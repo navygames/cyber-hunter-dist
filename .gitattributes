@@ -1,0 +1,3 @@
+# Byte-exact files: the update manifest pins sha256 of the bytes on disk,
+# so git must never convert line endings.
+* -text

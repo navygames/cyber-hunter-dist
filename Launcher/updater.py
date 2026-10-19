@@ -68,7 +68,6 @@ ALLOW = (
     "tools/private_server/*.ps1",
     "tools/private_server/responses/*",
     "tools/private_server/certs/ca.cert.pem",
-    "tools/private_server/certs/server_pins.json",
     "game-server/src/sync_supabase.js",
 )
 
@@ -94,6 +93,9 @@ DENY = (
     "**check_payload.py**", "**spawn_mapper.py**",
     "**make_update_manifest.py**", "**build_installer.py**", "**build_all.py**",
     "**protect_release.py**", "**py2parse.py**",
+    # server_pins.json gets a fresh pinned_at timestamp on every connect
+    # (TOFU), so its hash is a moving target -- never auto-update it.
+    "**server_pins.json",
     "tools/private_server/certs/server.**", "tools/private_server/certs/*.key*",
     "tools/private_server/generate_certs.py",
 )
