@@ -1,6 +1,6 @@
 {
  "schema": 1,
- "version": "2026.10.19-070136",
+ "version": "2026.10.19-101900",
  "files": [
   {
    "path": "CyberHunter.bat",
@@ -9,13 +9,13 @@
   },
   {
    "path": "CyberHunterLauncher.exe",
-   "sha256": "79e781cefbe4310ce1fa68a03e9e11b8bbac6e18b7eb73e7d71bc84503ef9ee6",
-   "size": 25021397
+   "sha256": "514a682fc599ec954943ad4667f109204e452330aa160e1ccb63261ebe314de5",
+   "size": 25021831
   },
   {
    "path": "Launcher/accounts.py",
-   "sha256": "3535fdb8b124095550731f89241419e255b37c576e2b82749040015a22d2f309",
-   "size": 54329
+   "sha256": "a93f76d1ee3881f32a0a1da69a838b0e5960678569605aba970e7df1ee17ec42",
+   "size": 54370
   },
   {
    "path": "Launcher/app_icon.ico",
@@ -334,8 +334,8 @@
   },
   {
    "path": "launcher.exe",
-   "sha256": "79e781cefbe4310ce1fa68a03e9e11b8bbac6e18b7eb73e7d71bc84503ef9ee6",
-   "size": 25021397
+   "sha256": "514a682fc599ec954943ad4667f109204e452330aa160e1ccb63261ebe314de5",
+   "size": 25021831
   },
   {
    "path": "requirements.txt",
@@ -359,8 +359,8 @@
   },
   {
    "path": "tools/private_server/certs/ca.cert.pem",
-   "sha256": "13dd38ff677e4a6a726b5336b70f4cd8edbdb06f1c780c18fdd2e6aad000ed47",
-   "size": 1216
+   "sha256": "3a0c3c57a5b314ae6ed28b7495beb605cdd5f5bfde4dabab75f4ada04fbf0afc",
+   "size": 1192
   },
   {
    "path": "tools/private_server/gateway_stub.py",

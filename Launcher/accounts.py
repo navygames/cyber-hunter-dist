@@ -719,8 +719,9 @@ def list_accounts():
     # Security: Never enumerate all stored accounts.
     # Only return the local active signed-in account if one is present.
     act = active()
-    if act and act.get("display"):
-        k = _key(act["display"])
+    name = (act.get("username") or act.get("display")) if act else None
+    if name:
+        k = _key(name)
         db = _load()
         rec = db.get("accounts", {}).get(k)
         if rec:
