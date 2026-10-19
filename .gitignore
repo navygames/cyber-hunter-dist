@@ -1,0 +1,59 @@
+# Player client repo. Keep it to source only.
+
+# Game files - proprietary, supplied separately
+/game/
+/Game/
+*.npk
+*.npk.*
+
+# Per-player state - never publish
+revival_config.env
+launcher_config.json
+Launcher/launcher_config.json
+Launcher/accounts.json
+player_account.json
+client/runtime/
+.env
+.env.*
+
+# Private keys - players only ever get the CA *certificate*
+*.key
+*.key.pem
+tools/private_server/certs/*
+!tools/private_server/certs/ca.cert.pem
+!tools/private_server/certs/server_pins.json
+
+# Generated
+**/__pycache__/
+*.pyc
+**/logs/
+*.log
+
+# Updater / downloader temp files
+*.new
+*.part
+.installer_tmp/
+Launcher/build/
+Launcher/dist/
+
+# Mod source never ships: players get client/native/build/script/*.nxs only.
+client/frida/
+client/native/*.py
+client/native/game_overlay/
+
+# Mirror of Launcher/updater.py DENY: a `git push` of this folder must not
+# publish more than the update manifest does.
+ControlPanel/
+**/ban_service*
+**/token_service*
+**/referee*
+**/anti_cheat*
+**/social_service*
+tools/private_server/generate_certs.py
+game-server/src/supabase_core.js
+game-server/src/sync_relay.js
+**/.relay_secret
+**/check_payload.py
+**/spawn_mapper.py
+*.part
+*.new

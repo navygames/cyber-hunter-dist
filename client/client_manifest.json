@@ -1,0 +1,1093 @@
+{
+ "note": "Identity of the reference client. See tools/client_manifest.py.",
+ "packs": {
+  "Documents/res/character/common.npk": {
+   "index_sha256": "93dd1e819c562f15b2d9df60cb12e5d9d601fa2faf2ae2137c5722fee2409173",
+   "index_size": 107,
+   "size": 159
+  },
+  "Documents/res/character/empty.npk": {
+   "index_sha256": "c88eb18a73885538f48be89fb153fee17feba79bb449c434f160b70f2d21093c",
+   "index_size": 107,
+   "size": 158
+  },
+  "Documents/res/character/female.npk": {
+   "index_sha256": "12cc73baa3e77001544bc9ed5ec985d560dbc923d6170cac82ac9079eea2736f",
+   "index_size": 790124,
+   "size": 1167820648
+  },
+  "Documents/res/character/makeup_preview.npk": {
+   "index_sha256": "a8346f7d31665d8a3aca2e370820a7d9ef71eba2a9263838d3fda115b0e1c0c4",
+   "index_size": 108,
+   "size": 167
+  },
+  "Documents/res/character/male.npk": {
+   "index_sha256": "d27ce5afd13fcc93e8b030a736c7a9d7482143e7af0232ce6f6c1534981f021f",
+   "index_size": 421230,
+   "size": 747935292
+  },
+  "Documents/res/character/transformers.npk": {
+   "index_sha256": "b4acc4f708af46e54fa2b1ddd51b6c524397e602847e11016dd835b626b37ee8",
+   "index_size": 400,
+   "size": 148712
+  },
+  "Documents/res/character/weapon.npk": {
+   "index_sha256": "ad71505869518760b8553459ad5bbdeef937a8d918d6781e114b642bf42c8785",
+   "index_size": 161273,
+   "size": 312032848
+  },
+  "Documents/res/character_2.npk": {
+   "index_sha256": "1f7541626a38ad32644c5d1e97c8fff810d29196f58ef3d834c74a2fed7e07a6",
+   "index_size": 46856,
+   "size": 234056985
+  },
+  "Documents/res/common.npk": {
+   "index_sha256": "60e5cef445ed36e1d9b114c501b027bd73e944d8e8426a2c8011c51f6acaaeb5",
+   "index_size": 3946,
+   "size": 1243738
+  },
+  "Documents/res/effect_cache.npk": {
+   "index_sha256": "d872d1dfc6c0d93c64ccd9386546453d76f27d32cfdc6bb3ed5a1152126ef544",
+   "index_size": 103240,
+   "size": 13359264
+  },
+  "Documents/res/effect_precompile.npk": {
+   "index_sha256": "357f4774efc1d5ff37a65ac1c50e3d1f0ad34ea7ef675904456d390457c1bb52",
+   "index_size": 156,
+   "size": 3500
+  },
+  "Documents/res/item.npk": {
+   "index_sha256": "8f3ab740e55f746c2ec496b405fe69670708f40e8cfc235bd71b7553196c44ed",
+   "index_size": 41401,
+   "size": 87241308
+  },
+  "Documents/res/killbox.npk": {
+   "index_sha256": "3c9ba4e0fcbe253c34f64dec862f1060260767986c7d3d9edc8f4507a7c0225a",
+   "index_size": 8052,
+   "size": 44148360
+  },
+  "Documents/res/levelsets/4k_diedai.npk": {
+   "index_sha256": "4a09e34c6c684ca917f2a0332e42f5492b535542ccca55f40bd4c5523e8d142b",
+   "index_size": 615,
+   "size": 11109926
+  },
+  "Documents/res/levelsets/4v4_jidi.npk": {
+   "index_sha256": "cfff2deebfb38687ae88713a6fb3e89691045cb8859591f19a6664e76a120f0b",
+   "index_size": 3685,
+   "size": 18187057
+  },
+  "Documents/res/levelsets/4v4_matou.npk": {
+   "index_sha256": "7458c248d7223c65bf1fe63eb951eec77bb2d8d4d71c68f4c781008dd9e69c61",
+   "index_size": 3779,
+   "size": 49620422
+  },
+  "Documents/res/levelsets/8v8.npk": {
+   "index_sha256": "8f01452e2a4c99feb762c8eaf3dfeb771d4042b734d2b43a3e5c166d35ebbdf2",
+   "index_size": 7304,
+   "size": 128090056
+  },
+  "Documents/res/levelsets/biaogan.npk": {
+   "index_sha256": "2b055c5fff5e02ff7f855185d74ec4526a2538303e6ef22e17e7d73b5af7df88",
+   "index_size": 157,
+   "size": 504463
+  },
+  "Documents/res/levelsets/billboard.npk": {
+   "index_sha256": "8041ca46e8caba397f3e7a21752cf70f380b9536654984b5da3e7d6a1df2930d",
+   "index_size": 1882,
+   "size": 971200
+  },
+  "Documents/res/levelsets/car.npk": {
+   "index_sha256": "4a6eea219cb8be552e46fd592af8cedfc8c3e22cf8053764cfc16964e50a10e9",
+   "index_size": 1374,
+   "size": 1611374
+  },
+  "Documents/res/levelsets/ceshi.npk": {
+   "index_sha256": "94e21abb630e0139ea2d5942bd7e55285af82c9366cf57c0c044fd4eee908082",
+   "index_size": 358,
+   "size": 3445
+  },
+  "Documents/res/levelsets/common.npk": {
+   "index_sha256": "37349d3fd0107d58380806c2aba935085fbe54e4b38254ccfec4928d4de5f8cf",
+   "index_size": 891,
+   "size": 9065655
+  },
+  "Documents/res/levelsets/fence.npk": {
+   "index_sha256": "7017be32379d2f31a3c008e5274d948fa45058108f56d9486dfd65ee1d6fb2b4",
+   "index_size": 9778,
+   "size": 348491
+  },
+  "Documents/res/levelsets/furniture.npk": {
+   "index_sha256": "463692ed02a5f44b3659847e5e38fd851dd970cda327df89b369e49af6e3ccf5",
+   "index_size": 1506,
+   "size": 2103363
+  },
+  "Documents/res/levelsets/g80.npk": {
+   "index_sha256": "4f3c2d8082f9711a49524a21d9c9c9ad0652fdb93c4e480524f8f1fd28448d9a",
+   "index_size": 539,
+   "size": 1480223
+  },
+  "Documents/res/levelsets/generalbuilding.npk": {
+   "index_sha256": "54c9bc90ac50d49e52ee6e58fa5e2fd35701fa0812a9be55e1fdc0551f953b05",
+   "index_size": 1212,
+   "size": 5115798
+  },
+  "Documents/res/levelsets/help.npk": {
+   "index_sha256": "6504afe23d7b20cbb2a9553be30af1022d2a4df61d622869bb0b709b8e78b982",
+   "index_size": 401,
+   "size": 3808
+  },
+  "Documents/res/levelsets/largeobjects.npk": {
+   "index_sha256": "31e23171df3e2c1c03fee3006483e54dffb192eaa9aeb2b085b130187212142a",
+   "index_size": 1521,
+   "size": 1219607
+  },
+  "Documents/res/levelsets/login_n.npk": {
+   "index_sha256": "943830d770621bdb2cee8f499a7992fd4199a199da6946eb27334d294bf1fb6a",
+   "index_size": 2579,
+   "size": 36691009
+  },
+  "Documents/res/levelsets/lottery.npk": {
+   "index_sha256": "0978b7ff2dc34a48a65089d4dbf891094bed9c91e56e7cf39b3a7d87b784d23d",
+   "index_size": 340,
+   "size": 4209138
+  },
+  "Documents/res/levelsets/mars.npk": {
+   "index_sha256": "d46f440f44199fc5d1bc88ce59de6ba4803b63785465caa8db5c0461f5f07468",
+   "index_size": 745,
+   "size": 3338887
+  },
+  "Documents/res/levelsets/mc.npk": {
+   "index_sha256": "1f91b7a2fc23e590a930d85714de65c022431fdf13af74d94dba5da5ce1a678a",
+   "index_size": 1234,
+   "size": 60645
+  },
+  "Documents/res/levelsets/newbie_weapon_growth.npk": {
+   "index_sha256": "6b383d9063a6a8bd5fb3971383a60fecf6d4ea43fd3c79873d46b94ec2f44645",
+   "index_size": 370,
+   "size": 2056803
+  },
+  "Documents/res/levelsets/package.npk": {
+   "index_sha256": "caa0ccdb944c88dfd5dba72cb707c2c45b3c24b67c221c388b5300c38ce7a7da",
+   "index_size": 181926,
+   "size": 714923058
+  },
+  "Documents/res/levelsets/physics.npk": {
+   "index_sha256": "2fef340fc7540a514f1aad4e1e86ac54260bb1f0d8934c24d5a0d83344bbc667",
+   "index_size": 916,
+   "size": 66382
+  },
+  "Documents/res/levelsets/plant.npk": {
+   "index_sha256": "330d593b5e92be64a198d0efe004c6f45e89c0ef9c0630207ef12a8aec1611eb",
+   "index_size": 5538,
+   "size": 1960904
+  },
+  "Documents/res/levelsets/skybox.npk": {
+   "index_sha256": "fa55d3a54128b0570810585b1bf2bc6937f14eee6d2231793c94c554efc69547",
+   "index_size": 288,
+   "size": 5351293
+  },
+  "Documents/res/levelsets/smallprops.npk": {
+   "index_sha256": "e0ff5b5455e448c5627a89c1c644c73f164af6b77c6ef74088c29179be205d7f",
+   "index_size": 7568,
+   "size": 4171073
+  },
+  "Documents/res/levelsets/solo_show.npk": {
+   "index_sha256": "18f50d9987edb6d6b858c1a31c8d30ce5eafdf7f97e371285496527d35ca6481",
+   "index_size": 107,
+   "size": 162
+  },
+  "Documents/res/levelsets/specialbuilding.npk": {
+   "index_sha256": "e5f7dada9766393c0fcd5948b0b8dc9f382653a95cf04e5c17cb859cfd74ccdc",
+   "index_size": 1976,
+   "size": 993227
+  },
+  "Documents/res/levelsets/stone.npk": {
+   "index_sha256": "dc5720a11399e5a20002b3f52d49212a18be17c04f731e8fd3c46e85aba1440b",
+   "index_size": 4235,
+   "size": 1972011
+  },
+  "Documents/res/levelsets/stonebuilding.npk": {
+   "index_sha256": "9ec59a033694bf04bbfb02ac7b8f66ef25752f4a1353ecfa3081b7fc044118d4",
+   "index_size": 1849,
+   "size": 4900828
+  },
+  "Documents/res/levelsets/ui_escape.npk": {
+   "index_sha256": "dc871b3cf7eade467ab1efc174fd8407561a09e9bb05de247662ee19ff030aba",
+   "index_size": 1182,
+   "size": 23471204
+  },
+  "Documents/res/levelsets/vehicle_show.npk": {
+   "index_sha256": "fb968fcc4aa0f0e5e14a43b25322bbe816c284f8a74f2986eb1f1c285b4a4914",
+   "index_size": 279,
+   "size": 1391901
+  },
+  "Documents/res/levelsets/victory.npk": {
+   "index_sha256": "3b02a1c0012ee22f77f78771034a52bf04de659163cb2bd8fe4b4b51a7c4d65b",
+   "index_size": 418,
+   "size": 3455
+  },
+  "Documents/res/levelsets/weapon_growth.npk": {
+   "index_sha256": "5cd29189b871ee112d8a6397cb560e462f14ce4707639d3be112cc6d8e794155",
+   "index_size": 110,
+   "size": 166
+  },
+  "Documents/res/levelsets/zhandian.npk": {
+   "index_sha256": "6e31cf56429778ce689f93191e1ff96101ebbe4e32d527f2dfd8edd8ee292715",
+   "index_size": 205,
+   "size": 1179
+  },
+  "Documents/res/npc.npk": {
+   "index_sha256": "14bf775b974558e4603429d0d9cc0c70177172696e78e047edb485fe977e0feb",
+   "index_size": 26404,
+   "size": 54979808
+  },
+  "Documents/res/package_escape.npk": {
+   "index_sha256": "665bd653e030189b8a32264e848beed3637aa3aa9f6b4cd7c66da217fe9c9fed",
+   "index_size": 113452,
+   "size": 318909061
+  },
+  "Documents/res/scene/4v4_jidi.npk": {
+   "index_sha256": "2a67ae38b768c831b8723d4e0f944850136e2e7f5c0cd820fb18d3dd41fecb83",
+   "index_size": 4469,
+   "size": 7235398
+  },
+  "Documents/res/scene/4v4_matou.npk": {
+   "index_sha256": "1c8350c607626110246d814e28e3cfdda8b566393760f1f2e761559dbfe95886",
+   "index_size": 3775,
+   "size": 9233390
+  },
+  "Documents/res/scene/8v8.npk": {
+   "index_sha256": "8338f0b960db29e92ee45e396de2ed580cf7d9e07c6c39cb1805c2c4691718de",
+   "index_size": 10728,
+   "size": 12267749
+  },
+  "Documents/res/scene/cangku.npk": {
+   "index_sha256": "f6d8ade8a4c841dde88c6ff8c5493f6cf1c2e4326664619e56f87c753640ee34",
+   "index_size": 2991,
+   "size": 4836084
+  },
+  "Documents/res/scene/cangku_juji.npk": {
+   "index_sha256": "898c56d787606514214f43f4b9359bb66f9f4fbdc05efd404e1658bb1f19097b",
+   "index_size": 3483,
+   "size": 9125613
+  },
+  "Documents/res/scene/character_unlock.npk": {
+   "index_sha256": "0baef556b1e2730896dd5043eebdafa3212ff983c84b9482dacb3563b77a5957",
+   "index_size": 107,
+   "size": 165
+  },
+  "Documents/res/scene/cralab02.npk": {
+   "index_sha256": "973ce9c713cf78d0528fb1d8127b68a937cd67bd588c04e04c9dc3a0c5019fdf",
+   "index_size": 32727,
+   "size": 50164318
+  },
+  "Documents/res/scene/crani.npk": {
+   "index_sha256": "0363144b35fae46eb38a16ad94168409c019ac5a84a9ad4bb5f3d6bde88750e1",
+   "index_size": 51607,
+   "size": 71032109
+  },
+  "Documents/res/scene/handbook.npk": {
+   "index_sha256": "f208acbfc4d57af577cc982e3d36cb440f68f1557abee03c056f639b6066d572",
+   "index_size": 96,
+   "size": 157
+  },
+  "Documents/res/scene/lab.npk": {
+   "index_sha256": "95e1939ebf15c7857a9635c0437bda7003ae87e2e6f4b2e5c92b0a3968585a1d",
+   "index_size": 100,
+   "size": 152
+  },
+  "Documents/res/scene/lobby_common.npk": {
+   "index_sha256": "5ccc6c3f0c524fd6350dfffa3e484c6db49f47305acac0bbb34f7159b6745f9e",
+   "index_size": 349,
+   "size": 6298
+  },
+  "Documents/res/scene/lobby_common_moon.npk": {
+   "index_sha256": "28c6612e2dbac598cf86b99e8eba7b9d8167c7a2daf6fee0d92be71a3046f84d",
+   "index_size": 393,
+   "size": 7354
+  },
+  "Documents/res/scene/lobby_dts.npk": {
+   "index_sha256": "116e0c25e83429dc7d3fd4160581767489458c1723dca7a5746e0273d716359c",
+   "index_size": 383,
+   "size": 6794
+  },
+  "Documents/res/scene/lobby_zhenying.npk": {
+   "index_sha256": "6b68dfbc39589e935a61960d16e1a28f59c2f40d4e1ce532678cedb5ed02ca79",
+   "index_size": 355,
+   "size": 6334
+  },
+  "Documents/res/scene/login_chaotai.npk": {
+   "index_sha256": "94a03e9f357344ba892d739d475b8fe1cdb2b0824dda23a496a3a5bcb534f3ae",
+   "index_size": 253,
+   "size": 7362
+  },
+  "Documents/res/scene/login_christmas.npk": {
+   "index_sha256": "2eefe0f268743fbaa5dff07153e8f6200e46d6919eb75f1fb9726bae906effdf",
+   "index_size": 255,
+   "size": 7182
+  },
+  "Documents/res/scene/login_guiwuzhe.npk": {
+   "index_sha256": "f91c407a46606eaa032c789c38f0612113feee59f07341751b29d1ab9a82f790",
+   "index_size": 466,
+   "size": 9044
+  },
+  "Documents/res/scene/login_halloween.npk": {
+   "index_sha256": "f6816e13cdcb4e8667115eadc35be7edd0da9b6c35714aadc6227a955cc75d6b",
+   "index_size": 202,
+   "size": 5382
+  },
+  "Documents/res/scene/login_hongyewan.npk": {
+   "index_sha256": "08fc6b38535fae6a31e360315eaaecdaf52a716a204f3fb1e5e66e665e5dd90a",
+   "index_size": 387,
+   "size": 8272
+  },
+  "Documents/res/scene/login_jinli.npk": {
+   "index_sha256": "c898d43c0aa7bd871dc47d8a1a3fd8c6e41788001a65a88ee9b241fca463e401",
+   "index_size": 380,
+   "size": 7808
+  },
+  "Documents/res/scene/login_n.npk": {
+   "index_sha256": "c4d5d0e72860a684f1067999051d53ef48fa950e4e3e3973621ad65f2a03ee86",
+   "index_size": 245,
+   "size": 6862
+  },
+  "Documents/res/scene/login_shendao.npk": {
+   "index_sha256": "2cd1216aea62de3b270aecac526c599cfa3dcba7103067f480594dad4b99dd67",
+   "index_size": 462,
+   "size": 9147
+  },
+  "Documents/res/scene/login_spring.npk": {
+   "index_sha256": "af5881008f6911500cc20af82467bf6293d438becfac5a31ce77b885659a8e14",
+   "index_size": 250,
+   "size": 7010
+  },
+  "Documents/res/scene/login_summer03.npk": {
+   "index_sha256": "b18e10e86c9177e28755e6fd8098a7ec685fc5b3a13546765c76efcd89ea1eab",
+   "index_size": 344,
+   "size": 7982
+  },
+  "Documents/res/scene/login_tuzijiuba.npk": {
+   "index_sha256": "7558840f4c6f408ad32b4eb5f797c13941afbe9c47c676042058f5fed35486ae",
+   "index_size": 389,
+   "size": 7788
+  },
+  "Documents/res/scene/lottery.npk": {
+   "index_sha256": "4ec8a3c4e99ae99bb683b95acf21d6a32aed3e3b57504ff2f88336894becc2e0",
+   "index_size": 103,
+   "size": 156
+  },
+  "Documents/res/scene/lottery_christmas.npk": {
+   "index_sha256": "d146451e9c19e8c42c864cf640c5fc10048e86752d6a2cf81bb22688becfdfc9",
+   "index_size": 112,
+   "size": 166
+  },
+  "Documents/res/scene/lottery_halloween.npk": {
+   "index_sha256": "c01d814f39d7b973fd07bf02ea112176f8c23bd9dddec29f63e949cb58a51911",
+   "index_size": 113,
+   "size": 166
+  },
+  "Documents/res/scene/lottery_spring.npk": {
+   "index_sha256": "ccc03a55b9774a002bca5f90951c43d2b6ef9d13bc918927e27bd27b27d565b7",
+   "index_size": 109,
+   "size": 163
+  },
+  "Documents/res/scene/newbie_guide.npk": {
+   "index_sha256": "6c44cbdfde3b38f28d99dd395da87c9950c0613951d7ebde2cbee68144e065d9",
+   "index_size": 203,
+   "size": 4456
+  },
+  "Documents/res/scene/newbie_weapon_growth.npk": {
+   "index_sha256": "3a4df83a7e8cdbf2efb2edddd8110becbf1cdb2d79452e084edcfc869cda9b21",
+   "index_size": 519,
+   "size": 14981
+  },
+  "Documents/res/scene/rishigongyuan.npk": {
+   "index_sha256": "791b9261ed943efa18e2bd829fecf19e4a81a59a5250f9cca7054f239c5ad2f5",
+   "index_size": 4378,
+   "size": 4824519
+  },
+  "Documents/res/scene/shendian.npk": {
+   "index_sha256": "9122a686cfe5f3d5228045db8387f23108f7840de6a98dbddbd0a389f7228a81",
+   "index_size": 3304,
+   "size": 4056288
+  },
+  "Documents/res/scene/solo_show.npk": {
+   "index_sha256": "2730b2e530a205f963827c61561be1a52ca56b0351d620342ef7ecda7d253276",
+   "index_size": 103,
+   "size": 158
+  },
+  "Documents/res/scene/tiantai.npk": {
+   "index_sha256": "dd5c0dd2dc1f71652a507d93b17775a35834d47e74c62f77335333d5b9bcb4d7",
+   "index_size": 18112,
+   "size": 2479812
+  },
+  "Documents/res/scene/tiantai2.npk": {
+   "index_sha256": "a741db268c0351261cbd2d6bc3286b3090a781402709de4bcec4f72752cd80d7",
+   "index_size": 37444,
+   "size": 4664472
+  },
+  "Documents/res/scene/ui.npk": {
+   "index_sha256": "ffc7bae2759ce4bf73ea2f667ab90ada126b1c25d620c72932c12d96655ad50c",
+   "index_size": 3715,
+   "size": 156576
+  },
+  "Documents/res/scene/ui_escape.npk": {
+   "index_sha256": "518fd221494f48132e1db952beb4f9b09d84f044a6455c8ebf3b944a9f6f9535",
+   "index_size": 1260,
+   "size": 43217
+  },
+  "Documents/res/scene/ui_raga.npk": {
+   "index_sha256": "63d43292b7cf38072c355daa06acbce3f094971725f45918424bbad927f8e3b2",
+   "index_size": 338,
+   "size": 5924
+  },
+  "Documents/res/scene/vehicle_show.npk": {
+   "index_sha256": "e6037a7acd69fc319889df284af64a3f3d44698bf5cec4892478a9935fc3f6a9",
+   "index_size": 111,
+   "size": 161
+  },
+  "Documents/res/scene/vehicle_show01.npk": {
+   "index_sha256": "3b8ea4297890972538a0cf25629bb918c2108ebc1012e9d7822bcbda71d931f8",
+   "index_size": 332,
+   "size": 8358
+  },
+  "Documents/res/scene/vehicle_show03.npk": {
+   "index_sha256": "12ffe6b144e48426baa40ee172886f0e07d24ec8818266d1ff8e5112cdcad4e7",
+   "index_size": 303,
+   "size": 6871
+  },
+  "Documents/res/scene/victory.npk": {
+   "index_sha256": "a6f84b8a5fb150ef19c2a5413b6edc65f4d86a9845509d03d33871ec6e914251",
+   "index_size": 798,
+   "size": 34932
+  },
+  "Documents/res/scene/weapon_growth.npk": {
+   "index_sha256": "398ab94c204768c1835d490b09fc88250288f8f8e42f8d26d0ac3badef058e47",
+   "index_size": 100,
+   "size": 162
+  },
+  "Documents/res/scene/world4k.npk": {
+   "index_sha256": "0277623c1a06c8d551e8e82c3d39b856cb798347cede2adcfc6c4449ed25dece",
+   "index_size": 481784,
+   "size": 452130586
+  },
+  "Documents/res/scene/xiangzhan.npk": {
+   "index_sha256": "3a76ab5eb717e41117bbea02da1adadaf5f178def91621212421adddd312fea5",
+   "index_size": 8476,
+   "size": 5928261
+  },
+  "Documents/res/scene/xuanren.npk": {
+   "index_sha256": "470cd09dfd8c986cf61ad87296406a63482ccaf3b097575c5239610bc42479d7",
+   "index_size": 187,
+   "size": 4642
+  },
+  "Documents/res/scene/xunlianchang.npk": {
+   "index_sha256": "760ea48bb6d764b193705a47ba34af315e3d6c53893da7cfeed3e3d58562181f",
+   "index_size": 450,
+   "size": 108347
+  },
+  "Documents/res/scene/zhanbei.npk": {
+   "index_sha256": "a87bb8497d46083e3d820d0ecec22828f8e5eb28822f47701360fcc26c35413f",
+   "index_size": 290,
+   "size": 7818
+  },
+  "Documents/res/sfx.npk": {
+   "index_sha256": "a43049d2a82479f95139b0f35c81b624c60912d13a97fa19462c68325898a36b",
+   "index_size": 240617,
+   "size": 45949354
+  },
+  "Documents/res/shader.npk": {
+   "index_sha256": "aa3b5a44cdb198e8022e3befc803d79830e512201f5c2cde89e9a289b262e2f4",
+   "index_size": 17334,
+   "size": 4693073
+  },
+  "Documents/res/texture.npk": {
+   "index_sha256": "5482f81c55844968beb854bf27af53ad7014d9775568a9b22bb213ed7eefd6ba",
+   "index_size": 94,
+   "size": 150
+  },
+  "Documents/res/titleset.npk": {
+   "index_sha256": "36dc1f94c6033e59d529adf70e768828d50c726e502ef4ed19464f93021454bf",
+   "index_size": 684,
+   "size": 38745113
+  },
+  "Documents/res/ui.npk": {
+   "index_sha256": "356fdd282acb2a0b5ab27a29fee4354d2b3002354dc0817bf71b0c7aeba75ea7",
+   "index_size": 719548,
+   "size": 551410335
+  },
+  "Documents/res/ui_patch.npk": {
+   "index_sha256": "c63666028531bb36e804791ddc4f10660dcd2ef8399cd4f93b45b192eab9f616",
+   "index_size": 4206,
+   "size": 4351189
+  },
+  "Documents/res/vehicle.npk": {
+   "index_sha256": "f2117196c34a059abb4e1a986ce0f8bcfe1e0a7ed9f2b99a175eefc829be9727",
+   "index_size": 63277,
+   "size": 269721625
+  },
+  "Documents/res/xsetting.npk": {
+   "index_sha256": "28549aaf504615983a78b39fef44e6fb0892e859b34d3e1f2a57ee97bfd70890",
+   "index_size": 3720,
+   "size": 1098815
+  },
+  "data.npk": {
+   "index_sha256": "5f93a3946432dd4bbc5b43cd22540223bd72b0c15d56557ab963c64bcddfc3a8",
+   "index_size": 51012,
+   "sha256": "3d47f732e06d9a6fcf775a846af5e4e7eb6742d7eb5ecc538dccd082264e9d6d",
+   "size": 16285293
+  },
+  "patch.npk": {
+   "index_sha256": "39ad140034398bcb4531a8c7a72faf45d19a4fd0cd593069c896d7193e711102",
+   "index_size": 3183,
+   "sha256": "cc383d9755c885043aee5c61f7c1551978480d70d2a7c29cb691a37ca7090284",
+   "size": 145573
+  },
+  "res/character/common.npk": {
+   "index_sha256": "d84dd420bf328e03ec1bcc62447fd19f18178da66765266d26d3d0235916e6c4",
+   "index_size": 310,
+   "size": 100349
+  },
+  "res/character/empty.npk": {
+   "index_sha256": "c425f6a2999a0f3ab809df44b0cb94ffbcada024550bc92c7e2a3ab5b1f90614",
+   "index_size": 364,
+   "size": 1226
+  },
+  "res/character/female.npk": {
+   "index_sha256": "503bc0c71aa47def32e0afafb4e64e6e08447dd9009b5ce7e1ade7befc27ee32",
+   "index_size": 883495,
+   "size": 1371137994
+  },
+  "res/character/makeup_preview.npk": {
+   "index_sha256": "0afff9b7ca94550de93be87b2bc901ac570c51b5c83e5e180c86b6a7165446b4",
+   "index_size": 389,
+   "size": 1709
+  },
+  "res/character/male.npk": {
+   "index_sha256": "b8fcd5c1d33ffd5ab138494b54bfbd39ff12ff7e59b3f5edafdaf71fedc96223",
+   "index_size": 548554,
+   "size": 932900287
+  },
+  "res/character/transformers.npk": {
+   "index_sha256": "b538cad1072e210457a8a3d3d5987acccf24e43c3eef967ffb669534a477d67a",
+   "index_size": 2834,
+   "size": 7556457
+  },
+  "res/character/weapon.npk": {
+   "index_sha256": "3c8ce7da40f5b42249ca4c4b4debdb7fc0a1d7882c3287158797b7ba866160f8",
+   "index_size": 228855,
+   "size": 550574810
+  },
+  "res/character_2.npk": {
+   "index_sha256": "1f7541626a38ad32644c5d1e97c8fff810d29196f58ef3d834c74a2fed7e07a6",
+   "index_size": 46856,
+   "size": 234056985
+  },
+  "res/common.npk": {
+   "index_sha256": "3f6a0160aa55e614e29da1579248e2d8a9ea289709d147c6ac42f3c5eccca6b8",
+   "index_size": 99886,
+   "size": 5871207
+  },
+  "res/effect_cache.npk": {
+   "index_sha256": "3a7155d00ec85b078eac8a4914b2df7bcc3c44c754a42d757a7425692bf80ad8",
+   "index_size": 177129,
+   "size": 13191950
+  },
+  "res/effect_precompile.npk": {
+   "index_sha256": "28e68e05bc8a33b9da7778be3dfa6e59742facb9aecc4a6d418203e93be75499",
+   "index_size": 229,
+   "size": 3616
+  },
+  "res/feixingqi.npk": {
+   "index_sha256": "5ab35256a506beda6521757b3705e86d8a5c096994085e2f69334a9e059fcb1d",
+   "index_size": 391,
+   "size": 2537260
+  },
+  "res/item.npk": {
+   "index_sha256": "d73b643f86ee7c4ad0542a4b9458f7d5bbfd6284768f9d5756f25d34023b106e",
+   "index_size": 128261,
+   "size": 207114711
+  },
+  "res/killbox.npk": {
+   "index_sha256": "2313de6aa35794c83d6ea1aa0f41d14d8da989967df80a2942ef10e46dcb2843",
+   "index_size": 8049,
+   "size": 44148360
+  },
+  "res/levelsets/4k_diedai.npk": {
+   "index_sha256": "171ccba9b549b59eb61a78119546d3ed1120ad685da9270f3ccaea32c23044de",
+   "index_size": 2024,
+   "size": 15368740
+  },
+  "res/levelsets/4v4_jidi.npk": {
+   "index_sha256": "1337c565a4a2ee717ad8fee730e748dbfa8d5a9ddcb6f8a109e1e811832cb777",
+   "index_size": 3690,
+   "size": 18187057
+  },
+  "res/levelsets/4v4_matou.npk": {
+   "index_sha256": "dca31586c2dc4c2ada0c2dd5dec875deda8bea3165881e4ff14797b192aad67c",
+   "index_size": 3769,
+   "size": 49620422
+  },
+  "res/levelsets/8v8.npk": {
+   "index_sha256": "bdb7a62a76f2f3a475425c5aa9f46df52489f6a955801915909f29f702432223",
+   "index_size": 7284,
+   "size": 128090056
+  },
+  "res/levelsets/biaogan.npk": {
+   "index_sha256": "326f37e2fe14b0204fcfc63db07909f955cf193c0dfcba6edf81360dbf8ef59a",
+   "index_size": 961,
+   "size": 2036838
+  },
+  "res/levelsets/billboard.npk": {
+   "index_sha256": "2016767ed57f52bf900991bee85ea9a727a91b4c390569e6d1804cd33a09395d",
+   "index_size": 25361,
+   "size": 21455764
+  },
+  "res/levelsets/car.npk": {
+   "index_sha256": "1580e89852fb99b9482856ca77545f1fbefd60d1a658df2876d037ace5111996",
+   "index_size": 13322,
+   "size": 30014276
+  },
+  "res/levelsets/ceshi.npk": {
+   "index_sha256": "4604a007852915b09e9cfeaabc4d5045c7bd42a0d34f4b4af562d830b3ce4f74",
+   "index_size": 679,
+   "size": 3898
+  },
+  "res/levelsets/common.npk": {
+   "index_sha256": "150db240e584e909e3a7d3cd2ae5cd80da6b4eef13402141f92cda3d607aaf77",
+   "index_size": 6379,
+   "size": 37778194
+  },
+  "res/levelsets/fence.npk": {
+   "index_sha256": "b7b710e0b997669e03572e520008796e01da315ff34ce3a3fe9b9c569fda5d83",
+   "index_size": 91825,
+   "size": 29674022
+  },
+  "res/levelsets/furniture.npk": {
+   "index_sha256": "fe40ca45a71d1df3a48cfa178218d7af60edf0eac421930e3f5deb4f3947c8e0",
+   "index_size": 3316,
+   "size": 8123385
+  },
+  "res/levelsets/g80.npk": {
+   "index_sha256": "d0b367c9418a462267cc7a9175900d28c923e608f3d0255198dc95ccdf51325f",
+   "index_size": 12441,
+   "size": 6141946
+  },
+  "res/levelsets/generalbuilding.npk": {
+   "index_sha256": "79d6f924c495de31e2475884e2c73f2ab77063912437fc521ec4b0cc083ad019",
+   "index_size": 46746,
+   "size": 143959448
+  },
+  "res/levelsets/help.npk": {
+   "index_sha256": "93ffd55a827efb75648da1ff41b4d722e19b045240004f0a8a5454108befe62f",
+   "index_size": 6211,
+   "size": 1047735
+  },
+  "res/levelsets/largeobjects.npk": {
+   "index_sha256": "f89b0748eaa43741fbe3b2dd753ace8c02e9dc7ea76e175d20dba44601f3f1b4",
+   "index_size": 32076,
+   "size": 58431818
+  },
+  "res/levelsets/login_n.npk": {
+   "index_sha256": "80b959ef824f2b8e8f620b1209f5eaa17b422f37d99c8823cab25c27711e3879",
+   "index_size": 10385,
+   "size": 60050002
+  },
+  "res/levelsets/lottery.npk": {
+   "index_sha256": "224f3ea283517caab35a61dc2be2ac1d90078f5035cb3fc15cb5fb8f3a951b27",
+   "index_size": 6614,
+   "size": 32854454
+  },
+  "res/levelsets/mars.npk": {
+   "index_sha256": "f3727bd6703abd110d8aacb1c6efa50b34d875cd6501b8dabb094f9aea8e9b5f",
+   "index_size": 1339,
+   "size": 3338799
+  },
+  "res/levelsets/mc.npk": {
+   "index_sha256": "82cce8c52efc2f7bc22cee19e751c7d71b5c8581cf96bb9b747ed78fe8beba09",
+   "index_size": 24971,
+   "size": 113457641
+  },
+  "res/levelsets/newbie_weapon_growth.npk": {
+   "index_sha256": "6b383d9063a6a8bd5fb3971383a60fecf6d4ea43fd3c79873d46b94ec2f44645",
+   "index_size": 370,
+   "size": 2056803
+  },
+  "res/levelsets/package.npk": {
+   "index_sha256": "18cd64277736badb27292b8a3823381b381b66831bf75f6507d4a30debf91035",
+   "index_size": 75962,
+   "size": 1054098469
+  },
+  "res/levelsets/physics.npk": {
+   "index_sha256": "ed8759b661a0e2ad972dbfbd86fdc315e58fdcffffa3cacf44b0532bd32b5a98",
+   "index_size": 8482,
+   "size": 711766
+  },
+  "res/levelsets/plant.npk": {
+   "index_sha256": "bd71c4a1086a6af76a68f1988646e3583cc6cfbcd73a21870af80080e098f853",
+   "index_size": 99384,
+   "size": 97707031
+  },
+  "res/levelsets/skybox.npk": {
+   "index_sha256": "2f1330936b0ac0b8dc62c59a5d4fe15e7402137a31380115f98515225084aa23",
+   "index_size": 1367,
+   "size": 7230588
+  },
+  "res/levelsets/smallprops.npk": {
+   "index_sha256": "5dcf95b4ddff2134a1b38de80475136d36f479ffbf89a236e256cbb40ce3a8fa",
+   "index_size": 120700,
+   "size": 152451380
+  },
+  "res/levelsets/solo_show.npk": {
+   "index_sha256": "267bdde298382e680566605490c5a5fc3b620fc145defd8eaa3a3ae7d0278e93",
+   "index_size": 1737,
+   "size": 2506274
+  },
+  "res/levelsets/specialbuilding.npk": {
+   "index_sha256": "25462a836b6a28360fd0ffd7e77eef725880201073e3e527546a197d68aa847f",
+   "index_size": 48411,
+   "size": 189751853
+  },
+  "res/levelsets/stone.npk": {
+   "index_sha256": "789992ebf855ab90afeec104ddb538509b1750a9b2b76595b5261c0b851ddce8",
+   "index_size": 38911,
+   "size": 194497023
+  },
+  "res/levelsets/stonebuilding.npk": {
+   "index_sha256": "489cad8fd76117f189aafcf62a269d4ac1367b1b3f3e227da99f16be358a032f",
+   "index_size": 31348,
+   "size": 84576357
+  },
+  "res/levelsets/ui_escape.npk": {
+   "index_sha256": "d0160f7e51a8ba4efbf5dcbd7dc44e5a7317c32bfba4311acd2b7a7c3129029f",
+   "index_size": 1181,
+   "size": 23471204
+  },
+  "res/levelsets/vehicle_show.npk": {
+   "index_sha256": "2d12748b582876b430289ece1da56af19cbf0323c1f48e86f00216ce39dc1078",
+   "index_size": 1653,
+   "size": 2583050
+  },
+  "res/levelsets/victory.npk": {
+   "index_sha256": "af684ca608381cf9e3c412afd3ca8c06a4298d6045124a88521027e99ee34637",
+   "index_size": 2325,
+   "size": 6389167
+  },
+  "res/levelsets/weapon_growth.npk": {
+   "index_sha256": "8322664501fc0546ef6e4ad1576737edcb9b8bb423a2a82548f2bee003cbef6f",
+   "index_size": 679,
+   "size": 2661215
+  },
+  "res/levelsets/zhandian.npk": {
+   "index_sha256": "83ab4818e48b219daf930db52f6445397efcb082d7858accca62ed7b765c61c9",
+   "index_size": 1092,
+   "size": 2338361
+  },
+  "res/npc.npk": {
+   "index_sha256": "6e26ffe40d9926d23d18c698d2ad94f4003ef736d2e3fe4addb1a3e7fce9aac1",
+   "index_size": 43395,
+   "size": 99925180
+  },
+  "res/package_escape.npk": {
+   "index_sha256": "e689cf7e36e1abef2df15920aeddc4e715fd2af8b82e698a8ba43a510626c6d3",
+   "index_size": 222145,
+   "size": 637817965
+  },
+  "res/scene/4v4_jidi.npk": {
+   "index_sha256": "a557b594fcb8a2908ae4eae146d6eaa0a1975892de965132560168c0b6b72e85",
+   "index_size": 8065,
+   "size": 7235406
+  },
+  "res/scene/4v4_matou.npk": {
+   "index_sha256": "abdc6dbe89ac057af38ccb8234779d4caf143684705cea21793cf55862d84873",
+   "index_size": 3777,
+   "size": 9233390
+  },
+  "res/scene/8v8.npk": {
+   "index_sha256": "9aa3bea9a4681f3814177580f7d33f5d91530c825708b586c1cde43cf5089039",
+   "index_size": 10722,
+   "size": 24535346
+  },
+  "res/scene/cangku.npk": {
+   "index_sha256": "033ab619f6904c22cbf00dfaea6210ba8e280eab5ecc1ba3b8ed0161a8bcdb02",
+   "index_size": 5363,
+   "size": 4836092
+  },
+  "res/scene/cangku_juji.npk": {
+   "index_sha256": "6cc57aa160d5b32301e911fe7e0e79cca228cbeab2071d90a58e6ab6acf3b21c",
+   "index_size": 6235,
+   "size": 9125617
+  },
+  "res/scene/character_unlock.npk": {
+   "index_sha256": "bcc2f3395650a9f4a0773dca753717a837b8f22712c9ca9641aa4ca46c44bd45",
+   "index_size": 698,
+   "size": 7260
+  },
+  "res/scene/cralab02.npk": {
+   "index_sha256": "bea52aa9d5b217dcdc7eb103dbb69d50d10c59e25967d9cf54c4358eca0dbf72",
+   "index_size": 32738,
+   "size": 50164318
+  },
+  "res/scene/crani.npk": {
+   "index_sha256": "4142893a1c814a2fb022fc6c4fff4c97dd4ebcb9dfcb9ea4e5d7d7cbf523698b",
+   "index_size": 51632,
+   "size": 142064064
+  },
+  "res/scene/handbook.npk": {
+   "index_sha256": "2686c94b26cb863e2e35259df30e93a7cd8a7f5b1bb2b60d61480cfc4fa576b4",
+   "index_size": 473,
+   "size": 6097
+  },
+  "res/scene/lab.npk": {
+   "index_sha256": "7360fe6745e0be4c9fbb17ad4624223b373c6f728ca6206d772eec1ad11d7604",
+   "index_size": 43812,
+   "size": 75449676
+  },
+  "res/scene/lobby_common.npk": {
+   "index_sha256": "e7adafcce25c9f9dc2ba672ffbb03e4727e088b6a22b5aa06d6f2949dea417cf",
+   "index_size": 554,
+   "size": 6154
+  },
+  "res/scene/lobby_common_moon.npk": {
+   "index_sha256": "28f3c7fb2a626f40d02c24da67d048775b3a79ed908f6f959b594e5fcf301563",
+   "index_size": 394,
+   "size": 7354
+  },
+  "res/scene/lobby_dts.npk": {
+   "index_sha256": "c9c9a0b9f57354f699421415f9b4becaebc1290147243f6bf0172183323b500b",
+   "index_size": 628,
+   "size": 6626
+  },
+  "res/scene/lobby_zhenying.npk": {
+   "index_sha256": "2cbd2dc63c062db0701effd12eee846747e9fbbb680495447539bd2aaa04f216",
+   "index_size": 561,
+   "size": 6174
+  },
+  "res/scene/login_chaotai.npk": {
+   "index_sha256": "7b2ee625856c987fd69982f1026666507f4f53c51954daa95424808099c8754b",
+   "index_size": 760,
+   "size": 9219
+  },
+  "res/scene/login_christmas.npk": {
+   "index_sha256": "bddcb58e087fc2e3161d5eeda8ea66efa096d55559d0c4a941e97ee5d6a00051",
+   "index_size": 627,
+   "size": 8276
+  },
+  "res/scene/login_guiwuzhe.npk": {
+   "index_sha256": "57504ae99cb5a848bc183872983131fb82d2e9ce6561e2d1d9ffdc6d36287162",
+   "index_size": 759,
+   "size": 9048
+  },
+  "res/scene/login_halloween.npk": {
+   "index_sha256": "7c85ed9ee6efc37a81e7e4f2e77f6cc3bd1d761702b0d7a852b2e2d484b2e0a8",
+   "index_size": 626,
+   "size": 8472
+  },
+  "res/scene/login_hongyewan.npk": {
+   "index_sha256": "8e39f835e0d45decd59c73b67dd2bb009d36a05bc495f8ac588718bd5245198f",
+   "index_size": 628,
+   "size": 8276
+  },
+  "res/scene/login_jinli.npk": {
+   "index_sha256": "264a6998e39a03dfda1e0d816bc300316a03206685d57e38993327de1debdfc9",
+   "index_size": 620,
+   "size": 7812
+  },
+  "res/scene/login_n.npk": {
+   "index_sha256": "282918653e887eedc6667e8c1b3b2e51c3bdc54f368fcd04872f6a28f4310bdb",
+   "index_size": 773,
+   "size": 9721
+  },
+  "res/scene/login_shendao.npk": {
+   "index_sha256": "57da60dfd804b5b9cf17e96835f7810322bc4446f0a833736cbe5b2fd2df5a1f",
+   "index_size": 754,
+   "size": 9151
+  },
+  "res/scene/login_spring.npk": {
+   "index_sha256": "363a2767e3dbdc1e860652cb8828a6168daa01ae8205f8161e90ec23a89eec2e",
+   "index_size": 623,
+   "size": 7999
+  },
+  "res/scene/login_summer03.npk": {
+   "index_sha256": "b18e10e86c9177e28755e6fd8098a7ec685fc5b3a13546765c76efcd89ea1eab",
+   "index_size": 344,
+   "size": 7982
+  },
+  "res/scene/login_tuzijiuba.npk": {
+   "index_sha256": "7ecdd8af9d522adf7cc5b3f48a11c1b674805c576df3f71c71603a4b1ea1fe97",
+   "index_size": 630,
+   "size": 7792
+  },
+  "res/scene/lottery.npk": {
+   "index_sha256": "74376b33cbc927935f9569a97e551b8e83bc192ba925d0b863962bb5e260f1b1",
+   "index_size": 694,
+   "size": 8386
+  },
+  "res/scene/lottery_christmas.npk": {
+   "index_sha256": "2ff49036ca60fc82c9f73eac8de5caff8af565ea0ef823f476aedd5fb21a9a30",
+   "index_size": 557,
+   "size": 5773
+  },
+  "res/scene/lottery_halloween.npk": {
+   "index_sha256": "469a5532bb1ea5a342dc5e89704eda8cae540f9e51ddc02ad240a571f669adc6",
+   "index_size": 561,
+   "size": 6025
+  },
+  "res/scene/lottery_spring.npk": {
+   "index_sha256": "c3d8ad3d710964bbf162b44ba08b6b54b7445c3f18a8a73be0dbf62ca50a7498",
+   "index_size": 555,
+   "size": 5763
+  },
+  "res/scene/newbie_guide.npk": {
+   "index_sha256": "3a0d28864eda01ae0fdcfb734e1cd563f5e52417c9c49b3d16cb99bde634754d",
+   "index_size": 14352,
+   "size": 7542245
+  },
+  "res/scene/newbie_weapon_growth.npk": {
+   "index_sha256": "0b641e0ec7ed24977b8995e6c9cad884038cd980b3b9bf50da1554bb67cab6ef",
+   "index_size": 523,
+   "size": 14981
+  },
+  "res/scene/rishigongyuan.npk": {
+   "index_sha256": "3fb3eb40dfb0c66a22165659c252736ca383689b2f6e67b6905fb03f62a74e19",
+   "index_size": 4370,
+   "size": 9648876
+  },
+  "res/scene/shendian.npk": {
+   "index_sha256": "7ebf90f9557d8628160722d964924c08bc43edc62a2a90e0d691d505f129cb43",
+   "index_size": 3296,
+   "size": 8112419
+  },
+  "res/scene/solo_show.npk": {
+   "index_sha256": "5bf751ab0e1c3a1f37d514732822417dc86d76a03e92ed7c66a40a54ae354210",
+   "index_size": 2557,
+   "size": 34424
+  },
+  "res/scene/tiantai.npk": {
+   "index_sha256": "4b6c0518ef43d49943a681f748a47e6d943bd7997c5f45731c0ac161d7e303cc",
+   "index_size": 18092,
+   "size": 4959468
+  },
+  "res/scene/tiantai2.npk": {
+   "index_sha256": "d67439e84df18bfd8eb94f192853b7728650a6f32b989ed58338040e1721bb32",
+   "index_size": 37414,
+   "size": 9328787
+  },
+  "res/scene/ui.npk": {
+   "index_sha256": "f8ecc142e484d87aeedcb55f6b3087eee9da548f0578334c63bac8375581dfe4",
+   "index_size": 10171,
+   "size": 233480
+  },
+  "res/scene/ui_escape.npk": {
+   "index_sha256": "567fbdc908a79768c02f89ded6be173d8bef0ceb741e12700dbb007af3df5cad",
+   "index_size": 1249,
+   "size": 86276
+  },
+  "res/scene/ui_raga.npk": {
+   "index_sha256": "63d43292b7cf38072c355daa06acbce3f094971725f45918424bbad927f8e3b2",
+   "index_size": 338,
+   "size": 11692
+  },
+  "res/scene/vehicle_show.npk": {
+   "index_sha256": "f9be05af3820b944b144370f561614a389d9b3675123d1ec833389c2cc5f3e13",
+   "index_size": 560,
+   "size": 7927
+  },
+  "res/scene/vehicle_show01.npk": {
+   "index_sha256": "3b8ea4297890972538a0cf25629bb918c2108ebc1012e9d7822bcbda71d931f8",
+   "index_size": 332,
+   "size": 8358
+  },
+  "res/scene/vehicle_show03.npk": {
+   "index_sha256": "55fc148d2c908217ce9a4d7f3a124fa72f1a4d5b533f65d0f14ef9152031d69a",
+   "index_size": 302,
+   "size": 6871
+  },
+  "res/scene/victory.npk": {
+   "index_sha256": "d4268f2bd77484ff942e332d3e25513da3fe383aa234adab59abeaf5f66ff9e4",
+   "index_size": 15247,
+   "size": 4949219
+  },
+  "res/scene/weapon_growth.npk": {
+   "index_sha256": "f8f02b9953701cd56ea8f72cc90d1fc3844711c209716a232c2d8dfd049ce12c",
+   "index_size": 633,
+   "size": 7690
+  },
+  "res/scene/world4k.npk": {
+   "index_sha256": "f7759614d52e5b6e2edea3401f5b7bd4cd5bd70e5b2b8743426cdb6e16f1ca7a",
+   "index_size": 1342270,
+   "size": 908713500
+  },
+  "res/scene/xiangzhan.npk": {
+   "index_sha256": "bfcbb70ef67f3123f3eceb42b873373642cd2b8f1080b34c986b91ab539650a5",
+   "index_size": 8449,
+   "size": 11856364
+  },
+  "res/scene/xuanren.npk": {
+   "index_sha256": "2e144e18c1e3ac4996b186990ed38be9f0cd6a7e399581fe01906b4463c979c6",
+   "index_size": 465,
+   "size": 5764
+  },
+  "res/scene/xunlianchang.npk": {
+   "index_sha256": "781375cc546dad737026913dddd34d45a422558d5f1a52aa06c5839a89da562d",
+   "index_size": 20375,
+   "size": 10586478
+  },
+  "res/scene/zhanbei.npk": {
+   "index_sha256": "4ea9b754e7e11f418ec9228180cfc928c019637fc4460a55a68ccb936b3139e5",
+   "index_size": 961,
+   "size": 16122
+  },
+  "res/sfx.npk": {
+   "index_sha256": "77425280541aebff48ed98bcfa77939060ff626b3aad3f008e24c28c0f53781a",
+   "index_size": 666291,
+   "size": 111429648
+  },
+  "res/shader.npk": {
+   "index_sha256": "07a3ac66dbc81565393ba4f88196032ac9a926f76d37b86a1a6468024a1900e9",
+   "index_size": 89419,
+   "size": 11836948
+  },
+  "res/texture.npk": {
+   "index_sha256": "d11a67471acaa46799127d9ee4c41900f41f5379c75bace04a3b61053f49b162",
+   "index_size": 982,
+   "size": 879919
+  },
+  "res/titleset.npk": {
+   "index_sha256": "876de5b3e4cbe5060a00db177bf94fd91e64ba432aa3764d44dc0e44cadb617f",
+   "index_size": 3125,
+   "size": 69063540
+  },
+  "res/ui.npk": {
+   "index_sha256": "3d068d5e0cde0ec0a7cd5394150d6bcc21dd65fb603deebb4e712a5b40eaf3cd",
+   "index_size": 2334935,
+   "size": 979674530
+  },
+  "res/ui_patch.npk": {
+   "index_sha256": "8f09aeab6b704b0a65153f58a31cc433f5d27a3006bcc2237eb14082b88d2b47",
+   "index_size": 11534,
+   "size": 11718556
+  },
+  "res/vehicle.npk": {
+   "index_sha256": "3d31596e037e79e21b1f468daf8715adedf02c11c7759988ab7878141850efa6",
+   "index_size": 101540,
+   "size": 417100194
+  },
+  "res/xsetting.npk": {
+   "index_sha256": "08e9810429f59834a1dd3942f73e63a97c3e9dd77adb13d8313c50eaa18c1eb0",
+   "index_size": 10022,
+   "size": 1214125
+  },
+  "script.npk": {
+   "index_sha256": "cac94fa18b0d80e982a348c827867db699cea3fc7c79863b161d6a9703b94a6a",
+   "index_size": 179630,
+   "sha256": "971a882c35e850073a61e0c6a370204a5d71f79d0f0b479d4cebbec72fa9e8f2",
+   "size": 7492508
+  }
+ },
+ "required": [
+  "data.npk",
+  "script.npk",
+  "patch.npk"
+ ]
+}

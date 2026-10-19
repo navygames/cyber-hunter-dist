@@ -1,0 +1,1622 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Navy Games — Cyber Hunter Reawakening</title>
+  <!-- Vendored locally on purpose. These are render-blocking stylesheets: served
+       from a CDN they made an OFFLINE game launcher wait on the internet, and a
+       hanging request (VPN, redirected DNS, no connection) painted nothing at
+       all until it timed out. Nothing here touches the network now. -->
+  <link rel="stylesheet" href="vendor/fonts.css">
+  <link rel="stylesheet" href="vendor/fontawesome.css">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="launcher-body select-none">
+
+  <!-- Custom Frameless Window Titlebar (Seamlessly Blended with Logo Image) -->
+  <header class="launcher-titlebar" data-pywebview-drag-region>
+    <div class="titlebar-brand" data-pywebview-drag-region>
+      <img src="assets/navy-emblem-clear.png" alt="Navy Games" class="titlebar-brand-logo">
+      <span class="titlebar-brand-text">NAVY GAMES</span>
+    </div>
+
+    <div class="titlebar-actions">
+      <button class="titlebar-btn" id="btnServerQuick" title="Server Status">
+        <span class="server-dot offline" id="serverDot"></span>
+        <span class="server-text" id="serverText">STATUS: REAWAKENING SERVER</span>
+      </button>
+      <button class="titlebar-btn" id="btnOpenMaster" title="Control Panel" style="display: none;">
+        <i class="fa-solid fa-sliders"></i>
+      </button>
+      <button class="titlebar-btn" id="btnOpenSettings" title="Settings">
+        <i class="fa-solid fa-gear"></i>
+      </button>
+      <button class="titlebar-btn" id="btnMinimize" title="Minimize">
+        <i class="fa-solid fa-minus"></i>
+      </button>
+      <button class="titlebar-btn titlebar-close" id="btnClose" title="Close">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+    </div>
+  </header>
+
+  <!-- Launcher Main Container -->
+  <div class="launcher-layout">
+
+    <!-- ==================== LEFT NAVIGATION RAIL (HoYoPlay Style) ==================== -->
+    <aside class="left-nav-rail">
+      <!-- Top: Cyber Hunter Game Icon -->
+      <div class="rail-top">
+        <button class="rail-game-btn" id="railBtnCH" title="Cyber Hunter Reawakening" data-view="game-ch">
+          <div class="rail-game-indicator"></div>
+          <div class="rail-game-avatar">
+            <img src="assets/ch-solid-white.png" alt="CH">
+          </div>
+          <span class="rail-tooltip">Cyber Hunter</span>
+        </button>
+      </div>
+
+      <!-- Bottom: Hub / All Games (Active on Startup) -->
+      <div class="rail-bottom">
+        <button class="rail-action-btn rail-1v1-panel-btn" id="railBtn1v1Panel" title="1v1 Control Panel" style="display: none;">
+          <i class="fa-solid fa-gamepad"></i>
+          <span class="rail-tooltip">1v1 Control Panel</span>
+        </button>
+        <button class="rail-action-btn" id="railBtnMaster" title="Control Panel & Overrides" data-view="master" style="display: none;">
+          <i class="fa-solid fa-sliders"></i>
+          <span class="rail-tooltip">Control Panel</span>
+        </button>
+        <button class="rail-action-btn active" id="railBtnAllGames" title="All Games Hub" data-view="hub">
+          <i class="fa-solid fa-table-cells-large"></i>
+          <span class="rail-tooltip">All Games</span>
+        </button>
+      </div>
+    </aside>
+
+    <!-- ==================== MAIN CONTENT AREA ==================== -->
+    <main class="main-content-viewport" id="mainViewport">
+
+      <!-- ================= VIEW 1: ALL GAMES HUB (DEFAULT STARTUP VIEW) ================= -->
+      <div class="game-view-panel active" id="view-hub">
+        <div class="panel-hero-bg">
+          <img src="assets/hero-bg.jpg" alt="Hub Background" class="hero-bg-img" id="hubBgPreview">
+          <div class="hero-cinematic-overlay"></div>
+        </div>
+
+        <div class="hub-container">
+          
+          <!-- Top-Left Branding & Intro (Clean & Elegant) -->
+          <div class="hub-hero-presentation">
+            <div class="hub-logo-box">
+              <img src="assets/logo.png" alt="Cyber Hunter Reawakening" class="hub-game-logo">
+            </div>
+            <p class="hub-game-desc" id="hubDescPreview">
+              Navy Games presents Cyber Hunter Reawakening — offline revival with private server, ApexGameStudio Auth, and classic battle royale.
+            </p>
+          </div>
+
+          <!-- Bottom Card Strip (Click to Transition) -->
+          <div class="hub-bottom-strip">
+            <div class="hub-game-card active" data-game="ch" data-title="Cyber Hunter Reawakening" data-desc="Navy Games offline revival — private server, ApexGameStudio Auth, classic BR." data-bg="assets/hero-bg.jpg">
+              <div class="hub-card-inner">
+                <div class="hub-card-thumb-wrap">
+                  <img src="assets/ch-solid-white.png" alt="CH" class="hub-thumb-icon">
+                </div>
+                <div class="hub-card-labels">
+                  <span class="hub-card-tag">BATTLE ROYALE</span>
+                  <span class="hub-card-name">Cyber Hunter Reawakening</span>
+                </div>
+              </div>
+              <div class="hub-card-highlight-frame">
+                <span class="view-details-lbl">View Details <i class="fa-solid fa-arrow-right"></i></span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- ================= VIEW 2: CYBER HUNTER REAWAKENING (DETAIL VIEW) ================= -->
+      <div class="game-view-panel" id="view-game-ch">
+        
+        <!-- Background Hero Layers -->
+        <div class="panel-hero-bg">
+          <img src="assets/hero-bg.jpg" alt="Cyber Hunter" class="hero-bg-img">
+          <div class="hero-cinematic-overlay"></div>
+          <div class="hero-vignette"></div>
+        </div>
+
+        <!-- Featured Character Layer -->
+        <div class="hero-character-layer">
+          <img src="assets/heroes-duo.png" alt="Cyber Hunter Heroes" class="hero-character-art">
+          <div class="character-glow"></div>
+        </div>
+
+        <!-- View Content Grid -->
+        <div class="panel-content-grid">
+
+          <!-- Top-Left Branding Block (Clean & Minimalist) -->
+          <div class="view-header-block">
+            <div class="view-logo-wrap">
+              <img src="assets/logo.png" alt="Cyber Hunter Reawakening" class="view-logo-img">
+            </div>
+
+            <p class="view-pitch-text">
+              Powered by Navy Games. Play starts the Control Panel, game API, offline services, Frida lobby, and the client.
+            </p>
+          </div>
+
+          <!-- Bottom-Left Stack: Events Carousel -->
+          <div class="view-left-bottom-stack">
+
+            <!-- Bottom-Left News & Events Carousel Widget (HoYoPlay Style) -->
+            <div class="view-news-card-widget">
+              <div class="news-tabs-bar">
+                <button class="news-tab active" data-tab="events">Events</button>
+                <button class="news-tab" data-tab="notices">Notices</button>
+                <button class="news-tab" data-tab="news">News</button>
+              </div>
+
+              <div class="news-content-display" id="newsContentDisplay">
+                <!-- Banner Card -->
+                <div class="news-card-featured" id="newsBanner">
+                  <img src="assets/map-biohazard-facility.jpg" alt="Biohazard Event" class="news-card-thumb" id="newsThumb">
+                  <div class="news-card-badge-pill" id="newsTag">EVENT</div>
+                  <div class="news-card-info">
+                    <h4 class="news-card-title" id="newsTitle">[Season 1] Reawakening of Quantum Matrix &amp; Cyber Island</h4>
+                    <p class="news-card-date" id="newsDate">2026.08.31 &bull; Active Now</p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="news-dots-indicator" id="newsDots">
+                <span class="news-dot active" data-index="0"></span>
+                <span class="news-dot" data-index="1"></span>
+                <span class="news-dot" data-index="2"></span>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Right Social Links Floating Rail -->
+          <div class="view-social-rail">
+            <a href="javascript:void(0)" class="social-link" data-url="https://discord.gg/uXc8frbz5Y" title="Discord Community">
+              <i class="fa-brands fa-discord"></i>
+            </a>
+            <a href="javascript:void(0)" class="social-link" data-url="https://reddit.com" title="Reddit">
+              <i class="fa-brands fa-reddit-alien"></i>
+            </a>
+            <a href="javascript:void(0)" class="social-link" data-url="https://youtube.com" title="YouTube Trailers">
+              <i class="fa-brands fa-youtube"></i>
+            </a>
+            <a href="javascript:void(0)" class="social-link" data-url="https://twitter.com" title="Twitter / X">
+              <i class="fa-brands fa-x-twitter"></i>
+            </a>
+            <a href="javascript:void(0)" class="social-link" data-url="https://tiktok.com" title="TikTok">
+              <i class="fa-brands fa-tiktok"></i>
+            </a>
+          </div>
+
+          <!-- Bottom-Right Play Action Box (Exact Outer-Framed Button Aesthetic) -->
+          <div class="view-action-container">
+            <div class="play-btn-wrapper">
+              <button class="val-btn-primary" id="btnPlayMain">
+                <span class="btn-frame-box"></span>
+                <span class="btn-label" id="btnPlayLabel">
+                  <i class="fa-solid fa-play btn-play-icon"></i> PLAY
+                </span>
+              </button>
+            </div>
+
+            <!-- Game update progress (shown while UPDATE is downloading) -->
+            <div class="update-progress" id="updateProgress" hidden>
+              <div class="update-progress-track">
+                <div class="update-progress-fill" id="updateProgressFill"></div>
+              </div>
+              <div class="update-progress-meta">
+                <span id="updateProgressPhase">Preparing update...</span>
+                <span id="updateProgressPct">0%</span>
+              </div>
+              <div class="update-progress-meta update-progress-sub">
+                <span id="updateProgressSize">0 MB / -- MB</span>
+                <div class="update-progress-controls" style="display:inline-flex;align-items:center;gap:8px;">
+                  <span id="updateProgressSpeed">-- MB/s</span>
+                  <button type="button" class="btn-dl-control" id="btnDownloadPauseToggle" title="Pause / Resume Download">
+                    <i class="fa-solid fa-pause"></i> <span>Pause</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <div class="play-sub-details">
+              <span class="installed-tag" id="installedStatus">
+                <i class="fa-solid fa-circle-check text-success"></i> Ready to Launch
+              </span>
+              <span class="sub-sep">&bull;</span>
+              <a href="javascript:void(0)" class="find-game-link" id="linkCheckFiles">Verify Files</a>
+              <span class="sub-sep">&bull;</span>
+              <a href="javascript:void(0)" class="find-game-link" id="linkAccount">Sign in</a>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </main>
+  </div>
+
+  <!-- ==================== MASTER CONSOLE (operator: logs + overrides) ==================== -->
+  <div class="master-console" id="masterConsole" hidden>
+    <div class="master-console-inner">
+      <header class="master-head">
+        <div class="master-head-title">
+          <i class="fa-solid fa-sliders"></i>
+          <span>CONTROL PANEL</span>
+          <span class="master-head-sub">live controls · vehicle spawner · match overrides · logs</span>
+        </div>
+        <div class="master-head-actions">
+          <button type="button" class="master-icon-btn" id="btnMasterRefresh" title="Refresh snapshot">
+            <i class="fa-solid fa-rotate"></i>
+          </button>
+          <button type="button" class="master-icon-btn" id="btnMasterClose" title="Close">
+            <i class="fa-solid fa-xmark"></i>
+          </button>
+        </div>
+      </header>
+
+      <div class="master-status-strip" id="masterStatusStrip">
+        <div class="master-pill" data-k="mode"><span class="k">MODE</span><span class="v" id="msMode">—</span></div>
+        <div class="master-pill" data-k="launch"><span class="k">LAUNCH</span><span class="v" id="msLaunch">—</span></div>
+        <div class="master-pill" data-k="client"><span class="k">CLIENT</span><span class="v" id="msClient">—</span></div>
+        <div class="master-pill" data-k="ports"><span class="k">PORTS</span><span class="v" id="msPorts">—</span></div>
+        <div class="master-pill" data-k="hero"><span class="k">HERO</span><span class="v" id="msHero">—</span></div>
+      </div>
+
+      <div class="master-body">
+        <aside class="master-side">
+          <div class="master-side-block">
+            <div class="master-side-label">Log source</div>
+            <div class="master-seg" id="masterLogSource">
+              <button type="button" class="is-active" data-log="lobby">lobby_full</button>
+              <button type="button" data-log="game">game log</button>
+              <button type="button" data-log="requests">requests</button>
+              <button type="button" data-log="status">status JSON</button>
+            </div>
+          </div>
+
+          <div class="master-side-block">
+            <div class="master-side-label"><i class="fa-solid fa-vial-circle-check"></i> Match testing / sandbox</div>
+            <div class="master-cmd-grid" id="masterCmdTest"></div>
+          </div>
+
+          <div class="master-side-block">
+            <div class="master-side-label">Match / lobby</div>
+            <div class="master-cmd-grid" id="masterCmdMatch"></div>
+          </div>
+
+          <div class="master-side-block">
+            <div class="master-side-label"><i class="fa-solid fa-plane"></i> Vehicles / flight</div>
+            <div class="master-cmd-grid" id="masterCmdVehicle"></div>
+            <button type="button" class="master-feature-btn" id="btnSpawnHydrofoilDirect" style="margin-top:8px; width:100%; display:flex; align-items:center; justify-content:center; gap:8px; padding:9px 12px; background:linear-gradient(135deg,#0284c7,#0369a1); border:1px solid #38bdf8; border-radius:6px; color:#fff; font-size:12px; font-weight:700; cursor:pointer; box-shadow: 0 2px 8px rgba(2,132,199,0.35); transition: all 0.2s;">
+              <i class="fa-solid fa-jet-fighter"></i> Spawn Flying Hydrofoil (Titanium)
+            </button>
+          </div>
+
+          <div class="master-side-block">
+            <div class="master-side-label">Player / debug</div>
+            <div class="master-cmd-grid" id="masterCmdPlayer"></div>
+          </div>
+
+          <div class="master-side-block master-moderation-block">
+            <div class="master-side-label"><i class="fa-solid fa-shield-halved text-cyan"></i> ANTI-CHEAT / PLAYER MODERATION</div>
+            <div class="master-mod-grid" style="display:grid; grid-template-columns:1fr 1fr; gap:6px; margin-top:6px;">
+              <button type="button" class="master-feature-btn mod-btn-danger" id="btnModBan" style="padding:7px 8px; font-size:11px; font-weight:700; background:rgba(255,51,85,0.15); border:1px solid #ff3355; color:#ff3355; border-radius:5px; cursor:pointer;">
+                <i class="fa-solid fa-user-slash"></i> BAN PLAYER
+              </button>
+              <button type="button" class="master-feature-btn mod-btn-success" id="btnModUnban" style="padding:7px 8px; font-size:11px; font-weight:700; background:rgba(0,255,136,0.15); border:1px solid #00ff88; color:#00ff88; border-radius:5px; cursor:pointer;">
+                <i class="fa-solid fa-user-check"></i> UNBAN PLAYER
+              </button>
+              <button type="button" class="master-feature-btn" id="btnModViewBans" style="padding:7px 8px; font-size:11px; font-weight:700; background:#1c1a2e; border:1px solid #815eff; color:#c7b8ff; border-radius:5px; cursor:pointer;">
+                <i class="fa-solid fa-list-ul"></i> VIEW BANS
+              </button>
+              <button type="button" class="master-feature-btn" id="btnModViewFlags" style="padding:7px 8px; font-size:11px; font-weight:700; background:#1c1a2e; border:1px solid #fcd535; color:#fcd535; border-radius:5px; cursor:pointer;">
+                <i class="fa-solid fa-triangle-exclamation"></i> VIEW ANTI-CHEAT FLAGS
+              </button>
+            </div>
+          </div>
+
+          <div class="master-side-block">
+            <div class="master-side-label">Custom override</div>
+
+            <div class="master-cmd-row">
+              <input type="text" id="masterCmdInput" class="master-input"
+                     placeholder="e.g. br · loot · stamina · reexec" spellcheck="false">
+              <button type="button" class="master-send-btn" id="btnMasterSend">SEND</button>
+            </div>
+            <p class="master-hint">Writes <code>lobby_cmd_&lt;pid&gt;.txt</code> — same channel as <code>cmd.ps1</code>. Never starts Play.</p>
+          </div>
+
+          <div class="master-side-block master-danger">
+            <button type="button" class="master-danger-btn" id="btnMasterKillClient">
+              <i class="fa-solid fa-skull"></i> Kill client.exe
+            </button>
+          </div>
+        </aside>
+
+        <section class="master-log-pane">
+          <div class="master-log-toolbar">
+            <span id="masterLogPath" class="master-log-path">—</span>
+            <label class="master-check">
+              <input type="checkbox" id="masterLogFollow" checked> Follow
+            </label>
+            <button type="button" class="master-icon-btn" id="btnMasterClearLog" title="Clear view">
+              <i class="fa-solid fa-eraser"></i>
+            </button>
+          </div>
+          <pre class="master-log" id="masterLogView"></pre>
+          <div class="master-feedback" id="masterFeedback"></div>
+        </section>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== SETTINGS MODAL ==================== -->
+  <div class="modal-backdrop" id="settingsModal">
+    <div class="modal-box">
+      <div class="modal-header">
+        <div class="modal-title"><i class="fa-solid fa-gear"></i> LAUNCHER SETTINGS</div>
+        <button class="modal-close-btn" id="btnCloseSettings"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+
+      <div class="modal-body">
+        <div class="settings-group">
+          <label class="settings-label">Cyber Hunter Game Path</label>
+          <div class="settings-input-row">
+            <input type="text" class="settings-input" id="inputGamePath" readonly>
+            <button class="settings-browse-btn" id="btnBrowseGamePath">Browse...</button>
+          </div>
+          <span class="settings-hint">Location of <code>Cyber Hunter/bin/client.exe</code></span>
+        </div>
+
+        <div class="settings-group dev-only-feature">
+          <label class="settings-label">Navy Games / Control Panel URL</label>
+          <div class="settings-input-row">
+            <input type="text" class="settings-input" id="inputServerUrl" value="http://136.64.14.144:8888">
+            <button class="settings-browse-btn" id="btnCheckServer">Ping</button>
+          </div>
+        </div>
+
+        <div class="settings-group">
+          <label class="settings-label">General Options</label>
+          <div class="settings-toggle-row dev-only-feature">
+            <span>Auto-start full suite (Control Panel + game API + offline lobby)</span>
+            <input type="checkbox" id="toggleAutoServer" checked>
+          </div>
+          <div class="settings-toggle-row">
+            <span>Close Launcher when Game Starts</span>
+            <input type="checkbox" id="toggleCloseOnLaunch">
+          </div>
+        </div>
+
+        <div class="settings-group" id="groupAccountSettings">
+          <label class="settings-label"><i class="fa-solid fa-id-badge"></i> Player Profile</label>
+          <div class="game-settings-card">
+            <div class="fov-header-row">
+              <div class="fov-title-box">
+                <span class="fov-feature-title" id="settingsProfileName">Profile Settings</span>
+                <span class="fov-feature-desc" id="settingsProfileDesc">Manage password and in-game character name</span>
+              </div>
+              <button type="button" class="tool-btn" id="btnSettingsOpenProfile" style="padding: 6px 14px; font-size: 12px; font-weight: 600; white-space: nowrap;">
+                <i class="fa-solid fa-user-gear"></i> Edit Profile
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div class="settings-group" id="groupGameSettings">
+          <label class="settings-label"><i class="fa-solid fa-gamepad"></i> Game Settings</label>
+          <div class="game-settings-card">
+            <div class="fov-header-row">
+              <div class="fov-title-box">
+                <span class="fov-feature-title"><i class="fa-solid fa-eye text-purple"></i> FOV Settings</span>
+                <span class="fov-feature-desc">Adjust camera field of view (close zoom to wide angle)</span>
+              </div>
+              <span class="fov-val-badge" id="fovValueBadge">60°</span>
+            </div>
+
+            <div class="fov-slider-container">
+              <input type="range" class="fov-range-slider" id="inputFov" min="45" max="95" step="1" value="60">
+              <div class="fov-slider-ticks">
+                <span class="fov-tick-label">Close (45°)</span>
+                <span class="fov-tick-label fov-tick-center">Normal (60°)</span>
+                <span class="fov-tick-label">Wide (95°)</span>
+              </div>
+            </div>
+
+            <div class="fov-actions-row">
+              <span class="settings-hint"><i class="fa-solid fa-circle-info"></i> Normal FOV is 60°. Increases peripheral visibility.</span>
+              <button type="button" class="tool-btn fov-reset-btn" id="btnResetFov" title="Reset FOV back to default 60°">
+                <i class="fa-solid fa-rotate-left"></i> Reset to normal FOV
+              </button>
+            </div>
+          </div>
+
+          <!-- Graphics Quality Setting -->
+          <div class="game-settings-card" style="margin-top: 12px;">
+            <div class="fov-header-row">
+              <div class="fov-title-box">
+                <span class="fov-feature-title"><i class="fa-solid fa-display text-purple"></i> Graphics Quality</span>
+                <span class="fov-feature-desc">Visual fidelity and shadow rendering preset</span>
+              </div>
+              <span class="fov-val-badge" id="gfxQualityBadge">Medium</span>
+            </div>
+            <div class="env-modes-selector gfx-quality-selector" id="settingsGfxQualitySelector">
+              <button type="button" class="env-mode-pill" data-quality="0" title="Mode 0: Maximum FPS boost, disabled heavy shadow filtering">
+                <i class="fa-solid fa-bolt-lightning" style="color: #00ff88;"></i>
+                <span>Very Low</span>
+              </button>
+              <button type="button" class="env-mode-pill" data-quality="1" title="Mode 1: Smooth performance with lightweight foliage">
+                <i class="fa-solid fa-feather" style="color: #38bdf8;"></i>
+                <span>Low</span>
+              </button>
+              <button type="button" class="env-mode-pill active" data-quality="2" title="Mode 2: Balanced HD textures &amp; shadows">
+                <i class="fa-solid fa-layer-group" style="color: #815eff;"></i>
+                <span>Medium</span>
+              </button>
+              <button type="button" class="env-mode-pill" data-quality="3" title="Mode 3: Maximum cascade distance &amp; ultra textures">
+                <i class="fa-solid fa-gem" style="color: #facc15;"></i>
+                <span>Ultra</span>
+              </button>
+            </div>
+            <div class="fov-actions-row">
+              <span class="settings-hint"><i class="fa-solid fa-circle-info"></i> Very Low sets graphics mode to 0 for maximum FPS.</span>
+              <button type="button" class="tool-btn fov-reset-btn" id="btnOpenSetupWizard" title="Open the full graphic setup popup">
+                <i class="fa-solid fa-wand-magic-sparkles"></i> Setup Wizard
+              </button>
+            </div>
+          </div>
+
+          <!-- Target Frame Rate (FPS) Setting -->
+          <div class="game-settings-card" style="margin-top: 12px;">
+            <div class="fov-header-row">
+              <div class="fov-title-box">
+                <span class="fov-feature-title"><i class="fa-solid fa-gauge-high text-purple"></i> Target Frame Rate (FPS)</span>
+                <span class="fov-feature-desc">Engine refresh pacing and smooth framerate target</span>
+              </div>
+              <span class="fov-val-badge" id="fpsLimitBadge">120 FPS</span>
+            </div>
+            <div class="env-modes-selector fps-selector" id="settingsFpsSelector">
+              <button type="button" class="env-mode-pill" data-fps="60" title="Standard 60Hz display rate">
+                <span>60 FPS</span>
+              </button>
+              <button type="button" class="env-mode-pill" data-fps="90" title="Smooth 90Hz frame target">
+                <span>90 FPS</span>
+              </button>
+              <button type="button" class="env-mode-pill active" data-fps="120" title="120Hz high refresh fluid rate">
+                <span>120 FPS</span>
+              </button>
+              <button type="button" class="env-mode-pill" data-fps="144" title="144Hz competitive display rate">
+                <span>144 FPS</span>
+              </button>
+              <button type="button" class="env-mode-pill" data-fps="240" title="240Hz Pro Esports maximum framerate">
+                <i class="fa-solid fa-fire" style="color: #ff3355; margin-right: 2px;"></i>
+                <span>240 FPS</span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div class="settings-group dev-only-feature">
+          <label class="settings-label">Battle Royale Sky &amp; Environment</label>
+          <div class="daynight-control-panel">
+            <div class="daynight-info">
+              <div class="daynight-badge" id="badgeDayNight">
+                <i class="fa-solid fa-moon" id="badgeDayNightIcon"></i>
+                <span id="badgeDayNightText">Night Sky Active</span>
+              </div>
+              <span class="daynight-desc">Choose map sky &amp; lighting atmosphere. Or press <strong>F10</strong> inside match to cycle anytime.</span>
+            </div>
+            <div class="env-modes-selector" id="envModesSelector">
+              <button type="button" class="env-mode-pill active" data-mode="auto" title="Automated: AI randomly picks 1 weather per match">
+                <i class="fa-solid fa-wand-magic-sparkles" style="color: #38bdf8;"></i>
+                <span>Auto (AI Match)</span>
+              </button>
+              <button type="button" class="env-mode-pill" data-mode="day" title="Bright sunny daytime">
+                <i class="fa-solid fa-sun" style="color: #facc15;"></i>
+                <span>Day</span>
+              </button>
+              <button type="button" class="env-mode-pill" data-mode="dawn" title="Soft peach morning sky">
+                <i class="fa-solid fa-cloud-sun" style="color: #ff9a8b;"></i>
+                <span>Dawn</span>
+              </button>
+              <button type="button" class="env-mode-pill" data-mode="sunset" title="Golden orange sunset">
+                <i class="fa-solid fa-mountain-sun" style="color: #ff7020;"></i>
+                <span>Sunset</span>
+              </button>
+              <button type="button" class="env-mode-pill" data-mode="autumn" title="Autumn: orange foliage & golden sunset sky">
+                <i class="fa-solid fa-leaf" style="color: #f97316;"></i>
+                <span>Autumn</span>
+              </button>
+              <button type="button" class="env-mode-pill" data-mode="night" title="Dark starry sky with moon">
+                <i class="fa-solid fa-moon" style="color: #815eff;"></i>
+                <span>Night</span>
+              </button>
+              <button type="button" class="env-mode-pill" data-mode="rain" title="Stormy gray sky with rainfall & wet details">
+                <i class="fa-solid fa-cloud-showers-heavy" style="color: #38bdf8;"></i>
+                <span>Rain</span>
+              </button>
+              <button type="button" class="env-mode-pill" data-mode="rainy_night" title="Dark starry night with rainfall & wet details">
+                <i class="fa-solid fa-cloud-moon-rain" style="color: #7cb3f2;"></i>
+                <span>Rainy Night</span>
+              </button>
+              <button type="button" class="env-mode-pill" data-mode="snow" title="Crisp winter snow day with snow-covered world & falling snowflakes">
+                <i class="fa-solid fa-snowflake" style="color: #c7e9fe;"></i>
+                <span>Snow</span>
+              </button>
+              <button type="button" class="env-mode-pill" data-mode="snowy_night" title="Dark starry winter night with snow-covered world & falling snowflakes">
+                <i class="fa-solid fa-icicles" style="color: #93c5fd;"></i>
+                <span>Snowy Night</span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div class="settings-group dev-only-feature">
+          <label class="settings-label"><i class="fa-solid fa-wrench"></i> Tools &amp; Maintenance</label>
+          <div class="tool-grid">
+            <button class="tool-tile" id="btnVerifyFiles" title="Verify &amp; Repair Game Files">
+              <i class="fa-solid fa-wrench"></i>
+              <span>Verify Files</span>
+            </button>
+            <button class="tool-tile" id="btnOpenGameDir" title="Open Installation Folder">
+              <i class="fa-regular fa-folder-open"></i>
+              <span>Game Folder</span>
+            </button>
+            <button class="tool-tile" id="btnOpenInstaller" title="Install or repair the game files">
+              <i class="fa-solid fa-download"></i>
+              <span>Installer</span>
+            </button>
+            <button class="tool-tile" id="btnOpenAccount" title="Manage your account profile, change in-game name or password">
+              <i class="fa-regular fa-user"></i>
+              <span>Profile</span>
+            </button>
+            <button class="tool-tile dev-only-feature" id="btnOpenSpawnMapper" title="F11 spawn mapper — mark chests, vehicles, loot pads">
+              <i class="fa-solid fa-map-location-dot"></i>
+              <span>Spawn Mapper</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="settings-group dev-only-feature">
+          <label class="settings-label"><i class="fa-solid fa-brain"></i> AI Movement &amp; Animation Recording (Train Bots)</label>
+          <div class="tool-grid">
+            <button class="rec-tile" id="btnRecMovement" title="Record player speed, turns, and sprint/walk ratios">
+              <i class="fa-solid fa-person-running"></i>
+              <span>Record Movements</span>
+            </button>
+            <button class="rec-tile" id="btnRecCountdown" title="Record warm-up animations, emote loops &amp; prepare pad actions">
+              <i class="fa-solid fa-stopwatch-20"></i>
+              <span>Record Countdown</span>
+            </button>
+            <button class="rec-tile" id="btnRecCombat" title="Record combat shooting stance, ADS holds &amp; combat rolls">
+              <i class="fa-solid fa-crosshairs"></i>
+              <span>Record Combat</span>
+            </button>
+            <button class="rec-tile" id="btnRecLooting" title="Record ground pickup dwell times and chest approach patterns">
+              <i class="fa-solid fa-box-open"></i>
+              <span>Record Looting</span>
+            </button>
+            <button class="rec-tile" id="btnRecLanding" title="Record plane jump, glider descent &amp; landing flare timing">
+              <i class="fa-solid fa-plane-arrival"></i>
+              <span>Record Landing</span>
+            </button>
+            <button class="rec-tile" id="btnAnalyzeProfile" title="Compile recorded telemetry into AI profile and apply to bots">
+              <i class="fa-solid fa-wand-magic-sparkles"></i>
+              <span>Analyze &amp; Train</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="settings-group dev-only-feature" id="groupDevOptions">
+          <label class="settings-label"><i class="fa-solid fa-user-shield"></i> Developer Options</label>
+          <div class="dev-options-card">
+            <div class="dev-options-info">
+              <div class="dev-options-title"><i class="fa-solid fa-code text-purple"></i> Developer Mode Active</div>
+              <div class="dev-options-desc">You have access to Control Panel, weather customization, and live dev sandbox tools.</div>
+            </div>
+            <button type="button" class="tool-btn dev-add-trigger-btn" id="btnOpenAddDevModal">
+              <i class="fa-solid fa-user-plus"></i> Add to Dev
+            </button>
+          </div>
+        </div>
+
+        <!-- Developer: Add Testers -->
+        <div class="settings-group dev-only-feature" id="groupAddTesters">
+          <label class="settings-label"><i class="fa-solid fa-user-plus text-purple"></i> Add Testers</label>
+          <div class="dev-card-stack">
+            <div class="dev-options-info">
+              <div class="dev-options-title"><i class="fa-solid fa-key text-purple"></i> Create Tester Access Credentials</div>
+              <div class="dev-options-desc">Accounts are created on the game server, so testers can sign in from their own PC. Create as many as you need.</div>
+            </div>
+
+            <div class="dev-form-grid">
+              <div>
+                <label class="dev-field-label" for="inputTesterUser">Tester Username</label>
+                <input type="text" class="settings-input" id="inputTesterUser" maxlength="24" placeholder="e.g. Tester01" autocomplete="off" spellcheck="false">
+              </div>
+              <div>
+                <label class="dev-field-label" for="inputTesterHero">In-Game Name (Optional)</label>
+                <input type="text" class="settings-input" id="inputTesterHero" maxlength="24" placeholder="Defaults to username" autocomplete="off" spellcheck="false">
+              </div>
+            </div>
+
+            <div>
+              <label class="dev-field-label" for="inputTesterPass">Password</label>
+              <div class="settings-input-row">
+                <input type="text" class="settings-input" id="inputTesterPass" maxlength="64" placeholder="Enter or generate password" autocomplete="off" spellcheck="false">
+                <button type="button" class="settings-browse-btn" id="btnGenTesterPass">
+                  <i class="fa-solid fa-dice"></i> Generate
+                </button>
+              </div>
+            </div>
+
+            <div class="dev-actions-row">
+              <span class="dev-inline-msg" id="testerMsg" role="status" aria-live="polite"></span>
+              <button type="button" class="dev-action-btn" id="btnCreateTester">
+                <i class="fa-solid fa-user-check"></i> Create Tester
+              </button>
+            </div>
+
+            <div class="dev-list-head">
+              <span><i class="fa-solid fa-users"></i> Testers on server</span>
+              <span class="dev-list-tools">
+                <button type="button" class="dev-mini-btn" id="btnCopyAllTesterCreds" hidden><i class="fa-solid fa-copy"></i> Copy new credentials</button>
+                <button type="button" class="dev-mini-btn" id="btnRefreshTesters"><i class="fa-solid fa-rotate"></i> Refresh</button>
+              </span>
+            </div>
+            <div class="dev-list" id="testerList"><div class="dev-list-empty">No testers loaded yet.</div></div>
+          </div>
+        </div>
+
+        <!-- Developer: Ban Players -->
+        <div class="settings-group dev-only-feature" id="groupBanPlayers">
+          <label class="settings-label"><i class="fa-solid fa-user-slash" style="color:#ff3355"></i> Ban Players</label>
+          <div class="dev-card-stack dev-card-danger">
+            <div class="dev-options-info">
+              <div class="dev-options-title"><i class="fa-solid fa-gavel" style="color:#ff3355"></i> Ban a Player Account</div>
+              <div class="dev-options-desc">Bans are stored on the game server. A banned player sees the ban in their launcher and cannot launch the game on any PC.</div>
+            </div>
+
+            <div class="dev-form-grid">
+              <div>
+                <label class="dev-field-label" for="inputBanUser">Player Username</label>
+                <input type="text" class="settings-input" id="inputBanUser" maxlength="24" placeholder="Account username" autocomplete="off" spellcheck="false">
+              </div>
+              <div>
+                <label class="dev-field-label" for="selectBanDuration">Duration</label>
+                <select class="settings-input" id="selectBanDuration">
+                  <option value="0">Permanent</option>
+                  <option value="1">1 hour</option>
+                  <option value="24">24 hours</option>
+                  <option value="72">3 days</option>
+                  <option value="168">7 days</option>
+                  <option value="720">30 days</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="dev-form-grid">
+              <div>
+                <label class="dev-field-label" for="selectBanReason">Reason</label>
+                <select class="settings-input" id="selectBanReason">
+                  <option>Cheating</option>
+                  <option>Exploiting bugs</option>
+                  <option>Toxic behaviour</option>
+                  <option>Account sharing</option>
+                  <option>Leaking test builds</option>
+                  <option>Other</option>
+                </select>
+              </div>
+              <div>
+                <label class="dev-field-label" for="inputBanNotes">Notes (Optional)</label>
+                <input type="text" class="settings-input" id="inputBanNotes" maxlength="200" placeholder="Visible to developers only" autocomplete="off">
+              </div>
+            </div>
+
+            <div class="dev-actions-row">
+              <span class="dev-inline-msg" id="banMsg" role="status" aria-live="polite"></span>
+              <button type="button" class="dev-action-btn dev-action-danger" id="btnBanPlayerSettings">
+                <i class="fa-solid fa-ban"></i> Ban Player
+              </button>
+            </div>
+
+            <div class="dev-list-head">
+              <span><i class="fa-solid fa-list-ul"></i> Active bans</span>
+              <span class="dev-list-tools">
+                <button type="button" class="dev-mini-btn" id="btnRefreshBans"><i class="fa-solid fa-rotate"></i> Refresh</button>
+              </span>
+            </div>
+            <div class="dev-list" id="banList"><div class="dev-list-empty">No bans loaded yet.</div></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button class="val-btn-primary modal-save-btn" id="btnSaveSettings">
+          <span class="btn-frame-box"></span>
+          <span class="btn-label">SAVE &amp; APPLY</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== CHOOSE GRAPHIC SETTINGS MODAL ==================== -->
+  <div class="modal-backdrop" id="graphicsSetupModal">
+    <div class="modal-box graphics-setup-box">
+      <div class="modal-header">
+        <div class="modal-title">
+          <i class="fa-solid fa-sliders text-purple"></i> CHOOSE GRAPHIC SETTINGS
+        </div>
+        <button class="modal-close-btn" id="btnCloseGraphicsSetup" title="Close"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+
+      <div class="modal-body graphics-setup-body">
+        <div class="gfx-setup-hero">
+          <div class="gfx-hero-badge"><i class="fa-solid fa-sliders"></i> GRAPHICS SETTINGS</div>
+          <h3 class="gfx-setup-title">CONFIRM GRAPHIC SETTINGS</h3>
+          <p class="gfx-setup-subtitle">
+            Configure your graphics preset and target framerate for optimal visual fidelity and performance. Applied in real-time.
+          </p>
+        </div>
+
+        <!-- Section 1: Graphics Quality Presets -->
+        <div class="gfx-setup-section">
+          <div class="gfx-section-header">
+            <span class="gfx-section-label"><i class="fa-solid fa-display text-purple"></i> GRAPHICS PRESET</span>
+            <span class="gfx-section-desc">Select visual fidelity &amp; performance profile</span>
+          </div>
+
+          <div class="gfx-cards-grid" id="setupGfxCards">
+            <!-- Very Low (Mode 0) -->
+            <div class="gfx-preset-card" data-quality="0">
+              <div class="gfx-card-top">
+                <span class="gfx-preset-badge badge-green">MAX FPS</span>
+                <i class="fa-solid fa-bolt-lightning gfx-card-icon" style="color: #00ff88;"></i>
+              </div>
+              <div class="gfx-card-name">Very Low</div>
+              <div class="gfx-card-mode-tag">Graphics Mode 0</div>
+              <p class="gfx-card-desc">Shadow filtering off, reduced foliage draw distance. Maximum FPS boost &amp; competitive performance.</p>
+              <div class="gfx-card-check"><i class="fa-solid fa-check"></i></div>
+            </div>
+
+            <!-- Low / Smooth (Mode 1) -->
+            <div class="gfx-preset-card" data-quality="1">
+              <div class="gfx-card-top">
+                <span class="gfx-preset-badge badge-blue">SMOOTH</span>
+                <i class="fa-solid fa-feather gfx-card-icon" style="color: #38bdf8;"></i>
+              </div>
+              <div class="gfx-card-name">Low</div>
+              <div class="gfx-card-mode-tag">Graphics Mode 1</div>
+              <p class="gfx-card-desc">Lightweight dynamic lighting with basic foliage. Fluid gameplay for balanced systems.</p>
+              <div class="gfx-card-check"><i class="fa-solid fa-check"></i></div>
+            </div>
+
+            <!-- Medium / HD (Mode 2) -->
+            <div class="gfx-preset-card active" data-quality="2">
+              <div class="gfx-card-top">
+                <span class="gfx-preset-badge badge-purple">RECOMMENDED</span>
+                <i class="fa-solid fa-layer-group gfx-card-icon" style="color: #815eff;"></i>
+              </div>
+              <div class="gfx-card-name">Medium</div>
+              <div class="gfx-card-mode-tag">Graphics Mode 2</div>
+              <p class="gfx-card-desc">Rich HD textures, balanced shadows, and vibrant cyberpunk lighting fidelity.</p>
+              <div class="gfx-card-check"><i class="fa-solid fa-check"></i></div>
+            </div>
+
+            <!-- Ultra HD (Mode 3) -->
+            <div class="gfx-preset-card" data-quality="3">
+              <div class="gfx-card-top">
+                <span class="gfx-preset-badge badge-yellow">ULTRA FIDELITY</span>
+                <i class="fa-solid fa-gem gfx-card-icon" style="color: #facc15;"></i>
+              </div>
+              <div class="gfx-card-name">Ultra</div>
+              <div class="gfx-card-mode-tag">Graphics Mode 3</div>
+              <p class="gfx-card-desc">Full cascade shadow distances, maximum texture detail and crisp post-effects.</p>
+              <div class="gfx-card-check"><i class="fa-solid fa-check"></i></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Section 2: Target Framerate (FPS) -->
+        <div class="gfx-setup-section" style="margin-top: 18px;">
+          <div class="gfx-section-header">
+            <span class="gfx-section-label"><i class="fa-solid fa-gauge-high text-purple"></i> TARGET FRAME RATE (FPS)</span>
+            <span class="gfx-section-desc">Unlock high refresh rates tailored to your monitor</span>
+          </div>
+
+          <div class="fps-pills-container" id="setupFpsPills">
+            <button type="button" class="fps-select-pill" data-fps="60">
+              <span class="fps-num">60</span>
+              <span class="fps-unit">FPS</span>
+              <span class="fps-sub">Standard</span>
+            </button>
+            <button type="button" class="fps-select-pill" data-fps="90">
+              <span class="fps-num">90</span>
+              <span class="fps-unit">FPS</span>
+              <span class="fps-sub">Smooth</span>
+            </button>
+            <button type="button" class="fps-select-pill active" data-fps="120">
+              <span class="fps-num">120</span>
+              <span class="fps-unit">FPS</span>
+              <span class="fps-sub">Fast 120Hz</span>
+            </button>
+            <button type="button" class="fps-select-pill" data-fps="144">
+              <span class="fps-num">144</span>
+              <span class="fps-unit">FPS</span>
+              <span class="fps-sub">Esports</span>
+            </button>
+            <button type="button" class="fps-select-pill pro-fps" data-fps="240">
+              <span class="fps-pro-badge">PRO</span>
+              <span class="fps-num">240</span>
+              <span class="fps-unit">FPS</span>
+              <span class="fps-sub">240Hz Max</span>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal-footer gfx-setup-footer">
+        <div class="gfx-footer-summary">
+          <span class="gfx-summary-text">Preset: <strong id="gfxSummaryQuality">Medium (Mode 2)</strong> &bull; Framerate: <strong id="gfxSummaryFps">120 FPS</strong></span>
+        </div>
+        <button class="val-btn-primary modal-save-btn" id="btnConfirmGraphicsSetup">
+          <span class="btn-frame-box"></span>
+          <span class="btn-label"><i class="fa-solid fa-play" style="margin-right: 6px;"></i> APPLY &amp; PLAY</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== ACCOUNT & PROFILE SETTINGS ==================== -->
+  <div class="modal-backdrop" id="accountModal">
+    <div class="modal-box account-box">
+      <div class="modal-header">
+        <div class="modal-title"><i class="fa-regular fa-user"></i> <span id="accountTitle">SIGN IN</span></div>
+        <button class="modal-close-btn" id="btnCloseAccount"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+
+      <div class="modal-body">
+        <div class="account-tabs">
+          <button class="account-tab" id="tabProfile" data-mode="profile" style="display: none;"><i class="fa-solid fa-id-badge"></i> PROFILE SETTINGS</button>
+          <button class="account-tab is-active" id="tabSignIn" data-mode="login">SIGN IN</button>
+          <button class="account-tab" id="tabSignUp" data-mode="signup">CREATE ACCOUNT</button>
+        </div>
+
+        <!-- ================= PROFILE VIEW (Change Password, Change Game Name) ================= -->
+        <div id="accountProfileFields" style="display: none;">
+          <!-- Profile Header Card -->
+          <div class="profile-card">
+            <div class="profile-card-avatar">
+              <i class="fa-solid fa-user-astronaut"></i>
+            </div>
+            <div class="profile-card-info">
+              <div class="profile-card-name-row">
+                <span class="profile-username" id="profileDisplayUser">-</span>
+                <span class="profile-badge-dev" id="profileDevBadge" style="display: none;">DEVELOPER</span>
+              </div>
+              <div class="profile-sub-info">
+                <span>In-Game Name: <strong id="profileDisplayHero" style="color: #fff;">-</strong></span>
+              </div>
+            </div>
+            <button type="button" class="tool-btn profile-signout-btn" id="btnProfileSignOut" title="Sign out of this account">
+              <i class="fa-solid fa-right-from-bracket"></i> Sign Out
+            </button>
+          </div>
+
+          <!-- Section 1: Change Game Name -->
+          <div class="profile-section">
+            <div class="profile-section-header">
+              <span class="profile-section-title"><i class="fa-solid fa-signature text-purple"></i> Change Game Name</span>
+              <span class="settings-hint">Shown on your character in lobby, matches, and killfeed.</span>
+            </div>
+            <div class="settings-input-row" style="margin-top: 8px;">
+              <input type="text" class="settings-input" id="inputProfileHeroName" maxlength="24"
+                     placeholder="Enter new in-game name (1-24 characters)">
+              <button type="button" class="val-btn-primary" id="btnSaveHeroName" style="height: 38px; padding: 0 16px; white-space: nowrap;">
+                <span class="btn-label"><i class="fa-solid fa-check"></i> Save Name</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Section 2: Change Password -->
+          <div class="profile-section" style="margin-top: 18px;">
+            <div class="profile-section-header">
+              <span class="profile-section-title"><i class="fa-solid fa-key text-purple"></i> Change Password</span>
+              <span class="settings-hint">Must be at least 6 characters. Re-hashes securely with PBKDF2.</span>
+            </div>
+
+            <div class="settings-group" style="margin-top: 8px;">
+              <label class="settings-label" for="inputProfileOldPass">Current Password</label>
+              <div class="settings-input-row">
+                <input type="password" class="settings-input" id="inputProfileOldPass"
+                       autocomplete="current-password" maxlength="128" placeholder="Enter current password">
+                <button class="settings-browse-btn" id="btnToggleProfileOldPass" type="button">Show</button>
+              </div>
+            </div>
+
+            <div class="settings-group" style="margin-top: 8px;">
+              <label class="settings-label" for="inputProfileNewPass">New Password</label>
+              <div class="settings-input-row">
+                <input type="password" class="settings-input" id="inputProfileNewPass"
+                       autocomplete="new-password" maxlength="128" placeholder="At least 6 characters">
+                <button class="settings-browse-btn" id="btnToggleProfileNewPass" type="button">Show</button>
+              </div>
+            </div>
+
+            <div class="settings-group" style="margin-top: 8px;">
+              <label class="settings-label" for="inputProfileConfirmPass">Confirm New Password</label>
+              <div class="settings-input-row">
+                <input type="password" class="settings-input" id="inputProfileConfirmPass"
+                       autocomplete="new-password" maxlength="128" placeholder="Confirm new password">
+              </div>
+            </div>
+
+            <div style="margin-top: 12px; display: flex; justify-content: flex-end;">
+              <button type="button" class="val-btn-primary" id="btnSavePassword" style="height: 38px; padding: 0 18px; white-space: nowrap;">
+                <span class="btn-label"><i class="fa-solid fa-lock"></i> Update Password</span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- ================= AUTH VIEW (Sign In / Create Account) ================= -->
+        <div id="accountAuthFields">
+          <div class="settings-group">
+            <label class="settings-label" for="inputAccountUser">Username</label>
+            <div class="settings-input-row">
+              <input type="text" class="settings-input" id="inputAccountUser"
+                     autocomplete="username" spellcheck="false" maxlength="24"
+                     placeholder="3-24 characters">
+            </div>
+          </div>
+
+          <div class="settings-group">
+            <label class="settings-label" for="inputAccountPass">Password</label>
+            <div class="settings-input-row">
+              <input type="password" class="settings-input" id="inputAccountPass"
+                     autocomplete="current-password" maxlength="128"
+                     placeholder="At least 6 characters">
+              <button class="settings-browse-btn" id="btnTogglePass" type="button"
+                      aria-label="Show password">Show</button>
+            </div>
+          </div>
+
+          <div class="settings-group account-only-signup" id="groupHeroName" hidden>
+            <label class="settings-label" for="inputHeroName">In-game name</label>
+            <div class="settings-input-row">
+              <input type="text" class="settings-input" id="inputHeroName"
+                     maxlength="24" placeholder="Defaults to your username">
+            </div>
+            <span class="settings-hint">Shown on your character and the results screen.</span>
+          </div>
+
+          <div class="settings-group">
+            <div class="settings-toggle-row">
+              <span>Stay signed in on this PC</span>
+              <input type="checkbox" id="toggleRemember" checked>
+            </div>
+            <span class="settings-hint">
+              Stores a random session token, never your password. Each account keeps
+              its own character, wardrobe and career record.
+            </span>
+          </div>
+        </div>
+
+        <!-- ================= DISCORD ACCESS NOTICE (When Create Account clicked) ================= -->
+        <div id="accountDiscordNotice" style="display: none; text-align: center; padding: 25px 20px 15px;">
+          <div style="font-size: 38px; color: #5865F2; margin-bottom: 12px;">
+            <i class="fa-brands fa-discord"></i>
+          </div>
+          <div style="font-size: 17px; font-weight: 700; color: #f8fafc; margin-bottom: 8px; letter-spacing: 0.5px;">
+            JOIN OUR DISCORD SERVER TO GET ACCESS
+          </div>
+          <div style="font-size: 13px; color: #94a3b8; margin-bottom: 24px; line-height: 1.6; max-width: 380px; margin-left: auto; margin-right: auto;">
+            Direct account registration is currently invite-only. Join our official Discord community to receive your game access and account credentials!
+          </div>
+          <button type="button" class="val-btn-primary" id="btnJoinDiscordAccount" style="display: inline-flex; align-items: center; justify-content: center; gap: 10px; margin: 0 auto; padding: 0 28px; height: 44px; background: #5865F2; box-shadow: 0 8px 24px rgba(88, 101, 242, 0.4);">
+            <i class="fa-brands fa-discord" style="font-size: 16px;"></i>
+            <span style="font-weight: 700; letter-spacing: 0.5px;">JOIN DISCORD SERVER</span>
+          </button>
+        </div>
+
+        <div class="account-msg" id="accountMsg" role="status" aria-live="polite"></div>
+      </div>
+
+      <div class="modal-footer account-footer" id="accountFooterAuth">
+        <button class="tool-btn account-signout-btn" id="btnSignOut" hidden>
+          <i class="fa-solid fa-right-from-bracket"></i> Sign out
+        </button>
+        <button class="val-btn-primary modal-save-btn" id="btnAccountSubmit">
+          <span class="btn-frame-box"></span>
+          <span class="btn-label" id="btnAccountSubmitLabel">SIGN IN</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== COMING SOON POPUP MODAL ==================== -->
+  <div class="modal-backdrop" id="comingSoonModal">
+    <div class="modal-box coming-soon-box">
+      <div class="modal-header">
+        <div class="modal-title">
+          <i class="fa-solid fa-clock text-purple"></i> COMING SOON
+        </div>
+        <button class="modal-close-btn" id="btnCloseComingSoon"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+
+      <div class="modal-body coming-soon-body">
+        <div class="coming-soon-icon-wrap">
+          <i class="fa-brands fa-discord"></i>
+        </div>
+        <h3 class="coming-soon-heading">COMING SOON</h3>
+        <p class="coming-soon-desc">
+          Cyber Hunter Reawakening is currently preparing for launch. Join our official Discord channel for more updates, patch notes, and playtest announcements!
+        </p>
+      </div>
+
+      <div class="modal-footer coming-soon-footer">
+        <button class="val-btn-primary discord-join-btn" id="btnJoinDiscordModal" data-url="https://discord.gg/uXc8frbz5Y">
+          <span class="btn-frame-box"></span>
+          <span class="btn-label">
+            <i class="fa-brands fa-discord"></i> JOIN OUR OFFICIAL DISCORD
+          </span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  </div>
+
+  <!-- ==================== SPAWN MAPPER (F11) ==================== -->
+  <div class="modal-backdrop" id="spawnMapperModal">
+    <div class="modal-box spawn-mapper-box">
+      <div class="modal-header">
+        <div class="modal-title">
+          <i class="fa-solid fa-map-location-dot"></i> SPAWN MAPPER
+          <span class="spawn-mapper-badge" id="spawnMapperBadge">OFF</span>
+        </div>
+        <button class="modal-close-btn" id="btnCloseSpawnMapper"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+
+      <div class="modal-body spawn-mapper-body">
+        <p class="spawn-mapper-lede">
+          In-game: press <kbd>F11</kbd> while walking. Stand on a pad, pick a kind, mark.
+          This panel tracks live pose and the mark table written to
+          <code>client/runtime/spawn_map.json</code>.
+        </p>
+
+        <div class="spawn-mapper-pose" id="spawnMapperPose">
+          <div class="spawn-pose-row"><span class="k">Status</span><span class="v" id="smPoseStatus">Waiting for game…</span></div>
+          <div class="spawn-pose-row"><span class="k">Kind</span><span class="v" id="smPoseKind">—</span></div>
+          <div class="spawn-pose-row"><span class="k">XYZ</span><span class="v mono" id="smPoseXyz">—</span></div>
+          <div class="spawn-pose-row"><span class="k">Yaw / Pitch</span><span class="v mono" id="smPoseAngles">—</span></div>
+          <div class="spawn-pose-row"><span class="k">Dir</span><span class="v mono" id="smPoseDir">—</span></div>
+          <div class="spawn-pose-row"><span class="k">Marks</span><span class="v" id="smPoseCount">0</span></div>
+        </div>
+
+        <div class="spawn-mapper-actions">
+          <button class="tool-btn" id="smBtnToggle" type="button"><i class="fa-solid fa-power-off"></i> Toggle F11</button>
+          <button class="tool-btn" id="smBtnMarkChest" type="button"><i class="fa-solid fa-box"></i> Mark Chest</button>
+          <button class="tool-btn" id="smBtnMarkVeh" type="button"><i class="fa-solid fa-car"></i> Mark Vehicle</button>
+          <button class="tool-btn" id="smBtnMarkLoot" type="button"><i class="fa-solid fa-gun"></i> Mark Loot</button>
+          <button class="tool-btn" id="smBtnUndo" type="button"><i class="fa-solid fa-rotate-left"></i> Undo</button>
+          <button class="tool-btn" id="smBtnExport" type="button"><i class="fa-solid fa-file-export"></i> Export</button>
+          <button class="tool-btn" id="smBtnApply" type="button"><i class="fa-solid fa-wand-magic-sparkles"></i> Preview Place</button>
+          <button class="tool-btn" id="smBtnFolder" type="button"><i class="fa-regular fa-folder-open"></i> Folder</button>
+        </div>
+
+        <div class="spawn-mapper-table-wrap">
+          <table class="spawn-mapper-table" id="spawnMapperTable">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Kind</th>
+                <th>Type</th>
+                <th>Position</th>
+                <th>Yaw</th>
+                <th>Label</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody id="spawnMapperTbody">
+              <tr class="empty-row"><td colspan="7">No marks yet — open mapper in-game with F11 and press M.</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <p class="spawn-mapper-hint" id="spawnMapperHint">
+          Hotkeys in-game: 1–5 kind · M / Ins mark · Del undo · [ ] type id · E export
+        </p>
+        <div class="spawn-mapper-msg" id="spawnMapperMsg" role="status" aria-live="polite"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== ADD TO DEV MODAL ==================== -->
+  <div class="modal-backdrop" id="addDevModal">
+    <div class="modal-box dev-modal-box">
+      <div class="modal-header">
+        <div class="modal-title">
+          <i class="fa-solid fa-user-shield text-purple"></i> DEVELOPER ACCESS MANAGER
+        </div>
+        <button class="modal-close-btn" id="btnCloseAddDev"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+
+      <div class="modal-body dev-modal-body">
+        <p class="dev-modal-desc">
+          Add an account username to grant developer privileges (Control Panel, Weather Overrides, Spawn Mapper, and AI Recording Tools).
+        </p>
+
+        <div class="settings-group">
+          <label class="settings-label" for="inputDevUsername">Account Username</label>
+          <div class="settings-input-row">
+            <input type="text" class="settings-input" id="inputDevUsername"
+                   autocomplete="off" spellcheck="false" maxlength="24"
+                   placeholder="Enter username to add to dev (e.g. yuzechua)">
+            <button class="settings-browse-btn dev-add-submit-btn" id="btnSubmitAddDev" type="button">
+              <i class="fa-solid fa-user-plus"></i> Add to Dev
+            </button>
+          </div>
+        </div>
+
+        <div class="dev-current-section">
+          <label class="settings-label"><i class="fa-solid fa-shield-halved"></i> Active Developers</label>
+          <div class="dev-tags-container" id="devTagsContainer">
+            <!-- Populated dynamically by JS -->
+          </div>
+        </div>
+
+        <div class="account-msg" id="devModalMsg" role="status" aria-live="polite"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== PERMANENT BAN NOTIFICATION ==================== -->
+  <div class="modal-backdrop" id="bannedModal" hidden>
+    <div class="modal-box ban-notify-box" style="max-width:540px; border:2px solid #ff3355; box-shadow:0 0 40px rgba(255,51,85,0.45); background:radial-gradient(circle at top, #1a0d16, #09060c);">
+      <div class="modal-header" style="border-bottom:1px solid rgba(255,51,85,0.3); padding:16px 20px;">
+        <div class="modal-title" style="color:#ff3355; font-size:18px; font-weight:800; letter-spacing:1px;">
+          <i class="fa-solid fa-ban"></i> ACCESS RESTRICTED
+        </div>
+        <button class="modal-close-btn" id="btnCloseBannedModal"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+      <div class="modal-body" style="padding:24px 20px; text-align:center;">
+        <div style="width:70px; height:70px; border-radius:50%; background:rgba(255,51,85,0.15); border:2px solid #ff3355; display:flex; align-items:center; justify-content:center; margin:0 auto 16px; color:#ff3355; font-size:32px;">
+          <i class="fa-solid fa-skull"></i>
+        </div>
+        <h2 id="banModalTitle" style="color:#ffffff; font-family:var(--font-heading); font-size:26px; letter-spacing:2px; margin-bottom:12px; text-transform:uppercase;">
+          YOU ARE PERMANENTLY BANNED
+        </h2>
+        <div style="background:rgba(255,51,85,0.1); border:1px solid rgba(255,51,85,0.3); border-radius:8px; padding:12px 16px; margin-bottom:16px;">
+          <div style="font-size:12px; color:var(--val-text-muted); text-transform:uppercase; margin-bottom:4px;">Reason:</div>
+          <div id="banModalReason" style="color:#ff4d6d; font-size:16px; font-weight:700;">Cheating</div>
+        </div>
+        <p id="banModalText" style="color:var(--val-text-muted); font-size:14px; line-height:1.6; margin-bottom:20px;">
+          Access to Cyber Hunter Reawakening has been permanently restricted.
+        </p>
+        <div style="display:flex; justify-content:center; gap:12px;">
+          <button type="button" class="tool-btn" id="btnAcknowledgeBan" style="background:#ff3355; border:none; color:#fff; padding:10px 28px; font-weight:700; border-radius:6px; cursor:pointer;">
+            DISMISS
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== BAN PLAYER MODAL ==================== -->
+  <div class="modal-backdrop" id="modalBanPlayer" hidden>
+    <div class="modal-box" style="max-width:680px;">
+      <div class="modal-header">
+        <div class="modal-title" style="color:#ff3355;"><i class="fa-solid fa-user-slash"></i> BAN PLAYER</div>
+        <button class="modal-close-btn" id="btnCloseBanPlayer"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+      <div class="modal-body">
+        <div class="settings-group">
+          <label class="settings-label">Search Player</label>
+          <div class="settings-input-row">
+            <input type="text" class="settings-input" id="inputBanSearch" placeholder="Enter in-game name or account ID">
+            <button class="settings-browse-btn" id="btnBanSearchPlayer" type="button"><i class="fa-solid fa-magnifying-glass"></i> Search</button>
+          </div>
+        </div>
+
+        <div class="settings-group">
+          <label class="settings-label">Search Results</label>
+          <div id="banSearchResults" style="max-height:160px; overflow-y:auto; border:1px solid var(--val-border); border-radius:6px; background:#0e0d18;">
+            <div style="padding:14px; text-align:center; color:var(--val-text-dim); font-size:13px;">Enter a player name and search above</div>
+          </div>
+        </div>
+
+        <div id="banPlayerForm" style="display:none; margin-top:16px; border-top:1px solid var(--val-border); padding-top:16px;">
+          <div style="background:rgba(129,94,255,0.1); border:1px solid #815eff; border-radius:6px; padding:10px 14px; margin-bottom:14px; display:flex; justify-content:space-between; align-items:center;">
+            <div>
+              <div style="font-size:11px; color:var(--val-text-muted);">Selected Target</div>
+              <div id="banSelectedName" style="font-size:15px; font-weight:700; color:#fff;">—</div>
+            </div>
+            <div style="text-align:right;">
+              <div style="font-size:11px; color:var(--val-text-muted);">Account ID</div>
+              <div id="banSelectedAcct" style="font-size:13px; font-family:var(--font-mono); color:#c7b8ff;">—</div>
+            </div>
+          </div>
+
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom:12px;">
+            <div>
+              <label class="settings-label">Ban Type</label>
+              <select class="settings-input" id="selectBanType" style="width:100%; cursor:pointer;">
+                <option value="Permanent">Permanent</option>
+                <option value="Temporary">Temporary</option>
+              </select>
+            </div>
+            <div>
+              <label class="settings-label">Reason</label>
+              <select class="settings-input" id="selectBanReason" style="width:100%; cursor:pointer;">
+                <option value="Cheating">Cheating</option>
+                <option value="Exploiting">Exploiting</option>
+                <option value="Ban Evasion">Ban Evasion</option>
+                <option value="Manual Developer Ban">Manual Developer Ban</option>
+                <option value="Other">Other</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="settings-group" id="groupBanDuration" style="display:none;">
+            <label class="settings-label">Duration (Hours)</label>
+            <input type="number" class="settings-input" id="inputBanDuration" min="1" max="8760" value="24">
+          </div>
+
+          <div class="settings-group">
+            <label class="settings-label">Developer Notes</label>
+            <textarea class="settings-input" id="inputBanNotes" rows="2" style="width:100%; resize:vertical; padding:8px;" placeholder="Optional context or investigation notes"></textarea>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer" style="display:flex; justify-content:flex-end; gap:10px;">
+        <button type="button" class="tool-btn" id="btnCancelBan">CANCEL</button>
+        <button type="button" class="tool-btn" id="btnConfirmBan" style="background:#ff3355; border:1px solid #ff3355; color:#fff; font-weight:700;" disabled>CONFIRM BAN</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== UNBAN PLAYER MODAL ==================== -->
+  <div class="modal-backdrop" id="modalUnbanPlayer" hidden>
+    <div class="modal-box" style="max-width:650px;">
+      <div class="modal-header">
+        <div class="modal-title" style="color:#00ff88;"><i class="fa-solid fa-user-check"></i> UNBAN PLAYER</div>
+        <button class="modal-close-btn" id="btnCloseUnbanPlayer"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+      <div class="modal-body">
+        <div class="settings-group">
+          <label class="settings-label">Search In-game name / Account ID</label>
+          <div class="settings-input-row">
+            <input type="text" class="settings-input" id="inputUnbanSearch" placeholder="Search active bans">
+            <button class="settings-browse-btn" id="btnUnbanSearch" type="button"><i class="fa-solid fa-magnifying-glass"></i> Find</button>
+          </div>
+        </div>
+
+        <div id="unbanDetailsContainer" style="display:none;">
+          <div style="background:#0e0d18; border:1px solid var(--val-border); border-radius:8px; padding:14px; margin-bottom:14px;">
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom:10px;">
+              <div><span style="color:var(--val-text-muted); font-size:12px;">Player name:</span> <strong id="unbanPlayerName" style="color:#fff;">—</strong></div>
+              <div><span style="color:var(--val-text-muted); font-size:12px;">Account ID:</span> <span id="unbanAccountID" style="color:#c7b8ff; font-family:var(--font-mono);">—</span></div>
+              <div><span style="color:var(--val-text-muted); font-size:12px;">Ban reason:</span> <span id="unbanReasonDisplay" style="color:#ff3355; font-weight:700;">—</span></div>
+              <div><span style="color:var(--val-text-muted); font-size:12px;">Ban date:</span> <span id="unbanDateDisplay" style="color:var(--val-text-main);">—</span></div>
+              <div><span style="color:var(--val-text-muted); font-size:12px;">Banned by:</span> <span id="unbanBannedByDisplay" style="color:#fcd535;">—</span></div>
+              <div><span style="color:var(--val-text-muted); font-size:12px;">Ban Type:</span> <span id="unbanTypeDisplay" style="color:#fff;">—</span></div>
+            </div>
+
+            <div style="margin-top:10px; border-top:1px solid var(--val-border); padding-top:10px;">
+              <span style="color:var(--val-text-muted); font-size:12px;">Anti-cheat evidence:</span>
+              <pre id="unbanEvidenceDisplay" style="background:#07060c; padding:8px; border-radius:4px; font-size:11px; max-height:110px; overflow-y:auto; color:#a1a0b5; margin-top:4px;"></pre>
+            </div>
+          </div>
+
+          <div class="settings-group">
+            <label class="settings-label">Reason for Unban</label>
+            <input type="text" class="settings-input" id="inputUnbanReason" placeholder="e.g. False positive appeal verified / Developer pardon" value="Appeal approved / Developer review">
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer" style="display:flex; justify-content:flex-end; gap:10px;">
+        <button type="button" class="tool-btn" id="btnCancelUnban">CANCEL</button>
+        <button type="button" class="tool-btn" id="btnConfirmUnban" style="background:#00ff88; border:1px solid #00ff88; color:#0b0a14; font-weight:700;" disabled>UNBAN PLAYER</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== VIEW BANS MODAL ==================== -->
+  <div class="modal-backdrop" id="modalViewBans" hidden>
+    <div class="modal-box" style="max-width:850px;">
+      <div class="modal-header">
+        <div class="modal-title"><i class="fa-solid fa-list-ul text-purple"></i> BAN RECORDS DATABASE</div>
+        <button class="modal-close-btn" id="btnCloseViewBans"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+      <div class="modal-body">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+          <div style="display:flex; gap:8px;">
+            <button type="button" class="account-tab is-active" id="tabBansActive" style="padding:6px 14px; font-size:12px;">Active Bans</button>
+            <button type="button" class="account-tab" id="tabBansAll" style="padding:6px 14px; font-size:12px;">All Records</button>
+          </div>
+          <button type="button" class="master-icon-btn" id="btnRefreshBans" title="Refresh"><i class="fa-solid fa-rotate"></i></button>
+        </div>
+        <div id="bansTableContainer" style="max-height:360px; overflow-y:auto; border:1px solid var(--val-border); border-radius:6px; background:#0e0d18;">
+          <!-- Loaded dynamically -->
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== VIEW ANTI-CHEAT FLAGS MODAL ==================== -->
+  <div class="modal-backdrop" id="modalViewFlags" hidden>
+    <div class="modal-box" style="max-width:900px;">
+      <div class="modal-header">
+        <div class="modal-title" style="color:#fcd535;"><i class="fa-solid fa-triangle-exclamation"></i> ANTI-CHEAT DETECTION FLAGS</div>
+        <button class="modal-close-btn" id="btnCloseViewFlags"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+      <div class="modal-body">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+          <span style="font-size:13px; color:var(--val-text-muted);">Real-time server detections, confidence scoring, and movement telemetry</span>
+          <button type="button" class="master-icon-btn" id="btnRefreshFlags" title="Refresh"><i class="fa-solid fa-rotate"></i></button>
+        </div>
+        <div id="flagsTableContainer" style="max-height:380px; overflow-y:auto; border:1px solid var(--val-border); border-radius:6px; background:#0e0d18;">
+          <!-- Loaded dynamically -->
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== CONFIRM ACTION MODAL ==================== -->
+  <div class="modal-backdrop" id="modalConfirmAction" hidden>
+    <div class="modal-box" style="max-width:440px; border:1px solid #ff3355;">
+      <div class="modal-header">
+        <div class="modal-title" id="confirmActionTitle" style="color:#ff3355;"><i class="fa-solid fa-triangle-exclamation"></i> CONFIRMATION REQUIRED</div>
+        <button class="modal-close-btn" id="btnCloseConfirmAction"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+      <div class="modal-body" style="padding:18px 20px;">
+        <p id="confirmActionMessage" style="color:#fff; font-size:14px; line-height:1.5;">Are you sure you want to proceed?</p>
+      </div>
+      <div class="modal-footer" style="display:flex; justify-content:flex-end; gap:10px;">
+        <button type="button" class="tool-btn" id="btnConfirmActionCancel">CANCEL</button>
+        <button type="button" class="tool-btn" id="btnConfirmActionProceed" style="background:#ff3355; color:#fff; font-weight:700;">PROCEED</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== 1V1 MATCHMAKING MODAL ==================== -->
+  <div class="modal-backdrop" id="modalOneOnOneMatch">
+    <div class="modal-box one-on-one-modal-box">
+      <div class="modal-header">
+        <div class="modal-title">
+          <i class="fa-solid fa-crosshairs text-pink"></i> 1V1 MATCHMAKING
+        </div>
+        <button class="modal-close-btn" id="btnClose1v1Match"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+
+      <div class="modal-body one-on-one-modal-body">
+        <div class="one-on-one-banner">
+          <div class="one-on-one-banner-icon"><i class="fa-solid fa-swords"></i></div>
+          <div class="one-on-one-banner-text">
+            <h4>Private 1v1 Duel</h4>
+            <p>Challenge another player into an isolated arena on the Battle Royale map with custom controls & fast respawns.</p>
+          </div>
+        </div>
+
+        <div class="settings-group">
+          <label class="settings-label">Opponent Username</label>
+          <div class="one-on-one-input-wrap">
+            <input type="text" id="input1v1Opponent" placeholder="Type user username" class="settings-input" autocomplete="off" />
+            <button type="button" class="tool-btn" id="btn1v1CheckOpponent" title="Verify User Status"><i class="fa-solid fa-magnifying-glass"></i> Check</button>
+          </div>
+        </div>
+
+        <div id="status1v1Match" class="one-on-one-status-box" style="display: none;">
+          <i id="status1v1Icon" class="fa-solid fa-circle-notch fa-spin"></i>
+          <span id="status1v1Text">Checking opponent status...</span>
+        </div>
+
+        <div id="active1v1Banner" class="one-on-one-active-alert" style="display: none;">
+          <div class="alert-content">
+            <i class="fa-solid fa-bolt text-yellow"></i>
+            <div>
+              <strong>Active 1v1 Session Detected</strong>
+              <div id="active1v1Details" class="alert-desc">Session is currently running.</div>
+            </div>
+          </div>
+          <button type="button" class="tool-btn highlight" id="btnOpen1v1CPFromMatch">Open Control Panel</button>
+        </div>
+      </div>
+
+      <div class="modal-footer one-on-one-footer">
+        <button type="button" class="tool-btn" id="btn1v1Cancel">CANCEL</button>
+        <button type="button" class="val-btn-primary" id="btn1v1MatchNow">
+          <span class="btn-frame-box"></span>
+          <span class="btn-label"><i class="fa-solid fa-crosshairs"></i> MATCH NOW</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== 1V1 CONTROL PANEL MODAL ==================== -->
+  <div class="modal-backdrop" id="modalOneOnOneControl">
+    <div class="modal-box one-on-one-cp-box">
+      <div class="modal-header">
+        <div class="modal-title">
+          <i class="fa-solid fa-sliders text-pink"></i> 1V1 CONTROL PANEL
+          <span class="one-on-one-live-tag" id="tag1v1Status">LIVE SESSION</span>
+        </div>
+        <button class="modal-close-btn" id="btnClose1v1Control"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+
+      <div class="modal-body one-on-one-cp-body">
+        <!-- Session Info Bar -->
+        <div class="one-on-one-session-bar">
+          <div class="session-info-item">
+            <span class="session-info-label">Arena</span>
+            <span class="session-info-value" id="cp1v1Arena">World4k Arena</span>
+          </div>
+          <div class="session-info-item">
+            <span class="session-info-label">Opponent</span>
+            <span class="session-info-value text-pink" id="cp1v1Opponent">Player</span>
+          </div>
+          <div class="session-info-item">
+            <span class="session-info-label">Session ID</span>
+            <span class="session-info-value mono" id="cp1v1SessionId">#1v1_session</span>
+          </div>
+          <div class="session-info-item">
+            <button type="button" class="tool-btn sm" id="btnRefresh1v1Status" title="Refresh Status"><i class="fa-solid fa-rotate"></i></button>
+          </div>
+        </div>
+
+        <div class="cp-grid">
+          <!-- Column 1: Cubes & Ammo -->
+          <div class="cp-card">
+            <div class="cp-card-title"><i class="fa-solid fa-cube text-cyan"></i> Quantum Cubes & Ammo</div>
+            <div class="cp-card-content">
+              <div class="cp-btn-row">
+                <button type="button" class="tool-btn full highlight" id="btn1v1Cubes500"><i class="fa-solid fa-plus"></i> 500 Quantum Cubes</button>
+              </div>
+              <div class="cp-input-group" style="margin-top: 8px;">
+                <input type="number" id="input1v1CustomCubes" placeholder="Custom cubes (e.g. 1000)" value="500" min="0" max="99999" class="settings-input" />
+                <button type="button" class="tool-btn" id="btn1v1SetCustomCubes">Set Cubes</button>
+              </div>
+              <div class="cp-btn-row" style="margin-top: 10px;">
+                <button type="button" class="tool-btn full highlight" id="btn1v1RefillAmmo"><i class="fa-solid fa-gun"></i> Refill All Ammo (Max)</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Column 2: Vitals & Movement -->
+          <div class="cp-card">
+            <div class="cp-card-title"><i class="fa-solid fa-heart-pulse text-green"></i> Vitals & Position</div>
+            <div class="cp-card-content">
+              <div class="cp-btn-row">
+                <button type="button" class="tool-btn full" id="btn1v1RestoreVitals"><i class="fa-solid fa-shield-halved text-cyan"></i> Full HP & Shield (100/100)</button>
+              </div>
+              <div class="cp-btn-row" style="margin-top: 8px;">
+                <button type="button" class="tool-btn full" id="btn1v1GiveMeds"><i class="fa-solid fa-briefcase-medical text-green"></i> Give Medkits & Armor</button>
+              </div>
+              <div class="cp-btn-row" style="margin-top: 8px;">
+                <button type="button" class="tool-btn full highlight" id="btn1v1TeleportCloser"><i class="fa-solid fa-arrows-to-circle text-yellow"></i> Teleport Closer (35m)</button>
+              </div>
+              <div class="cp-btn-row" style="margin-top: 8px;">
+                <button type="button" class="tool-btn full" id="btn1v1ForceRespawn"><i class="fa-solid fa-arrow-rotate-right text-pink"></i> Force Respawn Now</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Column 3: Weapons & Attachments Loadout -->
+          <div class="cp-card span-2">
+            <div class="cp-card-title"><i class="fa-solid fa-crosshairs text-purple"></i> Custom 1v1 Weapon Loadout</div>
+            <div class="cp-card-content">
+              <div class="cp-form-row">
+                <div class="cp-field">
+                  <label class="settings-label">Primary Weapon</label>
+                  <select id="sel1v1PrimaryWeapon" class="settings-select">
+                    <option value="3100">Delta (Rifle)</option>
+                    <option value="3101">Crusader (Rifle)</option>
+                    <option value="3102">Son of the Sky (Rifle)</option>
+                    <option value="3103">Tribal Faith (Rifle)</option>
+                    <option value="3104">Liberty Alpha (Rifle)</option>
+                    <option value="3200">Vortex (SMG)</option>
+                    <option value="3201">Foxtrot (SMG)</option>
+                    <option value="3300">Valkyrie (Sniper)</option>
+                    <option value="3301">Soulsnatcher (Sniper)</option>
+                    <option value="3400">Night Eagle (Shotgun)</option>
+                    <option value="3401">Vortex Shock (Shotgun)</option>
+                    <option value="3500">Destroyer (Heavy Weapon)</option>
+                  </select>
+                </div>
+                <div class="cp-field">
+                  <label class="settings-label">Secondary Weapon</label>
+                  <select id="sel1v1SecondaryWeapon" class="settings-select">
+                    <option value="3200">Vortex (SMG)</option>
+                    <option value="3100">Delta (Rifle)</option>
+                    <option value="3101">Crusader (Rifle)</option>
+                    <option value="3300">Valkyrie (Sniper)</option>
+                    <option value="3400">Night Eagle (Shotgun)</option>
+                    <option value="3401">Vortex Shock (Shotgun)</option>
+                    <option value="3500">Destroyer (Heavy Weapon)</option>
+                    <option value="3501">Flaming Wax (Heavy Weapon)</option>
+                    <option value="3502">Direct Hit (Heavy Weapon)</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="cp-checkbox-row" style="margin-top: 8px;">
+                <label class="settings-checkbox-wrap">
+                  <input type="checkbox" id="chk1v1FullAttachments" checked />
+                  <span>Auto-equip Full Attachments (Compensator, Ext Mag, Tactical Stock, 4x Scope)</span>
+                </label>
+              </div>
+
+              <div class="cp-actions-row" style="margin-top: 10px; display: flex; gap: 8px; flex-wrap: wrap;">
+                <button type="button" class="tool-btn highlight" id="btn1v1ApplyWeapons"><i class="fa-solid fa-check"></i> Apply Loadout</button>
+                <button type="button" class="tool-btn" id="btn1v1GiveThrowables"><i class="fa-solid fa-bomb"></i> Give Throwables (Frag & Smoke)</button>
+                <button type="button" class="tool-btn" id="btn1v1ResetSkills"><i class="fa-solid fa-wand-magic-sparkles"></i> Refresh Droid Skills</button>
+                <button type="button" class="tool-btn" id="btn1v1ClearInventory"><i class="fa-solid fa-trash-can"></i> Clear Inventory</button>
+                <button type="button" class="tool-btn" id="btn1v1ResetLoadout"><i class="fa-solid fa-rotate-left"></i> Reset Default Loadout</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Column 4: Vehicles -->
+          <div class="cp-card">
+            <div class="cp-card-title"><i class="fa-solid fa-car-side text-yellow"></i> Vehicle Controls</div>
+            <div class="cp-card-content">
+              <div class="cp-field">
+                <label class="settings-label">Vehicle Type</label>
+                <select id="sel1v1Vehicle" class="settings-select">
+                  <option value="4200">Titanium Hydrofoil (Flying)</option>
+                  <option value="4000">Sports Car (Cerberus)</option>
+                  <option value="4001">Off-Road (Dawn)</option>
+                  <option value="4100">Motorcycle (Windrider)</option>
+                </select>
+              </div>
+              <div class="cp-btn-row" style="margin-top: 8px; display: flex; gap: 8px;">
+                <button type="button" class="tool-btn highlight" style="flex: 1;" id="btn1v1SpawnVehicle"><i class="fa-solid fa-plus"></i> Spawn</button>
+                <button type="button" class="tool-btn" style="flex: 1;" id="btn1v1RepairVehicle"><i class="fa-solid fa-wrench"></i> Repair/Refuel</button>
+                <button type="button" class="tool-btn" id="btn1v1RemoveVehicles" title="Remove vehicles"><i class="fa-solid fa-trash"></i></button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Column 5: Match Management -->
+          <div class="cp-card">
+            <div class="cp-card-title"><i class="fa-solid fa-flag-checkered text-pink"></i> Match Management</div>
+            <div class="cp-card-content">
+              <p style="font-size: 12px; color: var(--val-text-muted); margin-bottom: 12px;">Restart the round or cleanly end the session and return both players back to the lobby.</p>
+              <div class="cp-btn-row" style="display: flex; gap: 8px;">
+                <button type="button" class="tool-btn" style="flex: 1;" id="btn1v1RestartMatch"><i class="fa-solid fa-rotate"></i> Restart Match</button>
+                <button type="button" class="tool-btn danger" style="flex: 1;" id="btn1v1EndSession"><i class="fa-solid fa-arrow-right-from-bracket"></i> End Session</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal-footer" style="display: flex; justify-content: space-between; align-items: center;">
+        <div style="font-size: 11px; color: var(--val-text-muted); display: flex; align-items: center; gap: 6px;">
+          <i class="fa-solid fa-shield-check text-green"></i> Authoritative Referee Server Session Verified
+        </div>
+        <button type="button" class="tool-btn" id="btnClose1v1ControlBottom">CLOSE</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification Overlay -->
+
+  <div class="toast-container" id="toastContainer"></div>
+
+  <!-- Scripts -->
+  <script src="app.js"></script>
+</body>
+</html>
