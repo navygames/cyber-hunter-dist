@@ -1,19 +1,19 @@
 {
- "build": "6aa73ba069d8b5ff",
- "built": "2026-10-19T22:08:03",
+ "build": "2f46491776dfa740",
+ "built": "2026-10-19T22:15:15",
  "files": {
   "common/__init__.nxs": "c6480e369916785d0c06fe976a0f1f42db19d91a587ed20cec34e7c3f6d28c34",
   "common/logo_mgr.nxs": "967d39f262786ef43c71b3faf7aaaa21a0cff43c5ecc4c43e637f39ab9afa973",
   "common/logo_panel.nxs": "615bdc6d81b55b3f3ed2179eb93f1c5edd1a05e0a27bdc174d9844ad9e62fbc8",
   "reawakening/__init__.nxs": "1d618a71243345acc17f2a24b2dcb5c85be75d4fc44d413d3c7a8e84b7d6d2ec",
   "reawakening/boot.nxs": "92455a1d1c51429a7e23a26d66deaa9fa137887d0d28618e24b9f91dd0251196",
-  "reawakening/pack.nxs": "2d5d3473683e4b7db941622aab70409882a80fe4bf18908999885a468757cfde"
+  "reawakening/pack.nxs": "6bc8cc0cff119ab96138202b421848bbd3fc2cd935f58c1161a503b1e2f4097f"
  },
  "sources": {
   "client/frida/br_world4k_anchors.py": "e942440ea014291dee657450074e1e69c41342b935304833774ec1d466c6eb30",
   "client/frida/br_world4k_spawns.py": "a453d681b5cd6584cf7b5462c1b9b0428c35006c48d3c577ffb02ecbd3eaf25f",
-  "client/frida/lobby_full_payload.py": "54d8a7127fec4ff7a5edc237ce2469e849594ca560928d8d02a5d16ab20150c9",
-  "client/frida/lobby_offline_server.py": "f7d9b9fea8b95814e330626cbf555b9090ab71f9abe5d830916f7f3b88573f2d",
+  "client/frida/lobby_full_payload.py": "53b7173170bb69614b65b27423a7a29f658263767e47f6192375d289019741dd",
+  "client/frida/lobby_offline_server.py": "a63c5b4089bdc11d3549798d0087adf9236295a5372c1c3516a74123563e69f6",
   "client/frida/offline_account_db.py": "7988c2cbc5b6fb2cd06d09a8cba9895b5b833ba43f11ad0e4b948ec470a42781",
   "client/frida/offline_weapon_damage.json": "1cb84bd513c135da77f3ce0a0878c1a8f0451657e101c9b83d759af676da7f7c",
   "client/native/boot.py": "d754630c41ba41771a60521ca1bcc95e635bb3fb4ab2f0f377cf27f5540d147e",
