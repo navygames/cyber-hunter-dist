@@ -3366,27 +3366,25 @@ class LauncherAPI:
             self._set_update(status="error", phase="Update failed", message=str(e)[:400], speed_bps=0.0)
 
     def restart_launcher(self):
-        """Relaunch through CyberHunter.bat (the single entry point) and close.
-
-        A launcher .exe downloaded by the updater sits next to the old one as
-        <name>.new; it is swapped in once this process has exited.
-        """
+        """Relaunch through CyberHunter.bat (the single entry point) and close."""
         bat = os.path.join(ROOT_DIR, "CyberHunter.bat")
         try:
-            steps = ["ping -n 3 127.0.0.1 >nul"]
             for name in ("launcher.exe", "CyberHunterLauncher.exe"):
                 cur = os.path.join(ROOT_DIR, name)
                 if os.path.isfile(cur + ".new"):
-                    steps.append('move /y "%s.new" "%s" >nul' % (cur, cur))
-            steps.append('start "" "%s"' % bat)
-            # Pass a single string to cmd /c so Python doesn't escape quotes to \"
-            # which causes cmd's start to fail with 'Windows cannot find \\'.
-            full_cmd = 'cmd /c ' + " & ".join(steps)
-            subprocess.Popen(full_cmd, cwd=ROOT_DIR, shell=False,
+                    try:
+                        if os.path.isfile(cur):
+                            os.remove(cur)
+                        os.rename(cur + ".new", cur)
+                    except Exception:
+                        pass
+            ps_cmd = 'Start-Sleep -Milliseconds 800; Start-Process -FilePath "%s"' % bat
+            subprocess.Popen(["powershell.exe", "-NoProfile", "-WindowStyle", "Hidden", "-Command", ps_cmd],
+                             cwd=ROOT_DIR,
                              creationflags=subprocess.CREATE_NO_WINDOW if os.name == "nt" else 0)
         except Exception as e:
             return {"success": False, "message": str(e)}
-        threading.Timer(0.4, lambda: os._exit(0)).start()
+        threading.Timer(0.3, lambda: os._exit(0)).start()
         return {"success": True}
 
     # ------------------------------------------------------------------ 1v1 Match System & Control Panel
