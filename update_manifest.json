@@ -1,6 +1,6 @@
 {
  "schema": 1,
- "version": "2026.10.19-195349",
+ "version": "2026.10.20-021616",
  "files": [
   {
    "path": "CyberHunter.bat",
@@ -309,7 +309,7 @@
   },
   {
    "path": "client/native/build/script/manifest.json",
-   "sha256": "ac7868a78319bb6e153df967ad677f4ffa4243d0aeb73aa9c43f5bc802930b95",
+   "sha256": "3ab377da460315251b72e4cafd75819649534704d335aa9296c5b435c73637f1",
    "size": 1795
   },
   {
