@@ -277,8 +277,7 @@ class Updater:
     # ------------------------------------------------------------ manifest
     def fetch_manifest(self):
         base = update_base_url(self.root)
-        url = base + MANIFEST_NAME + ("?t=%d" % int(time.time()))
-        with _get(url) as resp:
+        with _get(base + MANIFEST_NAME) as resp:
             raw = resp.read(4 * 1024 * 1024 + 1)
         if len(raw) > 4 * 1024 * 1024:
             raise RuntimeError("Update manifest is too large.")
@@ -382,42 +381,29 @@ class Updater:
         dest = os.path.join(self.root, *rel.split("/"))
         os.makedirs(os.path.dirname(dest), exist_ok=True)
         tmp = dest + ".part"
-        version = str(self._manifest.get("version") or int(time.time())) if self._manifest else str(int(time.time()))
-        url = base + urllib.parse.quote(rel) + ("?v=%s" % urllib.parse.quote(version))
+        url = base + urllib.parse.quote(rel)
         h = hashlib.sha256()
         got = 0
         t0, since, speed = time.time(), 0, 0.0
-        try:
-            with _get(url, timeout=30) as resp, open(tmp, "wb") as out:
-                while True:
-                    chunk = resp.read(256 * 1024)
-                    if not chunk:
-                        break
-                    got += len(chunk)
-                    if got > f["size"]:
-                        raise RuntimeError("%s is larger than the manifest says." % rel)
-                    h.update(chunk)
-                    out.write(chunk)
-                    since += len(chunk)
-                    now = time.time()
-                    if now - t0 >= 0.5:
-                        speed, t0, since = since / (now - t0), now, 0
-                    done = received_before + got
-                    self.set(received_bytes=done, speed_bps=speed,
-                             percent=min(98.0, done * 98.0 / total) if total else 50.0)
-        except Exception:
-            if os.path.isfile(tmp):
-                try:
-                    os.remove(tmp)
-                except Exception:
-                    pass
-            raise
+        with _get(url, timeout=30) as resp, open(tmp, "wb") as out:
+            while True:
+                chunk = resp.read(256 * 1024)
+                if not chunk:
+                    break
+                got += len(chunk)
+                if got > f["size"]:
+                    raise RuntimeError("%s is larger than the manifest says." % rel)
+                h.update(chunk)
+                out.write(chunk)
+                since += len(chunk)
+                now = time.time()
+                if now - t0 >= 0.5:
+                    speed, t0, since = since / (now - t0), now, 0
+                done = received_before + got
+                self.set(received_bytes=done, speed_bps=speed,
+                         percent=min(98.0, done * 98.0 / total) if total else 50.0)
         if h.hexdigest() != f["sha256"]:
-            if os.path.isfile(tmp):
-                try:
-                    os.remove(tmp)
-                except Exception:
-                    pass
+            os.remove(tmp)
             raise RuntimeError("%s failed its integrity check; update aborted." % rel)
         if rel.lower() in EXE_NAMES:
             # Can't overwrite the running exe: stage it for restart_launcher.

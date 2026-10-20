@@ -34,6 +34,21 @@ CYBER_HUNTER_DIR = GAME_DIR if os.path.exists(os.path.join(GAME_DIR, "bin", "cli
 )
 CLIENT_EXE = os.path.join(CYBER_HUNTER_DIR, "bin", "client.exe")
 LAUNCHER_EXE = os.path.join(CYBER_HUNTER_DIR, "launcher.exe")
+
+
+def _refresh_game_paths():
+    """Re-resolve where client.exe lives (the downloader can install it while
+    the launcher runs) and point launcher_config.json's game_path at it."""
+    global GAME_DIR, CYBER_HUNTER_DIR, CLIENT_EXE, LAUNCHER_EXE
+    GAME_DIR = os.path.join(ROOT_DIR, "Game") if os.path.exists(os.path.join(ROOT_DIR, "Game", "bin", "client.exe")) else os.path.join(ROOT_DIR, "game")
+    CYBER_HUNTER_DIR = GAME_DIR if os.path.exists(os.path.join(GAME_DIR, "bin", "client.exe")) else (
+        CYBER_STEAM_DIR if os.path.exists(os.path.join(CYBER_STEAM_DIR, "bin", "client.exe")) else GAME_DIR
+    )
+    CLIENT_EXE = os.path.join(CYBER_HUNTER_DIR, "bin", "client.exe")
+    LAUNCHER_EXE = os.path.join(CYBER_HUNTER_DIR, "launcher.exe")
+    return CLIENT_EXE if os.path.isfile(CLIENT_EXE) else ""
+
+
 RUNTIME_DIR = os.path.join(ROOT_DIR, "Runtime", "runtime") if os.path.exists(os.path.join(ROOT_DIR, "Runtime", "runtime")) else (
     os.path.join(ROOT_DIR, "Runtime") if os.path.isdir(os.path.join(ROOT_DIR, "Runtime")) and not os.path.isdir(os.path.join(ROOT_DIR, "client", "runtime"))
     else os.path.join(ROOT_DIR, "client", "runtime")
@@ -1320,7 +1335,7 @@ def _file_digest(path):
     return h.hexdigest()
 
 
-def _apply_day_night_npk_files(target_mode):
+def _apply_day_night_npk_files(target_mode, wait=False):
     """Apply the launcher weather preset to the game packs - safely.
 
     * never while client.exe is running (it has these packs open; rewriting
@@ -1330,7 +1345,7 @@ def _apply_day_night_npk_files(target_mode):
     * 'day'/'auto' restores the original files instead of rebuilding them
     """
     mode = _normalize_env_mode(target_mode)
-    if not _ENV_NPK_LOCK.acquire(False):
+    if not _ENV_NPK_LOCK.acquire(bool(wait)):
         return
     try:
         if is_process_running("client.exe", max_age=0):
@@ -1628,10 +1643,10 @@ class LauncherAPI:
                     }, f, indent=2)
             except Exception:
                 pass
-            try:
-                _apply_day_night_npk_files(target_mode)
-            except Exception:
-                pass
+            # Rewriting the weather packs can take a long time (world4k.npk is
+            # ~450 MB); never block the Settings save on it. Play waits for it.
+            threading.Thread(target=lambda m=target_mode: _apply_day_night_npk_files(m),
+                             daemon=True).start()
             if self._client_pid() > 0:
                 self.master_send_cmd("env " + target_mode)
                 if is_rain:
@@ -1794,6 +1809,7 @@ class LauncherAPI:
             if res.get("success"):
                 state["signed_in"] = res["account"]
                 state["is_dev"] = bool(res["account"].get("is_dev"))
+                state["ban"] = self._ban_for(res["account"])
                 return state
             # Stale token -- drop it
             cfg["account_token"] = ""
@@ -1803,21 +1819,55 @@ class LauncherAPI:
             if res.get("success"):
                 state["signed_in"] = res["account"]
                 state["is_dev"] = bool(res["account"].get("is_dev"))
+                state["ban"] = self._ban_for(res["account"])
                 return state
 
         return state
 
+    def _ban_for(self, account, force=False):
+        """Server ban status for the signed-in account (cached ~60 s)."""
+        try:
+            import accounts
+            if not account or account.get("is_dev"):
+                return {"banned": False}
+            return accounts.check_ban(account.get("username"), force=force)
+        except Exception:
+            return {"banned": False}
+
+    def _signed_user(self):
+        try:
+            import accounts
+            tok = load_config().get("account_token") or ""
+            return accounts.peek(tok)
+        except Exception:
+            pass
+        return None
+
+    def get_ban_status(self, force=False):
+        acc = self._signed_user()
+        if not acc:
+            return {"banned": False, "signed_in": False}
+        st = self._ban_for(acc, force=bool(force))
+        st["signed_in"] = True
+        return st
+
     def add_dev_account(self, username):
         try:
             import accounts
-            return accounts.add_dev(username)
+            me = self._signed_user() or {}
+            if not me.get("is_dev"):
+                return {"success": False, "message": "Developer privileges required."}
+            return accounts.add_dev(username, as_user=me.get("username"))
         except Exception as e:
             return {"success": False, "message": str(e)}
 
     def remove_dev_account(self, username):
         try:
             import accounts
-            return accounts.remove_dev(username)
+            me = self._signed_user() or {}
+            if not me.get("is_dev"):
+                return {"success": False, "message": "Developer privileges required."}
+            return accounts.remove_dev(username, as_user=me.get("username"))
         except Exception as e:
             return {"success": False, "message": str(e)}
 
@@ -1891,16 +1941,28 @@ class LauncherAPI:
             save_config(cfg)
         return dev_id
 
-    def authorize_play(self, check_ban=True):
+    def authorize_play(self):
         """Authoritative pre-launch ban check and signed token generation."""
         cfg = load_config()
         st = self.account_state()
         signed = (st or {}).get("signed_in") or {}
-        username = signed.get("username") or ""
+        username = signed.get("username") or "Hunter"
         account_id = str(signed.get("uid") or signed.get("account_id") or "10001")
         device_id = self.get_device_id()
 
-        if ban_service and check_ban:
+        # Server-authoritative ban (shared by every PC). Forced fresh at Play.
+        if signed and not signed.get("is_dev"):
+            sb = self._ban_for(signed, force=True)
+            if sb.get("banned"):
+                bt = sb.get("ban_type") or "Permanent"
+                return {
+                    "authorized": False, "banned": True,
+                    "reason": sb.get("reason") or "Cheating", "ban_type": bt,
+                    "expires_at": sb.get("expires_at") or 0,
+                    "message": "Your account is banned. You cannot launch Cyber Hunter Reawakening.",
+                }
+
+        if ban_service and not is_remote_mode():
             is_banned, ban_rec = ban_service.check_ban(
                 account_id=account_id,
                 username=username,
@@ -1918,19 +1980,8 @@ class LauncherAPI:
                 }
 
         role = ban_service.get_role(username) if ban_service else "PLAYER"
-        # Every Play gets a fresh token (TTL 1 h): the relay game_token cached
-        # at sign-in goes stale and the in-game START check would refuse it.
-        token = ""
-        if token_service:
-            try:
-                token = token_service.create_token(
-                    account_id=account_id, username=username,
-                    hero_name=signed.get("hero_name", username),
-                    role=role, device_id=device_id)
-            except Exception:
-                token = ""
-        if not token:
-            token = signed.get("game_token") or ""
+        # When the relay returned a game_token, write THAT into session_token.json as "token"
+        token = signed.get("game_token") or ""
         if not token:
             try:
                 import accounts
@@ -1978,45 +2029,43 @@ class LauncherAPI:
             "message": "PLAY AUTHORIZED"
         }
 
-    def moderation_search_players(self, query):
-        if not ban_service:
-            return []
-        return ban_service.search_players(query)
+    # Moderation is server-side (shared bans table on the VPS). The dev UI and
+    # the in-console moderation buttons both use these.
+    def _dev_or_error(self):
+        me = self._signed_user() or {}
+        if not me.get("is_dev"):
+            return None, {"success": False, "message": "Unauthorized: Developer role required"}
+        return me, None
 
-    def moderation_ban_player(self, account_id, in_game_name, ban_type="Permanent", reason="Cheating", notes="", duration=0):
-        if not ban_service:
-            return {"success": False, "message": "BanService unavailable"}
-        st = self.account_state()
-        signed = (st or {}).get("signed_in") or {}
-        actor = signed.get("username", "Admin")
-        if not ban_service.can_moderate(actor):
-            return {"success": False, "message": "Unauthorized: Developer/Admin role required"}
-        rec = ban_service.ban_player(
-            account_id=str(account_id),
-            in_game_name=str(in_game_name),
-            reason=reason,
-            ban_type=ban_type,
-            banned_by=actor,
-            duration_seconds=int(duration or 0),
-            notes=notes
-        )
-        return {"success": True, "message": f"Player {in_game_name} has been banned ({ban_type}).", "ban": rec}
+    def moderation_search_players(self, query):
+        me, err = self._dev_or_error()
+        if err:
+            return []
+        import accounts
+        return accounts.search_players(me["username"], query)
+
+    def moderation_ban_player(self, account_id, in_game_name="", ban_type="Permanent", reason="Cheating", notes="", duration=0):
+        me, err = self._dev_or_error()
+        if err:
+            return err
+        import accounts
+        secs = 0 if str(ban_type).lower().startswith("perm") else int(duration or 0)
+        return accounts.ban_player(me["username"], str(account_id or in_game_name), reason=reason,
+                                   duration_seconds=secs, notes=notes)
 
     def moderation_unban_player(self, ban_id, reason="Developer review"):
-        if not ban_service:
-            return {"success": False, "message": "BanService unavailable"}
-        st = self.account_state()
-        signed = (st or {}).get("signed_in") or {}
-        actor = signed.get("username", "Admin")
-        if not ban_service.can_moderate(actor):
-            return {"success": False, "message": "Unauthorized: Developer/Admin role required"}
-        ok, msg = ban_service.unban_player(ban_id, unbanned_by=actor, reason=reason)
-        return {"success": ok, "message": msg}
+        me, err = self._dev_or_error()
+        if err:
+            return err
+        import accounts
+        return accounts.unban_player(me["username"], ban_id=ban_id, reason=reason)
 
     def moderation_get_bans(self):
-        if not ban_service:
+        me, err = self._dev_or_error()
+        if err:
             return []
-        return ban_service.list_bans()
+        import accounts
+        return accounts.list_bans(me["username"]).get("bans", [])
 
     def moderation_get_flags(self):
         if not ban_service:
@@ -2024,11 +2073,46 @@ class LauncherAPI:
         return ban_service.list_flags()
 
     def moderation_get_role(self):
-        st = self.account_state()
-        signed = (st or {}).get("signed_in") or {}
-        username = signed.get("username", "")
-        role = ban_service.get_role(username) if ban_service else ("OWNER" if username == "yuzechua" else "PLAYER")
-        return {"role": role, "can_moderate": ban_service.can_moderate(username) if ban_service else (role in ("MODERATOR", "ADMIN", "OWNER"))}
+        me = self._signed_user() or {}
+        is_dev = bool(me.get("is_dev"))
+        return {"role": "DEVELOPER" if is_dev else "PLAYER", "can_moderate": is_dev}
+
+    # Settings > Ban Players
+    def dev_ban_player(self, username, reason="Cheating", duration_hours=0, notes=""):
+        me, err = self._dev_or_error()
+        if err:
+            return err
+        import accounts
+        try:
+            secs = int(float(duration_hours or 0) * 3600)
+        except (TypeError, ValueError):
+            secs = 0
+        if (username or "").strip().lower() == (me.get("username") or "").lower():
+            return {"success": False, "message": "You can't ban yourself."}
+        return accounts.ban_player(me["username"], username, reason=reason or "Cheating",
+                                   duration_seconds=secs, notes=notes or "")
+
+    def dev_unban_player(self, username="", ban_id="", reason="Developer review"):
+        me, err = self._dev_or_error()
+        if err:
+            return err
+        import accounts
+        return accounts.unban_player(me["username"], username=username or None,
+                                     ban_id=ban_id or None, reason=reason)
+
+    def dev_list_bans(self):
+        me, err = self._dev_or_error()
+        if err:
+            return dict(err, bans=[])
+        import accounts
+        return accounts.list_bans(me["username"])
+
+    def list_tester_accounts(self):
+        me, err = self._dev_or_error()
+        if err:
+            return dict(err, testers=[])
+        import accounts
+        return accounts.list_testers(me["username"])
 
 
     def minimize_window(self):
@@ -2071,10 +2155,16 @@ class LauncherAPI:
             )
             root.destroy()
             if selected:
+                sel = os.path.normpath(selected)
+                # Picking launcher.exe of the game folder: use its bin/client.exe.
+                if os.path.basename(sel).lower() != "client.exe":
+                    alt = os.path.join(os.path.dirname(sel), "bin", "client.exe")
+                    if os.path.isfile(alt):
+                        sel = alt
                 cfg = load_config()
-                cfg["game_path"] = os.path.normpath(selected)
+                cfg["game_path"] = sel
                 save_config(cfg)
-                return os.path.normpath(selected)
+                return sel
             return ""
         except Exception as e:
             return ""
@@ -2199,16 +2289,26 @@ class LauncherAPI:
                     "success": False,
                     "message": "Access Denied: Please sign in with your authorized account before playing."
                 }
-            # Server reachability and the ban check now run in-game when the
-            # player presses START on the main menu (referee auth_check), so
-            # Play launches the client immediately. Only refresh the local
-            # session token here (no network).
-            try:
-                self.authorize_play(check_ban=False)
-            except Exception as e:
-                print("session token refresh failed: %s" % e)
+            net = check_vps_connectivity()
+            if not net.get("ok"):
+                return {
+                    "success": False,
+                    "offline": True,
+                    "reason": net.get("reason"),
+                    "message": net.get("message") or OFFLINE_MESSAGE,
+                }
 
-        # Ban check moved in-game (main menu START -> referee auth_check).
+        # Pre-launch Server-Authoritative Ban Check
+        if mode == "client":
+            auth_res = self.authorize_play()
+            if not auth_res.get("authorized"):
+                return {
+                    "success": False,
+                    "banned": True,
+                    "ban_type": auth_res.get("ban_type", "Permanent"),
+                    "reason": auth_res.get("reason", "Cheating"),
+                    "message": auth_res.get("message", "Access denied: You are permanently banned.")
+                }
 
         # Check the repo is complete FIRST. An incomplete clone is the root
         # problem: starting the suite and then blaming a missing client.exe
@@ -2272,9 +2372,8 @@ class LauncherAPI:
             "-NoProfile", "-ExecutionPolicy", "Bypass", "-File",
             os.path.abspath(OFFLINE_PS1),
         ])
-        # launcher_config.json "boot_mode": "frida" (default) or "native"
-        # (client loads our compiled scripts itself, no Frida;
-        # docs/NATIVE_SCRIPTS.md).
+        # "frida" or "native" (client loads our compiled scripts itself, no
+        # Frida; docs/NATIVE_SCRIPTS.md). See boot_mode().
         pipeline[1].extend(["-Boot", boot_mode(cfg)])
 
         if pipeline:
@@ -2288,7 +2387,9 @@ class LauncherAPI:
                     # for minutes on a first-run `npm install`, and doing
                     # it inline froze the whole launcher window on Play.
                     _ensure_suite_services(bool(cfg.get("auto_server", True)))
-                    _apply_day_night_npk_files(cfg.get("env_mode") or ("night" if cfg.get("night_mode", False) else "day"))
+                    # wait=True: a background rewrite started by Settings must
+                    # finish before client.exe opens those packs.
+                    _apply_day_night_npk_files(cfg.get("env_mode") or ("night" if cfg.get("night_mode", False) else "day"), wait=True)
                     if kind == "cmd":
                         if is_admin():
                             subprocess.run(
@@ -2403,40 +2504,69 @@ class LauncherAPI:
     # Operator panel attached to this launcher: live logs, suite status, and
     # Frida lobby_cmd overrides. Same channel as client/frida/cmd.ps1.
 
+    _pid_cache = (0.0, 0)
+
     def _client_pid(self):
+        """PID of OUR client.exe (under this install's game folder), else 0.
+
+        Used to start PowerShell + Get-CimInstance on every call (0.5-2 s
+        each, several per Settings save), and matched only paths containing
+        "CyberHunter", so it never saw installs like E:\\CHReawakeningTest.
+        Now: Toolhelp snapshot + QueryFullProcessImageName, cached 1 s."""
         if os.name != "nt":
             return 0
+        now = time.time()
+        ts, pid = LauncherAPI._pid_cache
+        if now - ts < 1.0:
+            return pid
+        pid = 0
         try:
-            out = subprocess.check_output(
-                [
-                    "powershell", "-NoProfile", "-Command",
-                    "(Get-CimInstance Win32_Process -Filter \"Name='client.exe'\" | "
-                    "Where-Object { $_.ExecutablePath -like '*CyberHunter*' -or $_.ExecutablePath -like '*Cyber Hunter*' } | "
-                    "Sort-Object CreationDate | Select-Object -Last 1).ProcessId",
-                ],
-                creationflags=subprocess.CREATE_NO_WINDOW,
-                stderr=subprocess.STDOUT,
-                timeout=8,
-            )
-            s = (out or b"").decode("utf-8", "ignore").strip()
-            return int(s) if s.isdigit() else 0
+            from ctypes import wintypes
+            k32 = ctypes.windll.kernel32
+
+            class _PE32W(ctypes.Structure):
+                _fields_ = [("dwSize", wintypes.DWORD), ("cntUsage", wintypes.DWORD),
+                            ("th32ProcessID", wintypes.DWORD), ("th32DefaultHeapID", ctypes.c_size_t),
+                            ("th32ModuleID", wintypes.DWORD), ("cntThreads", wintypes.DWORD),
+                            ("th32ParentProcessID", wintypes.DWORD), ("pcPriClassBase", wintypes.LONG),
+                            ("dwFlags", wintypes.DWORD), ("szExeFile", ctypes.c_wchar * 260)]
+            roots = set()
+            for r in (GAME_DIR, CYBER_HUNTER_DIR, ROOT_DIR, os.path.dirname(os.path.dirname(load_config().get("game_path") or ""))):
+                if r:
+                    try:
+                        roots.add(os.path.normcase(os.path.realpath(r)))
+                    except Exception:
+                        pass
+            k32.CreateToolhelp32Snapshot.restype = wintypes.HANDLE
+            snap = k32.CreateToolhelp32Snapshot(2, 0)
+            if snap and snap != wintypes.HANDLE(-1).value:
+                pe = _PE32W()
+                pe.dwSize = ctypes.sizeof(_PE32W)
+                ok = k32.Process32FirstW(snap, ctypes.byref(pe))
+                best = (0, 0)
+                while ok:
+                    if pe.szExeFile.lower() == "client.exe":
+                        h = k32.OpenProcess(0x1000, False, pe.th32ProcessID)  # QUERY_LIMITED_INFORMATION
+                        path = ""
+                        if h:
+                            buf = ctypes.create_unicode_buffer(1024)
+                            n = wintypes.DWORD(1024)
+                            if k32.QueryFullProcessImageNameW(h, 0, buf, ctypes.byref(n)):
+                                path = buf.value
+                            k32.CloseHandle(h)
+                        mine = not path  # protected/elevated: can't tell, assume ours
+                        if path:
+                            rp = os.path.normcase(os.path.realpath(path))
+                            mine = any(rp.startswith(r + os.sep) for r in roots)
+                        if mine and pe.th32ProcessID > best[1]:
+                            best = (1, pe.th32ProcessID)
+                    ok = k32.Process32NextW(snap, ctypes.byref(pe))
+                k32.CloseHandle(snap)
+                pid = best[1]
         except Exception:
-            try:
-                out = subprocess.check_output(
-                    ["tasklist", "/FI", "IMAGENAME eq client.exe", "/FO", "CSV", "/NH"],
-                    creationflags=subprocess.CREATE_NO_WINDOW,
-                    stderr=subprocess.STDOUT,
-                    timeout=5,
-                )
-                line = (out or b"").decode("utf-8", "ignore").strip().splitlines()
-                if not line or "No tasks" in line[0]:
-                    return 0
-                parts = line[0].split(",")
-                if len(parts) >= 2:
-                    return int(parts[1].strip().strip('"'))
-            except Exception:
-                return 0
-        return 0
+            pid = 0
+        LauncherAPI._pid_cache = (now, pid)
+        return pid
 
     def master_snapshot(self):
         """Suite + match + account snapshot for the Master Console header."""
@@ -3053,14 +3183,34 @@ class LauncherAPI:
             return {"success": False, "message": str(e)}
 
     def is_game_installed(self):
-        if GameDownloader:
-            return GameDownloader.is_installed(ROOT_DIR)
+        cfg_exe = load_config().get("game_path") or ""
+        if cfg_exe and os.path.isfile(cfg_exe) and os.path.basename(cfg_exe).lower() == "client.exe":
+            return True
+        if GameDownloader and GameDownloader.is_installed(ROOT_DIR):
+            self._adopt_installed_game()
+            return True
         return os.path.isfile(CLIENT_EXE)
 
     def get_game_download_state(self):
         if GameDownloader:
-            return GameDownloader.get_state(ROOT_DIR)
+            st = GameDownloader.get_state(ROOT_DIR)
+            if st.get("status") == "done" and st.get("installed"):
+                self._adopt_installed_game()
+                st["game_path"] = load_config().get("game_path", "")
+            return st
         return {"status": "idle", "installed": os.path.isfile(CLIENT_EXE), "percent": 0.0}
+
+    def _adopt_installed_game(self):
+        """After a download: game/bin/client.exe beside the launcher becomes the Game Path."""
+        exe = _refresh_game_paths()
+        if not exe:
+            return ""
+        cfg = load_config()
+        cur = cfg.get("game_path") or ""
+        if not cur or not os.path.isfile(cur):
+            cfg["game_path"] = os.path.normpath(exe)
+            save_config(cfg)
+        return exe
 
     def pause_game_download(self):
         if GameDownloader:
@@ -3100,7 +3250,7 @@ class LauncherAPI:
             import accounts
         except ImportError:
             from Launcher import accounts
-        return accounts.create_account(username, password, hero_name)
+        return accounts.create_account(username, password, hero_name, created_by=signed.get("username"))
 
     def restart_launcher(self):
         """Relaunch through CyberHunter.bat (the single entry point) and close.
@@ -3119,10 +3269,7 @@ class LauncherAPI:
                 cur = os.path.join(ROOT_DIR, name)
                 steps.append('move /y "%s.new" "%s" >nul' % (cur, cur))
             steps.append('start "" "%s"' % bat)
-            # One command-line STRING: a list makes Python escape the inner
-            # quotes as \" which cmd does not understand -> start runs "\\"
-            # and Windows shows "Windows cannot find '\\'".
-            subprocess.Popen('cmd /c ' + " & ".join(steps), cwd=ROOT_DIR,
+            subprocess.Popen(["cmd", "/c", " & ".join(steps)], cwd=ROOT_DIR,
                              creationflags=subprocess.CREATE_NO_WINDOW if os.name == "nt" else 0)
         except Exception as e:
             return {"success": False, "message": str(e)}
