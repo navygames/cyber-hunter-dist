@@ -1941,17 +1941,17 @@ class LauncherAPI:
             save_config(cfg)
         return dev_id
 
-    def authorize_play(self):
+    def authorize_play(self, check_ban=True):
         """Authoritative pre-launch ban check and signed token generation."""
         cfg = load_config()
         st = self.account_state()
         signed = (st or {}).get("signed_in") or {}
-        username = signed.get("username") or "Hunter"
+        username = signed.get("username") or ""
         account_id = str(signed.get("uid") or signed.get("account_id") or "10001")
         device_id = self.get_device_id()
 
         # Server-authoritative ban (shared by every PC). Forced fresh at Play.
-        if signed and not signed.get("is_dev"):
+        if check_ban and signed and not signed.get("is_dev"):
             sb = self._ban_for(signed, force=True)
             if sb.get("banned"):
                 bt = sb.get("ban_type") or "Permanent"
@@ -1962,7 +1962,7 @@ class LauncherAPI:
                     "message": "Your account is banned. You cannot launch Cyber Hunter Reawakening.",
                 }
 
-        if ban_service and not is_remote_mode():
+        if check_ban and ban_service and not is_remote_mode():
             is_banned, ban_rec = ban_service.check_ban(
                 account_id=account_id,
                 username=username,
@@ -1980,8 +1980,19 @@ class LauncherAPI:
                 }
 
         role = ban_service.get_role(username) if ban_service else "PLAYER"
-        # When the relay returned a game_token, write THAT into session_token.json as "token"
-        token = signed.get("game_token") or ""
+        # Every Play gets a fresh token (TTL 1 h): the relay game_token cached
+        # at sign-in goes stale and the in-game START check would refuse it.
+        token = ""
+        if token_service:
+            try:
+                token = token_service.create_token(
+                    account_id=account_id, username=username,
+                    hero_name=signed.get("hero_name", username),
+                    role=role, device_id=device_id)
+            except Exception:
+                token = ""
+        if not token:
+            token = signed.get("game_token") or ""
         if not token:
             try:
                 import accounts
@@ -2291,8 +2302,12 @@ class LauncherAPI:
                 }
             # Server reachability and the ban check now run in-game when the
             # player presses START on the main menu (referee auth_check), so
-            # Play launches the client immediately.
-            pass
+            # Play launches the client immediately. Only refresh the local
+            # session token here (no network).
+            try:
+                self.authorize_play(check_ban=False)
+            except Exception as e:
+                print("session token refresh failed: %s" % e)
 
         # Ban check moved in-game (main menu START -> referee auth_check).
 
@@ -3255,7 +3270,10 @@ class LauncherAPI:
                 cur = os.path.join(ROOT_DIR, name)
                 steps.append('move /y "%s.new" "%s" >nul' % (cur, cur))
             steps.append('start "" "%s"' % bat)
-            subprocess.Popen(["cmd", "/c", " & ".join(steps)], cwd=ROOT_DIR,
+            # One command-line STRING: a list makes Python escape the inner
+            # quotes as \" which cmd does not understand -> start runs "\\"
+            # and Windows shows "Windows cannot find '\\'".
+            subprocess.Popen('cmd /c ' + " & ".join(steps), cwd=ROOT_DIR,
                              creationflags=subprocess.CREATE_NO_WINDOW if os.name == "nt" else 0)
         except Exception as e:
             return {"success": False, "message": str(e)}

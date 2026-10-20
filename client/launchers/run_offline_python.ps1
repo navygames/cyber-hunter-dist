@@ -575,6 +575,8 @@ $nativeCfg = [ordered]@{
     server_ip = $ServerIp
     remote = [bool]$IsRemote
     written = (Get-Date).ToString('o')
+    launcher_auth = $true
+    boot_ticket = [guid]::NewGuid().ToString('N')
 }
 [System.IO.File]::WriteAllText($NativeBootJson, ($nativeCfg | ConvertTo-Json), [System.Text.UTF8Encoding]::new($false))
 Enable-CrashDumps

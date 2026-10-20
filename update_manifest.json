@@ -1,6 +1,6 @@
 {
  "schema": 1,
- "version": "2026.10.20-112418",
+ "version": "2026.10.20-113754",
  "files": [
   {
    "path": "CyberHunter.bat",
@@ -9,8 +9,8 @@
   },
   {
    "path": "CyberHunterLauncher.exe",
-   "sha256": "8f8c0581831afa3855d2162925afdc929c31f74e2f7d13b76bb8424d6c03ba75",
-   "size": 25020538
+   "sha256": "54545cac17ab2486d61ecf74366367ef993e2663ab2f9190a095a2d39a17119d",
+   "size": 25024324
   },
   {
    "path": "Launcher/accounts.py",
@@ -29,8 +29,8 @@
   },
   {
    "path": "Launcher/run_launcher.py",
-   "sha256": "33f3a6fb717b742f4aeb80e4063132b957f8afa332af7e6a32f655fa890fd059",
-   "size": 161905
+   "sha256": "431a60f4f7496c047960aa90135193cf37ed9a1b3e4a508575b29a6c21e534d8",
+   "size": 167171
   },
   {
    "path": "Launcher/ui/app.js",
@@ -289,8 +289,8 @@
   },
   {
    "path": "client/launchers/run_offline_python.ps1",
-   "sha256": "aef5a4e9d021b827f668501f209f38d311805ad84b85a89e6c73a411db3b99c5",
-   "size": 34409
+   "sha256": "6047d057d8442958c811af8867c41cf737e8d157bb7938ccce95f7094f388e92",
+   "size": 34487
   },
   {
    "path": "client/native/build/script/common/__init__.nxs",
@@ -299,17 +299,17 @@
   },
   {
    "path": "client/native/build/script/common/logo_mgr.nxs",
-   "sha256": "844946d8bf9e9ca4b23ab06a48626526d40f3a5d14c93a6baafaaba113336666",
-   "size": 1092
+   "sha256": "ae74a37adbb153d320964fa555f9d13b977a62d48501eb4b4456d3ba528e5e68",
+   "size": 1000
   },
   {
    "path": "client/native/build/script/common/logo_panel.nxs",
-   "sha256": "7712d0e18acbb7aea52bdf299125fe48cddf0116683dc1a704c6b48df0abdbbf",
-   "size": 5506
+   "sha256": "57d9e605bc3724d1a66d78f0837bad4ed18824939973a603decc95c6dc5a621e",
+   "size": 5494
   },
   {
    "path": "client/native/build/script/manifest.json",
-   "sha256": "9158e1d6dd50e104fbf9e52ba1bbe215865571dabf6bd1a385606da8d5d45817",
+   "sha256": "697d8d37a24835721b129531cc66947f0075604cd9e9dadac4ee93d9a982c8c0",
    "size": 1795
   },
   {
@@ -319,12 +319,12 @@
   },
   {
    "path": "client/native/build/script/reawakening/boot.nxs",
-   "sha256": "8695a44ac47483ceaceed2a95df19b30a15babd979bb5c1203c9d6bb935c308b",
-   "size": 4714
+   "sha256": "9fed176ef3f3135b068a607ce2fcbf8eab49f258e0fb7d8891303fc982a9ad50",
+   "size": 5059
   },
   {
    "path": "client/native/build/script/reawakening/pack.nxs",
-   "sha256": "e0064a4ece6977ed58b7d3c63e64818a850668e4073d625be4aa08eb10107d2d",
+   "sha256": "078e8ad2b1eda81276d60fe7d47c23481424ab2c5ecf1938fae30d92acbe15c8",
    "size": 751344
   },
   {
@@ -334,8 +334,8 @@
   },
   {
    "path": "launcher.exe",
-   "sha256": "8f8c0581831afa3855d2162925afdc929c31f74e2f7d13b76bb8424d6c03ba75",
-   "size": 25020538
+   "sha256": "54545cac17ab2486d61ecf74366367ef993e2663ab2f9190a095a2d39a17119d",
+   "size": 25024324
   },
   {
    "path": "requirements.txt",
