@@ -1,6 +1,6 @@
 {
  "schema": 1,
- "version": "2026.10.20-114405",
+ "version": "2026.10.20-115808",
  "files": [
   {
    "path": "CyberHunter.bat",
@@ -9,8 +9,8 @@
   },
   {
    "path": "CyberHunterLauncher.exe",
-   "sha256": "bd50138252818128da5a8f1047079ad1b87011f5f457ceeddd3059b028edd50e",
-   "size": 25025086
+   "sha256": "04d6e7e657dd29076b482d5bd6019508e7ff6586a04fed7183fbb2147190d03b",
+   "size": 25016320
   },
   {
    "path": "Launcher/accounts.py",
@@ -29,8 +29,8 @@
   },
   {
    "path": "Launcher/run_launcher.py",
-   "sha256": "c2b2e5817a717bf990a2fd40d9cc3125cfd090b5a200f3f52f69fc448db3c8b0",
-   "size": 169204
+   "sha256": "2f77943647aa9ecd7f574e8523ccd7a116c991784dc5add29178b893ec4c85cf",
+   "size": 153591
   },
   {
    "path": "Launcher/ui/app.js",
@@ -274,8 +274,8 @@
   },
   {
    "path": "Launcher/updater.py",
-   "sha256": "516d25135bcf6a1860bd37f220400b955c970eee53f948b2c90f4b39d9f0951b",
-   "size": 18392
+   "sha256": "0e1799d60c49c8e1e119fcb60c6a243f8976e3e2361695ba55537969cf4ab780",
+   "size": 18554
   },
   {
    "path": "README.txt",
@@ -309,7 +309,7 @@
   },
   {
    "path": "client/native/build/script/manifest.json",
-   "sha256": "b1b74e1131a39ffb384bc5f48df7697e08ea648b5971b02230714ae649e74fbc",
+   "sha256": "2e048f7acc213df5409197204002faf720da60be6e031a6b498147edbb358c2a",
    "size": 1795
   },
   {
@@ -334,8 +334,8 @@
   },
   {
    "path": "launcher.exe",
-   "sha256": "bd50138252818128da5a8f1047079ad1b87011f5f457ceeddd3059b028edd50e",
-   "size": 25025086
+   "sha256": "04d6e7e657dd29076b482d5bd6019508e7ff6586a04fed7183fbb2147190d03b",
+   "size": 25016320
   },
   {
    "path": "requirements.txt",

@@ -3015,389 +3015,64 @@ class LauncherAPI:
             "message": f"All {found} core packages & client binaries verified."
         }
 
-    # ------------------------------------------------------------------ Game updates (git: reawakening-final)
-    # The install is a git clone; an "update" is a fast-forward of the local
-    # reawakening-final branch to origin. Checking is a cheap `git ls-remote`
-    # (no download); updating is `git fetch --progress` whose stderr gives us
-    # percentage, bytes received and transfer speed for the progress bar.
-    _UPDATE_BRANCH = "reawakening-final"
-    _update_lock = threading.Lock()
-    _update_state = {
-        "status": "idle",        # idle | checking | available | up_to_date | updating | done | error | unavailable
-        "phase": "",
-        "percent": 0.0,
-        "received_bytes": 0,
-        "total_bytes": 0,
-        "speed_bps": 0.0,
-        "local_sha": "",
-        "remote_sha": "",
-        "message": "",
-        "launcher_changed": False,
-        "checked_at": 0.0,
-    }
+    # ------------------------------------------------------------------ Launcher/client updates
+    # Manifest-based (Launcher/updater.py): downloads ONLY allow-listed player
+    # files over HTTPS and verifies each one's SHA-256. No git, so nothing
+    # else on the update branch (server code, configs) ever reaches a player.
+    _updater = None
+    _updater_lock = threading.Lock()
 
-    @staticmethod
-    def _git_exe():
-        import shutil
-        exe = shutil.which("git")
-        if exe:
-            return exe
-        for cand in (r"C:\Program Files\Git\cmd\git.exe",
-                     r"C:\Program Files (x86)\Git\cmd\git.exe",
-                     os.path.expandvars(r"%LOCALAPPDATA%\Programs\Git\cmd\git.exe")):
-            if os.path.isfile(cand):
-                return cand
-        return None
-
-    @staticmethod
-    def _git_env():
-        env = dict(os.environ)
-        env["GIT_TERMINAL_PROMPT"] = "0"   # never hang on a credential prompt
-        env["LC_ALL"] = "C"                # stable English progress output
-        return env
-
-    def _git(self, *args, timeout=30):
-        exe = self._git_exe()
-        if not exe:
-            raise RuntimeError("git not found")
-        p = subprocess.run(
-            [exe, "-C", ROOT_DIR] + list(args),
-            capture_output=True, text=True, timeout=timeout, env=self._git_env(),
-            creationflags=subprocess.CREATE_NO_WINDOW if os.name == "nt" else 0,
-        )
-        return p.returncode, (p.stdout or "").strip(), (p.stderr or "").strip()
-
-    def _set_update(self, **kw):
-        with self._update_lock:
-            self._update_state.update(kw)
+    def _get_updater(self):
+        with self._updater_lock:
+            if LauncherAPI._updater is None:
+                try:
+                    from updater import Updater
+                except ImportError:
+                    from Launcher.updater import Updater
+                LauncherAPI._updater = Updater(ROOT_DIR)
+            return LauncherAPI._updater
 
     def get_update_state(self):
-        with self._update_lock:
-            return dict(self._update_state)
-    def is_game_installed(self):
-        if GameDownloader:
-            return GameDownloader.is_installed(ROOT_DIR)
-        return os.path.isfile(CLIENT_EXE)
-
-    def get_game_download_state(self):
-        if GameDownloader:
-            return GameDownloader.get_state(ROOT_DIR)
-        return {"status": "idle", "installed": os.path.isfile(CLIENT_EXE), "percent": 0.0}
-
-    def pause_game_download(self):
-        if GameDownloader:
-            return GameDownloader.pause(ROOT_DIR)
-        return {"success": False, "message": "Downloader module unavailable."}
-
-    def resume_game_download(self):
-        return self.start_game_download()
-
-    def start_game_download(self):
-        st = self.account_state()
-        signed = (st or {}).get("signed_in")
-        if not signed or not signed.get("username"):
-            return {"success": False, "message": "Access Denied: Please sign in before downloading the game."}
-        
-        username = signed.get("username")
         try:
-            import accounts
-        except ImportError:
-            from Launcher import accounts
-        
-        cfg = load_config()
-        token = cfg.get("account_token") or accounts.get_session_token(username) or ""
-        if not accounts.verify_download_authorization(username, token):
-            return {"success": False, "message": "Unauthorized: Valid authenticated session required."}
-
-        if GameDownloader:
-            return GameDownloader.start(ROOT_DIR, auth_token=token, username=username)
-        return {"success": False, "message": "Downloader module unavailable."}
-
-    def create_tester_account(self, username, password, hero_name=""):
-        st = self.account_state()
-        signed = (st or {}).get("signed_in")
-        if not signed or not signed.get("is_dev"):
-            return {"success": False, "message": "Developer privileges required to create tester accounts."}
-        try:
-            import accounts
-        except ImportError:
-            from Launcher import accounts
-        return accounts.create_account(username, password, hero_name)
-
-    _ALLOWED_UPDATE_PREFIXES = (
-        "Launcher/",
-        "client/",
-        "tools/private_server/",
-        "tools/verify_game_files.py",
-        "tools/client_manifest.py",
-        "requirements.txt",
-        "CyberHunter.bat",
-    )
-    _BLOCKED_UPDATE_PATTERNS = (
-        "accounts.json",
-        "revival_config.env",
-        "game/",
-        "Cyber Steam/",
-        ".env",
-    )
-
-    def _is_allowed_update_file(self, rel_path):
-        if not rel_path:
-            return False
-        rel = rel_path.replace("\\", "/").strip().lstrip("./")
-        for blocked in self._BLOCKED_UPDATE_PATTERNS:
-            if blocked in rel:
-                return False
-        for allowed in self._ALLOWED_UPDATE_PREFIXES:
-            if rel == allowed or rel.startswith(allowed):
-                return True
-        return False
-
-    def _get_last_applied_sha(self):
-        sha_file = os.path.join(ROOT_DIR, "client", "runtime", "client_update_sha.txt")
-        try:
-            if os.path.isfile(sha_file):
-                with open(sha_file, "r") as f:
-                    s = f.read().strip()
-                    if s and len(s) >= 7:
-                        return s
-        except Exception:
-            pass
-        _, head_sha, _ = self._git("rev-parse", "HEAD")
-        return head_sha or ""
-
-    def _set_last_applied_sha(self, sha):
-        try:
-            rt_dir = os.path.join(ROOT_DIR, "client", "runtime")
-            if not os.path.isdir(rt_dir):
-                os.makedirs(rt_dir)
-            sha_file = os.path.join(rt_dir, "client_update_sha.txt")
-            with open(sha_file, "w") as f:
-                f.write(str(sha).strip())
-        except Exception:
-            pass
+            return self._get_updater().get()
+        except Exception as e:
+            return {"status": "unavailable", "message": str(e)}
 
     def check_for_update(self):
-        """Compare local state with origin/reawakening-final without downloading."""
-        st = self.get_update_state()
-        if st["status"] == "updating":
-            return st
-        if not os.path.isdir(os.path.join(ROOT_DIR, ".git")) or not self._git_exe():
-            self._set_update(status="unavailable", message="Auto-update needs a git install of the game.",
-                             checked_at=time.time())
-            return self.get_update_state()
         try:
-            rc, branch, _ = self._git("rev-parse", "--abbrev-ref", "HEAD")
-            if rc != 0 or branch != self._UPDATE_BRANCH:
-                self._set_update(status="unavailable",
-                                 message="On branch %s, not %s." % (branch or "?", self._UPDATE_BRANCH),
-                                 checked_at=time.time())
-                return self.get_update_state()
-            local_sha = self._get_last_applied_sha()
-            rc, out, err = self._git("ls-remote", "origin", "refs/heads/" + self._UPDATE_BRANCH, timeout=20)
-            if rc != 0 or not out:
-                self._set_update(status="error", message="Could not reach update server. " + err[-200:],
-                                 local_sha=local_sha, checked_at=time.time())
-                return self.get_update_state()
-            remote_sha = out.split()[0]
-            behind = remote_sha != local_sha
-            if behind:
-                # If we already have the remote commit, check if any ALLOWED client files changed
-                rc_has, _, _ = self._git("cat-file", "-e", remote_sha + "^{commit}")
-                if rc_has == 0:
-                    rc_anc, _, _ = self._git("merge-base", "--is-ancestor", remote_sha, "HEAD")
-                    if rc_anc == 0 and remote_sha == local_sha:
-                        behind = False
-                    else:
-                        rc_diff, diff_out, _ = self._git("diff", "--name-only", local_sha, remote_sha)
-                        if rc_diff == 0:
-                            allowed_diff = [f for f in diff_out.splitlines() if self._is_allowed_update_file(f)]
-                            if not allowed_diff:
-                                behind = False
-            self._set_update(status="available" if behind else "up_to_date",
-                             local_sha=local_sha, remote_sha=remote_sha,
-                             message="Update available" if behind else "Up to date",
-                             checked_at=time.time())
+            return self._get_updater().check()
         except Exception as e:
-            self._set_update(status="error", message="Update check failed: %s" % e, checked_at=time.time())
-        return self.get_update_state()
+            return {"status": "error", "message": "Update check failed: %s" % e}
 
     def start_update(self):
-        """Fetch + apply targeted updates from reawakening-final in a background thread."""
         if self._client_pid():
             return {"success": False, "message": "Close Cyber Hunter before updating."}
-        with self._update_lock:
-            if self._update_state["status"] == "updating":
-                return {"success": True, "message": "Update already running."}
-            self._update_state.update(status="updating", phase="Connecting...", percent=0.0,
-                                      received_bytes=0, total_bytes=0, speed_bps=0.0,
-                                      message="", launcher_changed=False)
-        threading.Thread(target=self._run_update, daemon=True).start()
-        return {"success": True, "message": "Update started."}
-
-    @staticmethod
-    def _parse_size(num, unit):
-        mult = {"bytes": 1, "B": 1, "KiB": 1024, "MiB": 1024 ** 2, "GiB": 1024 ** 3}.get(unit, 1)
         try:
-            return float(num) * mult
-        except ValueError:
-            return 0.0
-
-    def _run_update(self):
-        import re
-        rx_recv = re.compile(r"Receiving objects:\s+(\d+)%.*?,\s*([\d.]+)\s*(bytes|KiB|MiB|GiB)"
-                             r"(?:\s*\|\s*([\d.]+)\s*(bytes|KiB|MiB|GiB)/s)?")
-        rx_phase = re.compile(r"^(?:remote:\s*)?([A-Za-z ]+):\s+(\d+)%")
-        try:
-            old_sha = self._get_last_applied_sha()
-            exe = self._git_exe()
-            proc = subprocess.Popen(
-                [exe, "-C", ROOT_DIR, "fetch", "--progress", "origin",
-                 "+refs/heads/{0}:refs/remotes/origin/{0}".format(self._UPDATE_BRANCH)],
-                stdout=subprocess.DEVNULL, stderr=subprocess.PIPE, env=self._git_env(),
-                creationflags=subprocess.CREATE_NO_WINDOW if os.name == "nt" else 0,
-            )
-            buf = b""
-            tail = []
-            last_bytes, last_t = 0.0, time.time()
-            while True:
-                ch = proc.stderr.read(1)
-                if not ch:
-                    break
-                if ch not in (b"\r", b"\n"):
-                    buf += ch
-                    continue
-                line = buf.decode("utf-8", "replace").strip()
-                buf = b""
-                if not line:
-                    continue
-                tail = (tail + [line])[-6:]
-                m = rx_recv.search(line)
-                if m:
-                    pct = float(m.group(1))
-                    recv = self._parse_size(m.group(2), m.group(3))
-                    if m.group(4):
-                        speed = self._parse_size(m.group(4), m.group(5))
-                    else:
-                        now = time.time()
-                        speed = (recv - last_bytes) / max(now - last_t, 0.001)
-                        last_bytes, last_t = recv, now
-                    total = recv / (pct / 100.0) if pct > 0 else 0
-                    if pct >= 100:
-                        total = recv
-                    self._set_update(phase="Downloading", percent=pct * 0.9,
-                                     received_bytes=int(recv), total_bytes=int(total), speed_bps=speed)
-                    continue
-                m = rx_phase.search(line)
-                if m:
-                    name = m.group(1).strip()
-                    pct = float(m.group(2))
-                    if name.startswith("Receiving"):
-                        self._set_update(phase="Downloading", percent=pct * 0.9)
-                    elif name.startswith("Resolving"):
-                        self._set_update(phase="Installing", percent=90 + pct * 0.08, speed_bps=0.0)
-                    elif not self.get_update_state()["received_bytes"]:
-                        self._set_update(phase="Preparing (%s)" % name.lower(), percent=min(pct * 0.05, 5))
-            proc.wait()
-            if proc.returncode != 0:
-                raise RuntimeError(" ".join(tail[-2:]) or "git fetch failed")
-
-            self._set_update(phase="Applying update", percent=98, speed_bps=0.0)
-            target = "origin/" + self._UPDATE_BRANCH
-            rc_target, new_sha, _ = self._git("rev-parse", target)
-            if rc_target != 0 or not new_sha:
-                raise RuntimeError("Could not resolve " + target)
-
-            # Targeted diff: only inspect and checkout allowed client files
-            rc, diff_out, _ = self._git("diff", "--name-status", old_sha if old_sha else "HEAD", target)
-            if rc != 0:
-                # If diff against old_sha fails (e.g. shallow clone or invalid sha), diff against HEAD
-                rc, diff_out, _ = self._git("diff", "--name-status", "HEAD", target)
-
-            to_checkout = []
-            to_delete = []
-            if rc == 0 and diff_out:
-                for raw_line in diff_out.splitlines():
-                    line = raw_line.strip()
-                    if not line:
-                        continue
-                    parts = line.split("\t")
-                    if not parts:
-                        continue
-                    status_code = parts[0][0]
-                    if status_code == 'R' and len(parts) >= 3:
-                        old_p, new_p = parts[1].strip(), parts[2].strip()
-                        if self._is_allowed_update_file(old_p):
-                            to_delete.append(old_p)
-                        if self._is_allowed_update_file(new_p):
-                            to_checkout.append(new_p)
-                    elif status_code == 'D' and len(parts) >= 2:
-                        p = parts[1].strip()
-                        if self._is_allowed_update_file(p):
-                            to_delete.append(p)
-                    elif len(parts) >= 2:
-                        p = parts[1].strip()
-                        if self._is_allowed_update_file(p):
-                            to_checkout.append(p)
-
-            # Never overwrite uncommitted local edits (a dev checkout keeps
-            # work in progress here; the old code silently reverted it).
-            skipped_local = []
-            try:
-                rc_st, st_out, _ = self._git("status", "--porcelain", "-uno", timeout=30)
-                if rc_st == 0 and st_out:
-                    dirty = set()
-                    for ln in st_out.splitlines():
-                        pth = ln[3:].strip().strip('"')
-                        if " -> " in pth:
-                            pth = pth.split(" -> ", 1)[1].strip('"')
-                        dirty.add(pth.replace("\\", "/"))
-                    skipped_local = [p for p in to_checkout + to_delete if p in dirty]
-                    to_checkout = [p for p in to_checkout if p not in dirty]
-                    to_delete = [p for p in to_delete if p not in dirty]
-            except Exception:
-                pass
-            if skipped_local:
-                print("update: kept %d locally modified file(s): %s" % (
-                    len(skipped_local), ", ".join(skipped_local[:10])))
-
-            # Apply checkouts in chunks to avoid command-line length limits
-            checkout_chunk_size = 50
-            for i in range(0, len(to_checkout), checkout_chunk_size):
-                chunk = to_checkout[i:i + checkout_chunk_size]
-                rc_co, out_co, err_co = self._git(*(["checkout", target, "--"] + chunk), timeout=60)
-                if rc_co != 0:
-                    raise RuntimeError("Failed to update files: " + (err_co or out_co)[-300:])
-
-            # Apply safe deletions for allowed files only
-            for rel_del in to_delete:
-                full_del = os.path.join(ROOT_DIR, rel_del)
-                if os.path.isfile(full_del):
-                    try:
-                        os.remove(full_del)
-                    except Exception:
-                        pass
-
-            self._set_last_applied_sha(new_sha)
-            launcher_changed = any(p.startswith("Launcher/") for p in to_checkout)
-            self._set_update(status="done", phase="Update complete", percent=100,
-                             local_sha=new_sha, remote_sha=new_sha, speed_bps=0.0,
-                             launcher_changed=launcher_changed,
-                             message="Updated (%d files) to %s" % (len(to_checkout), new_sha[:7]))
+            return self._get_updater().start()
         except Exception as e:
-            self._set_update(status="error", phase="Update failed", message=str(e)[:400], speed_bps=0.0)
+            return {"success": False, "message": str(e)}
 
     def restart_launcher(self):
-        """Relaunch through CyberHunter.bat (the single entry point) and close."""
+        """Relaunch through CyberHunter.bat (the single entry point) and close.
+
+        A launcher .exe downloaded by the updater sits next to the old one as
+        <name>.new; it is swapped in once this process has exited."""
         bat = os.path.join(ROOT_DIR, "CyberHunter.bat")
         try:
-            # Wait for this process to exit (releases the single-instance lock)
-            # before CyberHunter.bat starts a fresh launcher.
-            cmd = 'ping -n 3 127.0.0.1 >nul & start "" "%s"' % bat
+            swaps = []
+            try:
+                swaps = self._get_updater().staged_exes()
+            except Exception:
+                pass
+            steps = ["ping -n 3 127.0.0.1 >nul"]
+            for name in swaps:
+                cur = os.path.join(ROOT_DIR, name)
+                steps.append('move /y "%s.new" "%s" >nul' % (cur, cur))
+            steps.append('start "" "%s"' % bat)
             # One command-line STRING: a list makes Python escape the inner
             # quotes as \" which cmd does not understand -> start runs "\\"
             # and Windows shows "Windows cannot find '\\'".
-            subprocess.Popen('cmd /c ' + cmd, cwd=ROOT_DIR,
+            subprocess.Popen('cmd /c ' + " & ".join(steps), cwd=ROOT_DIR,
                              creationflags=subprocess.CREATE_NO_WINDOW if os.name == "nt" else 0)
         except Exception as e:
             return {"success": False, "message": str(e)}
