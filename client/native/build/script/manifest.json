@@ -1,24 +1,24 @@
 {
- "build": "696712cf09b7728f",
- "built": "2026-10-20T17:38:05",
+ "build": "b440d3c66d1d8854",
+ "built": "2026-10-20T18:28:54",
  "files": {
   "common/__init__.nxs": "c6480e369916785d0c06fe976a0f1f42db19d91a587ed20cec34e7c3f6d28c34",
-  "common/logo_mgr.nxs": "967d39f262786ef43c71b3faf7aaaa21a0cff43c5ecc4c43e637f39ab9afa973",
-  "common/logo_panel.nxs": "615bdc6d81b55b3f3ed2179eb93f1c5edd1a05e0a27bdc174d9844ad9e62fbc8",
+  "common/logo_mgr.nxs": "844946d8bf9e9ca4b23ab06a48626526d40f3a5d14c93a6baafaaba113336666",
+  "common/logo_panel.nxs": "827f4dd1a88bec7ca5d39f713455a390bb8cce51d37ceac1353ff71a21ee4268",
   "reawakening/__init__.nxs": "1d618a71243345acc17f2a24b2dcb5c85be75d4fc44d413d3c7a8e84b7d6d2ec",
-  "reawakening/boot.nxs": "3a598df215b417dc4bda007f5802f22a2b4f8b4138e12d5d5f54a1cf766c133e",
-  "reawakening/pack.nxs": "2fc9a8589720fcbdba470f45ad8903236f40d7c2a6f4f4496f058d735adc1d6f"
+  "reawakening/boot.nxs": "bf318b8dd94a6acba50b57d6dfdbeaf9c91c2b58b201128ec6bc676cad3f8edb",
+  "reawakening/pack.nxs": "ac826d820e18a18eb280992fd9f069ef11f6d6d5b53b6cc688b22ce06984776c"
  },
  "sources": {
   "client/frida/br_world4k_anchors.py": "e942440ea014291dee657450074e1e69c41342b935304833774ec1d466c6eb30",
   "client/frida/br_world4k_spawns.py": "5b6dcc1651c6c0f018a7b873ee3444eed8ca7932f7a558df0e5ed4bdc52c60f5",
-  "client/frida/lobby_full_payload.py": "da3c4e49a25224f773c9a6dc91f3e55caa27c39cd24f53aca0bb89fa5a93373b",
-  "client/frida/lobby_offline_server.py": "5fc9947f5cb40875afc0c3414c13a9428dd756bf44c670de04a148798417d925",
+  "client/frida/lobby_full_payload.py": "db428999fa1b55c7272ed210f0816ef586ce2b881ac35737054bef835914846d",
+  "client/frida/lobby_offline_server.py": "0437cf4b745238468f709210b2a28f98049473a0975e26ee3ae57afc7c62a502",
   "client/frida/offline_account_db.py": "25c022c0e6c6479fa5d03f2a22f0fc549c582c4ecd2b7f185309d79f99189f6f",
   "client/frida/offline_weapon_damage.json": "d731b363ceea07d99a81c430ae2fe47fd98482c8e432a25b7560af277d796756",
-  "client/native/boot.py": "47009592bed70459418e62a7f02f224934a4d08d8ef20c77461c4373850bc832",
+  "client/native/boot.py": "1c045bfbfce30c579778b9185fce484b880cee28c25df8b20b2a3fd6c4302fe5",
   "client/native/game_overlay/common/__init__.py": "ec3c621294f583a84cc16d61045d7b38e1512770d6d3782212eeab82f4424c76",
-  "client/native/game_overlay/common/logo_mgr.py": "3dc33c52658189b3cbd9a3a744abe0b116d99e02a6a2b619a5524d587322bcfd",
-  "client/native/game_overlay/common/logo_panel.py": "6d4c6e8b40af7a3458dce94d90c7f0b0e44151833dc0f0bb5c14dba5bc7ada1f"
+  "client/native/game_overlay/common/logo_mgr.py": "470354202e7ad64ba10fc541940380f3b7324881e62ce4e876e485dbc53155ef",
+  "client/native/game_overlay/common/logo_panel.py": "3a6d56110a61a16ccea03f32c70b755a57cf4e39a2485a303b995e0951e40387"
  }
 }
