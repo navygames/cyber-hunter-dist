@@ -309,7 +309,7 @@
     },
     {
       "path": "client/native/build/script/manifest.json",
-      "sha256": "18e9442f40a03419868f2b05e4e9b4545f6f71ec58b512d6b2ef3029b1c701c2",
+      "sha256": "051de6998335c537565ee9ec6c9855aa54b8b5a8dd39335e2eb585110a345054",
       "size": 1795
     },
     {
@@ -324,8 +324,8 @@
     },
     {
       "path": "client/native/build/script/reawakening/pack.nxs",
-      "sha256": "fb1a8a341dfe4a46f16537640d842780ebd695b44dae0d51b82d191805fae070",
-      "size": 742995
+      "sha256": "acb91f00c3c2bd6ac7df090d037b632d3cb929dfcd1cd18755cf702219de357c",
+      "size": 743426
     },
     {
       "path": "game-server/src/sync_supabase.js",
