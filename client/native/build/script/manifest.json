@@ -1,24 +1,24 @@
 {
- "build": "696712cf09b7728f",
- "built": "2026-10-20T17:38:05",
+ "build": "684a281a3972cfab",
+ "built": "2026-10-20T22:24:42",
  "files": {
   "common/__init__.nxs": "c6480e369916785d0c06fe976a0f1f42db19d91a587ed20cec34e7c3f6d28c34",
   "common/logo_mgr.nxs": "967d39f262786ef43c71b3faf7aaaa21a0cff43c5ecc4c43e637f39ab9afa973",
   "common/logo_panel.nxs": "615bdc6d81b55b3f3ed2179eb93f1c5edd1a05e0a27bdc174d9844ad9e62fbc8",
   "reawakening/__init__.nxs": "1d618a71243345acc17f2a24b2dcb5c85be75d4fc44d413d3c7a8e84b7d6d2ec",
-  "reawakening/boot.nxs": "3a598df215b417dc4bda007f5802f22a2b4f8b4138e12d5d5f54a1cf766c133e",
-  "reawakening/pack.nxs": "2fc9a8589720fcbdba470f45ad8903236f40d7c2a6f4f4496f058d735adc1d6f"
+  "reawakening/boot.nxs": "baa370d52bd597d555f6783329b0e5c593e3e8c7c89942d9b23b0c9a35d2ad2e",
+  "reawakening/pack.nxs": "fbfe9eed168dc2e16dbe79b439d953ffacc9b25f7a91c8133e1f8807c6c3177a"
  },
  "sources": {
   "client/frida/br_world4k_anchors.py": "e942440ea014291dee657450074e1e69c41342b935304833774ec1d466c6eb30",
   "client/frida/br_world4k_spawns.py": "5b6dcc1651c6c0f018a7b873ee3444eed8ca7932f7a558df0e5ed4bdc52c60f5",
-  "client/frida/lobby_full_payload.py": "da3c4e49a25224f773c9a6dc91f3e55caa27c39cd24f53aca0bb89fa5a93373b",
+  "client/frida/lobby_full_payload.py": "0380d6b1b4b2824b409a91b7f4b7b165eda859cf2258feec2232c1891c5e9d12",
   "client/frida/lobby_offline_server.py": "5fc9947f5cb40875afc0c3414c13a9428dd756bf44c670de04a148798417d925",
   "client/frida/offline_account_db.py": "25c022c0e6c6479fa5d03f2a22f0fc549c582c4ecd2b7f185309d79f99189f6f",
   "client/frida/offline_weapon_damage.json": "d731b363ceea07d99a81c430ae2fe47fd98482c8e432a25b7560af277d796756",
-  "client/native/boot.py": "47009592bed70459418e62a7f02f224934a4d08d8ef20c77461c4373850bc832",
+  "client/native/boot.py": "42eb387acdf0412ccf663104bf8bc7d42ef29e82bbdc9ffa2339d84a8997b93c",
   "client/native/game_overlay/common/__init__.py": "ec3c621294f583a84cc16d61045d7b38e1512770d6d3782212eeab82f4424c76",
-  "client/native/game_overlay/common/logo_mgr.py": "3dc33c52658189b3cbd9a3a744abe0b116d99e02a6a2b619a5524d587322bcfd",
-  "client/native/game_overlay/common/logo_panel.py": "6d4c6e8b40af7a3458dce94d90c7f0b0e44151833dc0f0bb5c14dba5bc7ada1f"
+  "client/native/game_overlay/common/logo_mgr.py": "d1fe70f33142dcec70513c1674a7765170612412530254828a787dc57e06e45c",
+  "client/native/game_overlay/common/logo_panel.py": "ee80f18cab531243be9ce23e765ed9917755e0e979dc93cd4fc61e77db360d44"
  }
 }

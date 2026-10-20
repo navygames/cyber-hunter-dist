@@ -1,11 +1,11 @@
 {
  "schema": 1,
- "version": "2026.10.20-135500",
+ "version": "2026.10.20-222612",
  "files": [
   {
    "path": "CyberHunter.bat",
-   "sha256": "e1a086fbb1b028d1714e41ed76a2953973ddc5fcdf1dc7784b0f737f03430263",
-   "size": 1562
+   "sha256": "baa9db55b83f6388303f18a46f4988ea38c1838694ea3a31b3154d9dda1484fe",
+   "size": 1809
   },
   {
    "path": "CyberHunterLauncher.exe",
@@ -14,8 +14,8 @@
   },
   {
    "path": "Launcher/accounts.py",
-   "sha256": "a93f76d1ee3881f32a0a1da69a838b0e5960678569605aba970e7df1ee17ec42",
-   "size": 54370
+   "sha256": "a1b62b14e786d04254d4fa39069e79c922c27c1915e0aa1963a0c3d230a0e219",
+   "size": 34258
   },
   {
    "path": "Launcher/app_icon.ico",
@@ -24,18 +24,18 @@
   },
   {
    "path": "Launcher/game_downloader.py",
-   "sha256": "6e7face6f9752cf36a718be20a9008a6e3f17c47754a56ce77a53b2224e00929",
-   "size": 21219
+   "sha256": "2019b8f0c1e6b190a9a1609cc083d820dcb95015aea8b65a9cb5af72a9723019",
+   "size": 21088
   },
   {
    "path": "Launcher/run_launcher.py",
-   "sha256": "4f7e3b2707c82752c1e7989d684054796708be9fc6f4fb859d34e0da300469f3",
-   "size": 162463
+   "sha256": "d0c48b0523d70bb4151f0180fdbd51f02e31b65e2f8930a17f0d576cb54343b6",
+   "size": 168244
   },
   {
    "path": "Launcher/ui/app.js",
-   "sha256": "4d1e28092da1c6bed98ac1a1fe6007b29cbdf84d2fa614bdbd9fd0df4cbc865d",
-   "size": 159838
+   "sha256": "0d0a45e03aede16fd34d02721bbaa4d7ce4f9cf97ebe17130d2bfa410bbd1346",
+   "size": 150826
   },
   {
    "path": "Launcher/ui/assets/ch-logo-white.png",
@@ -134,13 +134,13 @@
   },
   {
    "path": "Launcher/ui/index.html",
-   "sha256": "d7706ea122cbc5bb6d23df93c2093a487999f141551304adb4677997d9379360",
-   "size": 90198
+   "sha256": "4afa91deb6d89174002a5c76d885454ab6f42d97d2908cab6eb1e5805df1dd54",
+   "size": 87646
   },
   {
    "path": "Launcher/ui/style.css",
-   "sha256": "2b696640d8235c88097849a77ccd2cce5e489af0345c829b09f9bcc907233c37",
-   "size": 77182
+   "sha256": "b482594e9a53200c4d217bab5f44cc75c289d27280770b9bdafef17f936dacf2",
+   "size": 72246
   },
   {
    "path": "Launcher/ui/vendor/fontawesome.css",
@@ -274,8 +274,8 @@
   },
   {
    "path": "Launcher/updater.py",
-   "sha256": "516d25135bcf6a1860bd37f220400b955c970eee53f948b2c90f4b39d9f0951b",
-   "size": 18392
+   "sha256": "0e1799d60c49c8e1e119fcb60c6a243f8976e3e2361695ba55537969cf4ab780",
+   "size": 18554
   },
   {
    "path": "README.txt",
@@ -289,8 +289,8 @@
   },
   {
    "path": "client/launchers/run_offline_python.ps1",
-   "sha256": "952c1c5c341b8d8d2ab3af8ad9c5e68dcf04fda8c8acc397aaddc9cae8bc23f4",
-   "size": 34363
+   "sha256": "b08d2d5f6ea539374c02a9b432d708a1c2504f4b442c9aa6f1c130f0f3ea2e7e",
+   "size": 34239
   },
   {
    "path": "client/native/build/script/common/__init__.nxs",
@@ -309,7 +309,7 @@
   },
   {
    "path": "client/native/build/script/manifest.json",
-   "sha256": "23a69012753403485916a1855156bcb9d3142497baa6419da399ce020a414730",
+   "sha256": "1eef58861ad4996984ee30f2a9293278865f6e665c35e55d71ba41f28f67aba3",
    "size": 1795
   },
   {
@@ -319,18 +319,18 @@
   },
   {
    "path": "client/native/build/script/reawakening/boot.nxs",
-   "sha256": "3a598df215b417dc4bda007f5802f22a2b4f8b4138e12d5d5f54a1cf766c133e",
-   "size": 4393
+   "sha256": "baa370d52bd597d555f6783329b0e5c593e3e8c7c89942d9b23b0c9a35d2ad2e",
+   "size": 5167
   },
   {
    "path": "client/native/build/script/reawakening/pack.nxs",
-   "sha256": "2fc9a8589720fcbdba470f45ad8903236f40d7c2a6f4f4496f058d735adc1d6f",
-   "size": 739824
+   "sha256": "fbfe9eed168dc2e16dbe79b439d953ffacc9b25f7a91c8133e1f8807c6c3177a",
+   "size": 741981
   },
   {
    "path": "game-server/src/sync_supabase.js",
-   "sha256": "eff231ac865d2c96e18b1b6c51a0b3441623411c605cfa4596994c7ed188d9f4",
-   "size": 12075
+   "sha256": "db02419e13ffa4f2d2b9829460d43dd9ab346aeacc98e8fb1311090799d0ce33",
+   "size": 8740
   },
   {
    "path": "launcher.exe",
@@ -339,13 +339,13 @@
   },
   {
    "path": "requirements.txt",
-   "sha256": "0fc9eae27676bfade9a339635d029a2ea3b8b704c40036ca06384d18c9fcc158",
-   "size": 385
+   "sha256": "579d50536576320ee1b50beda1a69c548d54cc08f295da05eb3544861dbff170",
+   "size": 314
   },
   {
    "path": "revival_config.env.example",
-   "sha256": "c1798ca9521d0ce620ed1bf09cd6c363e478b82a8f19d7e67b0980837a9c489d",
-   "size": 1888
+   "sha256": "becb88e10b40490d7d4833ac29b574c90a51a382553a46947ec10f77f014e45a",
+   "size": 1353
   },
   {
    "path": "tools/client_manifest.py",
@@ -379,8 +379,8 @@
   },
   {
    "path": "tools/private_server/patch_server.py",
-   "sha256": "d7b942e1e83c0e945b773395f2143016beebce7a4d4067a7d8cd5cf80199b6cc",
-   "size": 9486
+   "sha256": "dcbe5e6dfa23f8e774794bf931455ee0b4d3c35fe85666a19f286246c10680b0",
+   "size": 11276
   },
   {
    "path": "tools/private_server/remove_hosts.ps1",

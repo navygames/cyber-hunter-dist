@@ -27,6 +27,13 @@ if not exist "revival_config.env" (
     )
 )
 
+if exist "%~dp0launcher.exe.new" (
+    move /y "%~dp0launcher.exe.new" "%~dp0launcher.exe" >nul 2>&1
+)
+if exist "%~dp0CyberHunterLauncher.exe.new" (
+    move /y "%~dp0CyberHunterLauncher.exe.new" "%~dp0CyberHunterLauncher.exe" >nul 2>&1
+)
+
 if exist "%~dp0launcher.exe" (
     start "" "%~dp0launcher.exe"
     exit /b
