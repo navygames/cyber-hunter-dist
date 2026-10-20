@@ -3052,6 +3052,56 @@ class LauncherAPI:
         except Exception as e:
             return {"success": False, "message": str(e)}
 
+    def is_game_installed(self):
+        if GameDownloader:
+            return GameDownloader.is_installed(ROOT_DIR)
+        return os.path.isfile(CLIENT_EXE)
+
+    def get_game_download_state(self):
+        if GameDownloader:
+            return GameDownloader.get_state(ROOT_DIR)
+        return {"status": "idle", "installed": os.path.isfile(CLIENT_EXE), "percent": 0.0}
+
+    def pause_game_download(self):
+        if GameDownloader:
+            return GameDownloader.pause(ROOT_DIR)
+        return {"success": False, "message": "Downloader module unavailable."}
+
+    def resume_game_download(self):
+        return self.start_game_download()
+
+    def start_game_download(self):
+        st = self.account_state()
+        signed = (st or {}).get("signed_in")
+        if not signed or not signed.get("username"):
+            return {"success": False, "message": "Access Denied: Please sign in before downloading the game."}
+        
+        username = signed.get("username")
+        try:
+            import accounts
+        except ImportError:
+            from Launcher import accounts
+        
+        cfg = load_config()
+        token = cfg.get("account_token") or accounts.get_session_token(username) or ""
+        if not accounts.verify_download_authorization(username, token):
+            return {"success": False, "message": "Unauthorized: Valid authenticated session required."}
+
+        if GameDownloader:
+            return GameDownloader.start(ROOT_DIR, auth_token=token, username=username)
+        return {"success": False, "message": "Downloader module unavailable."}
+
+    def create_tester_account(self, username, password, hero_name=""):
+        st = self.account_state()
+        signed = (st or {}).get("signed_in")
+        if not signed or not signed.get("is_dev"):
+            return {"success": False, "message": "Developer privileges required to create tester accounts."}
+        try:
+            import accounts
+        except ImportError:
+            from Launcher import accounts
+        return accounts.create_account(username, password, hero_name)
+
     def restart_launcher(self):
         """Relaunch through CyberHunter.bat (the single entry point) and close.
 
