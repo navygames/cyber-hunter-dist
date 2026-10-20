@@ -1,6 +1,6 @@
 {
  "schema": 1,
- "version": "2026.10.20-110105",
+ "version": "2026.10.20-111739",
  "files": [
   {
    "path": "CyberHunter.bat",
@@ -9,8 +9,8 @@
   },
   {
    "path": "CyberHunterLauncher.exe",
-   "sha256": "435b14e72b4e80ac28bb16273f6f846746f3d1570a4e920e0077ce02d7726a25",
-   "size": 25021875
+   "sha256": "e947d7c421b860b81d580d7d2a782ae3d07c8e63f9d3431f5800ffbb87061b64",
+   "size": 25020962
   },
   {
    "path": "Launcher/accounts.py",
@@ -29,8 +29,8 @@
   },
   {
    "path": "Launcher/run_launcher.py",
-   "sha256": "4f7e3b2707c82752c1e7989d684054796708be9fc6f4fb859d34e0da300469f3",
-   "size": 162463
+   "sha256": "33f3a6fb717b742f4aeb80e4063132b957f8afa332af7e6a32f655fa890fd059",
+   "size": 161905
   },
   {
    "path": "Launcher/ui/app.js",
@@ -289,8 +289,8 @@
   },
   {
    "path": "client/launchers/run_offline_python.ps1",
-   "sha256": "952c1c5c341b8d8d2ab3af8ad9c5e68dcf04fda8c8acc397aaddc9cae8bc23f4",
-   "size": 34363
+   "sha256": "aef5a4e9d021b827f668501f209f38d311805ad84b85a89e6c73a411db3b99c5",
+   "size": 34409
   },
   {
    "path": "client/native/build/script/common/__init__.nxs",
@@ -309,7 +309,7 @@
   },
   {
    "path": "client/native/build/script/manifest.json",
-   "sha256": "c08271d7764c07901d922ae5d123823d1908c07c990adf21f67591cc672fc1f1",
+   "sha256": "93be4ca5c63809606e32512980563370f91d5a58eb3c5680848b9686de58e5e2",
    "size": 1795
   },
   {
@@ -324,8 +324,8 @@
   },
   {
    "path": "client/native/build/script/reawakening/pack.nxs",
-   "sha256": "bf73ce3b4842898e292fc97e4549d9ffc924e901ac877dcaac20c470753dcb04",
-   "size": 744372
+   "sha256": "436738365a9a79cd1cf7e0dab9e0b120bffd1249ffd99f471d1144814bf883cb",
+   "size": 746400
   },
   {
    "path": "game-server/src/sync_supabase.js",
@@ -334,8 +334,8 @@
   },
   {
    "path": "launcher.exe",
-   "sha256": "435b14e72b4e80ac28bb16273f6f846746f3d1570a4e920e0077ce02d7726a25",
-   "size": 25021875
+   "sha256": "e947d7c421b860b81d580d7d2a782ae3d07c8e63f9d3431f5800ffbb87061b64",
+   "size": 25020962
   },
   {
    "path": "requirements.txt",

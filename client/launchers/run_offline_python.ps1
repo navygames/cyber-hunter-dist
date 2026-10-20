@@ -656,7 +656,8 @@ while ((Get-Date) -lt $deadline) {
     $joined = ((Get-LogTail) -join "`n")
     $ready = ($joined -match 'lobby ready' -or
         ($joined -match 'IN_GAME OK' -and $joined -match 'scene_enter id=101 active=True') -or
-        $joined -match 'LOBBY_RETURN ok')
+        $joined -match 'LOBBY_RETURN ok' -or
+        $joined -match 'MAIN MENU ready')
     if ($ready) { break }
     if ($clientProc.HasExited) {
         $why = "client exited during lobby wait: $(Get-ExitDetail $clientProc)"

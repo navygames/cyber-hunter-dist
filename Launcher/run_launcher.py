@@ -2289,26 +2289,12 @@ class LauncherAPI:
                     "success": False,
                     "message": "Access Denied: Please sign in with your authorized account before playing."
                 }
-            net = check_vps_connectivity()
-            if not net.get("ok"):
-                return {
-                    "success": False,
-                    "offline": True,
-                    "reason": net.get("reason"),
-                    "message": net.get("message") or OFFLINE_MESSAGE,
-                }
+            # Server reachability and the ban check now run in-game when the
+            # player presses START on the main menu (referee auth_check), so
+            # Play launches the client immediately.
+            pass
 
-        # Pre-launch Server-Authoritative Ban Check
-        if mode == "client":
-            auth_res = self.authorize_play()
-            if not auth_res.get("authorized"):
-                return {
-                    "success": False,
-                    "banned": True,
-                    "ban_type": auth_res.get("ban_type", "Permanent"),
-                    "reason": auth_res.get("reason", "Cheating"),
-                    "message": auth_res.get("message", "Access denied: You are permanently banned.")
-                }
+        # Ban check moved in-game (main menu START -> referee auth_check).
 
         # Check the repo is complete FIRST. An incomplete clone is the root
         # problem: starting the suite and then blaming a missing client.exe
