@@ -34,21 +34,6 @@ CYBER_HUNTER_DIR = GAME_DIR if os.path.exists(os.path.join(GAME_DIR, "bin", "cli
 )
 CLIENT_EXE = os.path.join(CYBER_HUNTER_DIR, "bin", "client.exe")
 LAUNCHER_EXE = os.path.join(CYBER_HUNTER_DIR, "launcher.exe")
-
-
-def _refresh_game_paths():
-    """Re-resolve where client.exe lives (the downloader can install it while
-    the launcher runs) and point launcher_config.json's game_path at it."""
-    global GAME_DIR, CYBER_HUNTER_DIR, CLIENT_EXE, LAUNCHER_EXE
-    GAME_DIR = os.path.join(ROOT_DIR, "Game") if os.path.exists(os.path.join(ROOT_DIR, "Game", "bin", "client.exe")) else os.path.join(ROOT_DIR, "game")
-    CYBER_HUNTER_DIR = GAME_DIR if os.path.exists(os.path.join(GAME_DIR, "bin", "client.exe")) else (
-        CYBER_STEAM_DIR if os.path.exists(os.path.join(CYBER_STEAM_DIR, "bin", "client.exe")) else GAME_DIR
-    )
-    CLIENT_EXE = os.path.join(CYBER_HUNTER_DIR, "bin", "client.exe")
-    LAUNCHER_EXE = os.path.join(CYBER_HUNTER_DIR, "launcher.exe")
-    return CLIENT_EXE if os.path.isfile(CLIENT_EXE) else ""
-
-
 RUNTIME_DIR = os.path.join(ROOT_DIR, "Runtime", "runtime") if os.path.exists(os.path.join(ROOT_DIR, "Runtime", "runtime")) else (
     os.path.join(ROOT_DIR, "Runtime") if os.path.isdir(os.path.join(ROOT_DIR, "Runtime")) and not os.path.isdir(os.path.join(ROOT_DIR, "client", "runtime"))
     else os.path.join(ROOT_DIR, "client", "runtime")
@@ -1335,7 +1320,7 @@ def _file_digest(path):
     return h.hexdigest()
 
 
-def _apply_day_night_npk_files(target_mode, wait=False):
+def _apply_day_night_npk_files(target_mode):
     """Apply the launcher weather preset to the game packs - safely.
 
     * never while client.exe is running (it has these packs open; rewriting
@@ -1345,7 +1330,7 @@ def _apply_day_night_npk_files(target_mode, wait=False):
     * 'day'/'auto' restores the original files instead of rebuilding them
     """
     mode = _normalize_env_mode(target_mode)
-    if not _ENV_NPK_LOCK.acquire(bool(wait)):
+    if not _ENV_NPK_LOCK.acquire(False):
         return
     try:
         if is_process_running("client.exe", max_age=0):
@@ -1643,10 +1628,10 @@ class LauncherAPI:
                     }, f, indent=2)
             except Exception:
                 pass
-            # Rewriting the weather packs can take a long time (world4k.npk is
-            # ~450 MB); never block the Settings save on it. Play waits for it.
-            threading.Thread(target=lambda m=target_mode: _apply_day_night_npk_files(m),
-                             daemon=True).start()
+            try:
+                _apply_day_night_npk_files(target_mode)
+            except Exception:
+                pass
             if self._client_pid() > 0:
                 self.master_send_cmd("env " + target_mode)
                 if is_rain:
@@ -1809,7 +1794,6 @@ class LauncherAPI:
             if res.get("success"):
                 state["signed_in"] = res["account"]
                 state["is_dev"] = bool(res["account"].get("is_dev"))
-                state["ban"] = self._ban_for(res["account"])
                 return state
             # Stale token -- drop it
             cfg["account_token"] = ""
@@ -1819,55 +1803,21 @@ class LauncherAPI:
             if res.get("success"):
                 state["signed_in"] = res["account"]
                 state["is_dev"] = bool(res["account"].get("is_dev"))
-                state["ban"] = self._ban_for(res["account"])
                 return state
 
         return state
 
-    def _ban_for(self, account, force=False):
-        """Server ban status for the signed-in account (cached ~60 s)."""
-        try:
-            import accounts
-            if not account or account.get("is_dev"):
-                return {"banned": False}
-            return accounts.check_ban(account.get("username"), force=force)
-        except Exception:
-            return {"banned": False}
-
-    def _signed_user(self):
-        try:
-            import accounts
-            tok = load_config().get("account_token") or ""
-            return accounts.peek(tok)
-        except Exception:
-            pass
-        return None
-
-    def get_ban_status(self, force=False):
-        acc = self._signed_user()
-        if not acc:
-            return {"banned": False, "signed_in": False}
-        st = self._ban_for(acc, force=bool(force))
-        st["signed_in"] = True
-        return st
-
     def add_dev_account(self, username):
         try:
             import accounts
-            me = self._signed_user() or {}
-            if not me.get("is_dev"):
-                return {"success": False, "message": "Developer privileges required."}
-            return accounts.add_dev(username, as_user=me.get("username"))
+            return accounts.add_dev(username)
         except Exception as e:
             return {"success": False, "message": str(e)}
 
     def remove_dev_account(self, username):
         try:
             import accounts
-            me = self._signed_user() or {}
-            if not me.get("is_dev"):
-                return {"success": False, "message": "Developer privileges required."}
-            return accounts.remove_dev(username, as_user=me.get("username"))
+            return accounts.remove_dev(username)
         except Exception as e:
             return {"success": False, "message": str(e)}
 
@@ -1950,19 +1900,7 @@ class LauncherAPI:
         account_id = str(signed.get("uid") or signed.get("account_id") or "10001")
         device_id = self.get_device_id()
 
-        # Server-authoritative ban (shared by every PC). Forced fresh at Play.
-        if check_ban and signed and not signed.get("is_dev"):
-            sb = self._ban_for(signed, force=True)
-            if sb.get("banned"):
-                bt = sb.get("ban_type") or "Permanent"
-                return {
-                    "authorized": False, "banned": True,
-                    "reason": sb.get("reason") or "Cheating", "ban_type": bt,
-                    "expires_at": sb.get("expires_at") or 0,
-                    "message": "Your account is banned. You cannot launch Cyber Hunter Reawakening.",
-                }
-
-        if check_ban and ban_service and not is_remote_mode():
+        if ban_service and check_ban:
             is_banned, ban_rec = ban_service.check_ban(
                 account_id=account_id,
                 username=username,
@@ -2040,43 +1978,45 @@ class LauncherAPI:
             "message": "PLAY AUTHORIZED"
         }
 
-    # Moderation is server-side (shared bans table on the VPS). The dev UI and
-    # the in-console moderation buttons both use these.
-    def _dev_or_error(self):
-        me = self._signed_user() or {}
-        if not me.get("is_dev"):
-            return None, {"success": False, "message": "Unauthorized: Developer role required"}
-        return me, None
-
     def moderation_search_players(self, query):
-        me, err = self._dev_or_error()
-        if err:
+        if not ban_service:
             return []
-        import accounts
-        return accounts.search_players(me["username"], query)
+        return ban_service.search_players(query)
 
-    def moderation_ban_player(self, account_id, in_game_name="", ban_type="Permanent", reason="Cheating", notes="", duration=0):
-        me, err = self._dev_or_error()
-        if err:
-            return err
-        import accounts
-        secs = 0 if str(ban_type).lower().startswith("perm") else int(duration or 0)
-        return accounts.ban_player(me["username"], str(account_id or in_game_name), reason=reason,
-                                   duration_seconds=secs, notes=notes)
+    def moderation_ban_player(self, account_id, in_game_name, ban_type="Permanent", reason="Cheating", notes="", duration=0):
+        if not ban_service:
+            return {"success": False, "message": "BanService unavailable"}
+        st = self.account_state()
+        signed = (st or {}).get("signed_in") or {}
+        actor = signed.get("username", "Admin")
+        if not ban_service.can_moderate(actor):
+            return {"success": False, "message": "Unauthorized: Developer/Admin role required"}
+        rec = ban_service.ban_player(
+            account_id=str(account_id),
+            in_game_name=str(in_game_name),
+            reason=reason,
+            ban_type=ban_type,
+            banned_by=actor,
+            duration_seconds=int(duration or 0),
+            notes=notes
+        )
+        return {"success": True, "message": f"Player {in_game_name} has been banned ({ban_type}).", "ban": rec}
 
     def moderation_unban_player(self, ban_id, reason="Developer review"):
-        me, err = self._dev_or_error()
-        if err:
-            return err
-        import accounts
-        return accounts.unban_player(me["username"], ban_id=ban_id, reason=reason)
+        if not ban_service:
+            return {"success": False, "message": "BanService unavailable"}
+        st = self.account_state()
+        signed = (st or {}).get("signed_in") or {}
+        actor = signed.get("username", "Admin")
+        if not ban_service.can_moderate(actor):
+            return {"success": False, "message": "Unauthorized: Developer/Admin role required"}
+        ok, msg = ban_service.unban_player(ban_id, unbanned_by=actor, reason=reason)
+        return {"success": ok, "message": msg}
 
     def moderation_get_bans(self):
-        me, err = self._dev_or_error()
-        if err:
+        if not ban_service:
             return []
-        import accounts
-        return accounts.list_bans(me["username"]).get("bans", [])
+        return ban_service.list_bans()
 
     def moderation_get_flags(self):
         if not ban_service:
@@ -2084,46 +2024,11 @@ class LauncherAPI:
         return ban_service.list_flags()
 
     def moderation_get_role(self):
-        me = self._signed_user() or {}
-        is_dev = bool(me.get("is_dev"))
-        return {"role": "DEVELOPER" if is_dev else "PLAYER", "can_moderate": is_dev}
-
-    # Settings > Ban Players
-    def dev_ban_player(self, username, reason="Cheating", duration_hours=0, notes=""):
-        me, err = self._dev_or_error()
-        if err:
-            return err
-        import accounts
-        try:
-            secs = int(float(duration_hours or 0) * 3600)
-        except (TypeError, ValueError):
-            secs = 0
-        if (username or "").strip().lower() == (me.get("username") or "").lower():
-            return {"success": False, "message": "You can't ban yourself."}
-        return accounts.ban_player(me["username"], username, reason=reason or "Cheating",
-                                   duration_seconds=secs, notes=notes or "")
-
-    def dev_unban_player(self, username="", ban_id="", reason="Developer review"):
-        me, err = self._dev_or_error()
-        if err:
-            return err
-        import accounts
-        return accounts.unban_player(me["username"], username=username or None,
-                                     ban_id=ban_id or None, reason=reason)
-
-    def dev_list_bans(self):
-        me, err = self._dev_or_error()
-        if err:
-            return dict(err, bans=[])
-        import accounts
-        return accounts.list_bans(me["username"])
-
-    def list_tester_accounts(self):
-        me, err = self._dev_or_error()
-        if err:
-            return dict(err, testers=[])
-        import accounts
-        return accounts.list_testers(me["username"])
+        st = self.account_state()
+        signed = (st or {}).get("signed_in") or {}
+        username = signed.get("username", "")
+        role = ban_service.get_role(username) if ban_service else ("OWNER" if username == "yuzechua" else "PLAYER")
+        return {"role": role, "can_moderate": ban_service.can_moderate(username) if ban_service else (role in ("MODERATOR", "ADMIN", "OWNER"))}
 
 
     def minimize_window(self):
@@ -2166,16 +2071,10 @@ class LauncherAPI:
             )
             root.destroy()
             if selected:
-                sel = os.path.normpath(selected)
-                # Picking launcher.exe of the game folder: use its bin/client.exe.
-                if os.path.basename(sel).lower() != "client.exe":
-                    alt = os.path.join(os.path.dirname(sel), "bin", "client.exe")
-                    if os.path.isfile(alt):
-                        sel = alt
                 cfg = load_config()
-                cfg["game_path"] = sel
+                cfg["game_path"] = os.path.normpath(selected)
                 save_config(cfg)
-                return sel
+                return os.path.normpath(selected)
             return ""
         except Exception as e:
             return ""
@@ -2373,8 +2272,9 @@ class LauncherAPI:
             "-NoProfile", "-ExecutionPolicy", "Bypass", "-File",
             os.path.abspath(OFFLINE_PS1),
         ])
-        # "frida" or "native" (client loads our compiled scripts itself, no
-        # Frida; docs/NATIVE_SCRIPTS.md). See boot_mode().
+        # launcher_config.json "boot_mode": "frida" (default) or "native"
+        # (client loads our compiled scripts itself, no Frida;
+        # docs/NATIVE_SCRIPTS.md).
         pipeline[1].extend(["-Boot", boot_mode(cfg)])
 
         if pipeline:
@@ -2388,9 +2288,7 @@ class LauncherAPI:
                     # for minutes on a first-run `npm install`, and doing
                     # it inline froze the whole launcher window on Play.
                     _ensure_suite_services(bool(cfg.get("auto_server", True)))
-                    # wait=True: a background rewrite started by Settings must
-                    # finish before client.exe opens those packs.
-                    _apply_day_night_npk_files(cfg.get("env_mode") or ("night" if cfg.get("night_mode", False) else "day"), wait=True)
+                    _apply_day_night_npk_files(cfg.get("env_mode") or ("night" if cfg.get("night_mode", False) else "day"))
                     if kind == "cmd":
                         if is_admin():
                             subprocess.run(
@@ -2505,69 +2403,40 @@ class LauncherAPI:
     # Operator panel attached to this launcher: live logs, suite status, and
     # Frida lobby_cmd overrides. Same channel as client/frida/cmd.ps1.
 
-    _pid_cache = (0.0, 0)
-
     def _client_pid(self):
-        """PID of OUR client.exe (under this install's game folder), else 0.
-
-        Used to start PowerShell + Get-CimInstance on every call (0.5-2 s
-        each, several per Settings save), and matched only paths containing
-        "CyberHunter", so it never saw installs like E:\\CHReawakeningTest.
-        Now: Toolhelp snapshot + QueryFullProcessImageName, cached 1 s."""
         if os.name != "nt":
             return 0
-        now = time.time()
-        ts, pid = LauncherAPI._pid_cache
-        if now - ts < 1.0:
-            return pid
-        pid = 0
         try:
-            from ctypes import wintypes
-            k32 = ctypes.windll.kernel32
-
-            class _PE32W(ctypes.Structure):
-                _fields_ = [("dwSize", wintypes.DWORD), ("cntUsage", wintypes.DWORD),
-                            ("th32ProcessID", wintypes.DWORD), ("th32DefaultHeapID", ctypes.c_size_t),
-                            ("th32ModuleID", wintypes.DWORD), ("cntThreads", wintypes.DWORD),
-                            ("th32ParentProcessID", wintypes.DWORD), ("pcPriClassBase", wintypes.LONG),
-                            ("dwFlags", wintypes.DWORD), ("szExeFile", ctypes.c_wchar * 260)]
-            roots = set()
-            for r in (GAME_DIR, CYBER_HUNTER_DIR, ROOT_DIR, os.path.dirname(os.path.dirname(load_config().get("game_path") or ""))):
-                if r:
-                    try:
-                        roots.add(os.path.normcase(os.path.realpath(r)))
-                    except Exception:
-                        pass
-            k32.CreateToolhelp32Snapshot.restype = wintypes.HANDLE
-            snap = k32.CreateToolhelp32Snapshot(2, 0)
-            if snap and snap != wintypes.HANDLE(-1).value:
-                pe = _PE32W()
-                pe.dwSize = ctypes.sizeof(_PE32W)
-                ok = k32.Process32FirstW(snap, ctypes.byref(pe))
-                best = (0, 0)
-                while ok:
-                    if pe.szExeFile.lower() == "client.exe":
-                        h = k32.OpenProcess(0x1000, False, pe.th32ProcessID)  # QUERY_LIMITED_INFORMATION
-                        path = ""
-                        if h:
-                            buf = ctypes.create_unicode_buffer(1024)
-                            n = wintypes.DWORD(1024)
-                            if k32.QueryFullProcessImageNameW(h, 0, buf, ctypes.byref(n)):
-                                path = buf.value
-                            k32.CloseHandle(h)
-                        mine = not path  # protected/elevated: can't tell, assume ours
-                        if path:
-                            rp = os.path.normcase(os.path.realpath(path))
-                            mine = any(rp.startswith(r + os.sep) for r in roots)
-                        if mine and pe.th32ProcessID > best[1]:
-                            best = (1, pe.th32ProcessID)
-                    ok = k32.Process32NextW(snap, ctypes.byref(pe))
-                k32.CloseHandle(snap)
-                pid = best[1]
+            out = subprocess.check_output(
+                [
+                    "powershell", "-NoProfile", "-Command",
+                    "(Get-CimInstance Win32_Process -Filter \"Name='client.exe'\" | "
+                    "Where-Object { $_.ExecutablePath -like '*CyberHunter*' -or $_.ExecutablePath -like '*Cyber Hunter*' } | "
+                    "Sort-Object CreationDate | Select-Object -Last 1).ProcessId",
+                ],
+                creationflags=subprocess.CREATE_NO_WINDOW,
+                stderr=subprocess.STDOUT,
+                timeout=8,
+            )
+            s = (out or b"").decode("utf-8", "ignore").strip()
+            return int(s) if s.isdigit() else 0
         except Exception:
-            pid = 0
-        LauncherAPI._pid_cache = (now, pid)
-        return pid
+            try:
+                out = subprocess.check_output(
+                    ["tasklist", "/FI", "IMAGENAME eq client.exe", "/FO", "CSV", "/NH"],
+                    creationflags=subprocess.CREATE_NO_WINDOW,
+                    stderr=subprocess.STDOUT,
+                    timeout=5,
+                )
+                line = (out or b"").decode("utf-8", "ignore").strip().splitlines()
+                if not line or "No tasks" in line[0]:
+                    return 0
+                parts = line[0].split(",")
+                if len(parts) >= 2:
+                    return int(parts[1].strip().strip('"'))
+            except Exception:
+                return 0
+        return 0
 
     def master_snapshot(self):
         """Suite + match + account snapshot for the Master Console header."""
@@ -3146,72 +3015,74 @@ class LauncherAPI:
             "message": f"All {found} core packages & client binaries verified."
         }
 
-    # ------------------------------------------------------------------ Launcher/client updates
-    # Manifest-based (Launcher/updater.py): downloads ONLY allow-listed player
-    # files over HTTPS and verifies each one's SHA-256. No git, so nothing
-    # else on the update branch (server code, configs) ever reaches a player.
-    _updater = None
-    _updater_lock = threading.Lock()
+    # ------------------------------------------------------------------ Game updates (git: reawakening-final)
+    # The install is a git clone; an "update" is a fast-forward of the local
+    # reawakening-final branch to origin. Checking is a cheap `git ls-remote`
+    # (no download); updating is `git fetch --progress` whose stderr gives us
+    # percentage, bytes received and transfer speed for the progress bar.
+    _UPDATE_BRANCH = "reawakening-final"
+    _update_lock = threading.Lock()
+    _update_state = {
+        "status": "idle",        # idle | checking | available | up_to_date | updating | done | error | unavailable
+        "phase": "",
+        "percent": 0.0,
+        "received_bytes": 0,
+        "total_bytes": 0,
+        "speed_bps": 0.0,
+        "local_sha": "",
+        "remote_sha": "",
+        "message": "",
+        "launcher_changed": False,
+        "checked_at": 0.0,
+    }
 
-    def _get_updater(self):
-        with self._updater_lock:
-            if LauncherAPI._updater is None:
-                try:
-                    from updater import Updater
-                except ImportError:
-                    from Launcher.updater import Updater
-                LauncherAPI._updater = Updater(ROOT_DIR)
-            return LauncherAPI._updater
+    @staticmethod
+    def _git_exe():
+        import shutil
+        exe = shutil.which("git")
+        if exe:
+            return exe
+        for cand in (r"C:\Program Files\Git\cmd\git.exe",
+                     r"C:\Program Files (x86)\Git\cmd\git.exe",
+                     os.path.expandvars(r"%LOCALAPPDATA%\Programs\Git\cmd\git.exe")):
+            if os.path.isfile(cand):
+                return cand
+        return None
+
+    @staticmethod
+    def _git_env():
+        env = dict(os.environ)
+        env["GIT_TERMINAL_PROMPT"] = "0"   # never hang on a credential prompt
+        env["LC_ALL"] = "C"                # stable English progress output
+        return env
+
+    def _git(self, *args, timeout=30):
+        exe = self._git_exe()
+        if not exe:
+            raise RuntimeError("git not found")
+        p = subprocess.run(
+            [exe, "-C", ROOT_DIR] + list(args),
+            capture_output=True, text=True, timeout=timeout, env=self._git_env(),
+            creationflags=subprocess.CREATE_NO_WINDOW if os.name == "nt" else 0,
+        )
+        return p.returncode, (p.stdout or "").strip(), (p.stderr or "").strip()
+
+    def _set_update(self, **kw):
+        with self._update_lock:
+            self._update_state.update(kw)
 
     def get_update_state(self):
-        try:
-            return self._get_updater().get()
-        except Exception as e:
-            return {"status": "unavailable", "message": str(e)}
-
-    def check_for_update(self):
-        try:
-            return self._get_updater().check()
-        except Exception as e:
-            return {"status": "error", "message": "Update check failed: %s" % e}
-
-    def start_update(self):
-        if self._client_pid():
-            return {"success": False, "message": "Close Cyber Hunter before updating."}
-        try:
-            return self._get_updater().start()
-        except Exception as e:
-            return {"success": False, "message": str(e)}
-
+        with self._update_lock:
+            return dict(self._update_state)
     def is_game_installed(self):
-        cfg_exe = load_config().get("game_path") or ""
-        if cfg_exe and os.path.isfile(cfg_exe) and os.path.basename(cfg_exe).lower() == "client.exe":
-            return True
-        if GameDownloader and GameDownloader.is_installed(ROOT_DIR):
-            self._adopt_installed_game()
-            return True
+        if GameDownloader:
+            return GameDownloader.is_installed(ROOT_DIR)
         return os.path.isfile(CLIENT_EXE)
 
     def get_game_download_state(self):
         if GameDownloader:
-            st = GameDownloader.get_state(ROOT_DIR)
-            if st.get("status") == "done" and st.get("installed"):
-                self._adopt_installed_game()
-                st["game_path"] = load_config().get("game_path", "")
-            return st
+            return GameDownloader.get_state(ROOT_DIR)
         return {"status": "idle", "installed": os.path.isfile(CLIENT_EXE), "percent": 0.0}
-
-    def _adopt_installed_game(self):
-        """After a download: game/bin/client.exe beside the launcher becomes the Game Path."""
-        exe = _refresh_game_paths()
-        if not exe:
-            return ""
-        cfg = load_config()
-        cur = cfg.get("game_path") or ""
-        if not cur or not os.path.isfile(cur):
-            cfg["game_path"] = os.path.normpath(exe)
-            save_config(cfg)
-        return exe
 
     def pause_game_download(self):
         if GameDownloader:
@@ -3251,29 +3122,282 @@ class LauncherAPI:
             import accounts
         except ImportError:
             from Launcher import accounts
-        return accounts.create_account(username, password, hero_name, created_by=signed.get("username"))
+        return accounts.create_account(username, password, hero_name)
 
-    def restart_launcher(self):
-        """Relaunch through CyberHunter.bat (the single entry point) and close.
+    _ALLOWED_UPDATE_PREFIXES = (
+        "Launcher/",
+        "client/",
+        "tools/private_server/",
+        "tools/verify_game_files.py",
+        "tools/client_manifest.py",
+        "requirements.txt",
+        "CyberHunter.bat",
+    )
+    _BLOCKED_UPDATE_PATTERNS = (
+        "accounts.json",
+        "revival_config.env",
+        "game/",
+        "Cyber Steam/",
+        ".env",
+    )
 
-        A launcher .exe downloaded by the updater sits next to the old one as
-        <name>.new; it is swapped in once this process has exited."""
-        bat = os.path.join(ROOT_DIR, "CyberHunter.bat")
+    def _is_allowed_update_file(self, rel_path):
+        if not rel_path:
+            return False
+        rel = rel_path.replace("\\", "/").strip().lstrip("./")
+        for blocked in self._BLOCKED_UPDATE_PATTERNS:
+            if blocked in rel:
+                return False
+        for allowed in self._ALLOWED_UPDATE_PREFIXES:
+            if rel == allowed or rel.startswith(allowed):
+                return True
+        return False
+
+    def _get_last_applied_sha(self):
+        sha_file = os.path.join(ROOT_DIR, "client", "runtime", "client_update_sha.txt")
         try:
-            swaps = []
+            if os.path.isfile(sha_file):
+                with open(sha_file, "r") as f:
+                    s = f.read().strip()
+                    if s and len(s) >= 7:
+                        return s
+        except Exception:
+            pass
+        _, head_sha, _ = self._git("rev-parse", "HEAD")
+        return head_sha or ""
+
+    def _set_last_applied_sha(self, sha):
+        try:
+            rt_dir = os.path.join(ROOT_DIR, "client", "runtime")
+            if not os.path.isdir(rt_dir):
+                os.makedirs(rt_dir)
+            sha_file = os.path.join(rt_dir, "client_update_sha.txt")
+            with open(sha_file, "w") as f:
+                f.write(str(sha).strip())
+        except Exception:
+            pass
+
+    def check_for_update(self):
+        """Compare local state with origin/reawakening-final without downloading."""
+        st = self.get_update_state()
+        if st["status"] == "updating":
+            return st
+        if not os.path.isdir(os.path.join(ROOT_DIR, ".git")) or not self._git_exe():
+            self._set_update(status="unavailable", message="Auto-update needs a git install of the game.",
+                             checked_at=time.time())
+            return self.get_update_state()
+        try:
+            rc, branch, _ = self._git("rev-parse", "--abbrev-ref", "HEAD")
+            if rc != 0 or branch != self._UPDATE_BRANCH:
+                self._set_update(status="unavailable",
+                                 message="On branch %s, not %s." % (branch or "?", self._UPDATE_BRANCH),
+                                 checked_at=time.time())
+                return self.get_update_state()
+            local_sha = self._get_last_applied_sha()
+            rc, out, err = self._git("ls-remote", "origin", "refs/heads/" + self._UPDATE_BRANCH, timeout=20)
+            if rc != 0 or not out:
+                self._set_update(status="error", message="Could not reach update server. " + err[-200:],
+                                 local_sha=local_sha, checked_at=time.time())
+                return self.get_update_state()
+            remote_sha = out.split()[0]
+            behind = remote_sha != local_sha
+            if behind:
+                # If we already have the remote commit, check if any ALLOWED client files changed
+                rc_has, _, _ = self._git("cat-file", "-e", remote_sha + "^{commit}")
+                if rc_has == 0:
+                    rc_anc, _, _ = self._git("merge-base", "--is-ancestor", remote_sha, "HEAD")
+                    if rc_anc == 0 and remote_sha == local_sha:
+                        behind = False
+                    else:
+                        rc_diff, diff_out, _ = self._git("diff", "--name-only", local_sha, remote_sha)
+                        if rc_diff == 0:
+                            allowed_diff = [f for f in diff_out.splitlines() if self._is_allowed_update_file(f)]
+                            if not allowed_diff:
+                                behind = False
+            self._set_update(status="available" if behind else "up_to_date",
+                             local_sha=local_sha, remote_sha=remote_sha,
+                             message="Update available" if behind else "Up to date",
+                             checked_at=time.time())
+        except Exception as e:
+            self._set_update(status="error", message="Update check failed: %s" % e, checked_at=time.time())
+        return self.get_update_state()
+
+    def start_update(self):
+        """Fetch + apply targeted updates from reawakening-final in a background thread."""
+        if self._client_pid():
+            return {"success": False, "message": "Close Cyber Hunter before updating."}
+        with self._update_lock:
+            if self._update_state["status"] == "updating":
+                return {"success": True, "message": "Update already running."}
+            self._update_state.update(status="updating", phase="Connecting...", percent=0.0,
+                                      received_bytes=0, total_bytes=0, speed_bps=0.0,
+                                      message="", launcher_changed=False)
+        threading.Thread(target=self._run_update, daemon=True).start()
+        return {"success": True, "message": "Update started."}
+
+    @staticmethod
+    def _parse_size(num, unit):
+        mult = {"bytes": 1, "B": 1, "KiB": 1024, "MiB": 1024 ** 2, "GiB": 1024 ** 3}.get(unit, 1)
+        try:
+            return float(num) * mult
+        except ValueError:
+            return 0.0
+
+    def _run_update(self):
+        import re
+        rx_recv = re.compile(r"Receiving objects:\s+(\d+)%.*?,\s*([\d.]+)\s*(bytes|KiB|MiB|GiB)"
+                             r"(?:\s*\|\s*([\d.]+)\s*(bytes|KiB|MiB|GiB)/s)?")
+        rx_phase = re.compile(r"^(?:remote:\s*)?([A-Za-z ]+):\s+(\d+)%")
+        try:
+            old_sha = self._get_last_applied_sha()
+            exe = self._git_exe()
+            proc = subprocess.Popen(
+                [exe, "-C", ROOT_DIR, "fetch", "--progress", "origin",
+                 "+refs/heads/{0}:refs/remotes/origin/{0}".format(self._UPDATE_BRANCH)],
+                stdout=subprocess.DEVNULL, stderr=subprocess.PIPE, env=self._git_env(),
+                creationflags=subprocess.CREATE_NO_WINDOW if os.name == "nt" else 0,
+            )
+            buf = b""
+            tail = []
+            last_bytes, last_t = 0.0, time.time()
+            while True:
+                ch = proc.stderr.read(1)
+                if not ch:
+                    break
+                if ch not in (b"\r", b"\n"):
+                    buf += ch
+                    continue
+                line = buf.decode("utf-8", "replace").strip()
+                buf = b""
+                if not line:
+                    continue
+                tail = (tail + [line])[-6:]
+                m = rx_recv.search(line)
+                if m:
+                    pct = float(m.group(1))
+                    recv = self._parse_size(m.group(2), m.group(3))
+                    if m.group(4):
+                        speed = self._parse_size(m.group(4), m.group(5))
+                    else:
+                        now = time.time()
+                        speed = (recv - last_bytes) / max(now - last_t, 0.001)
+                        last_bytes, last_t = recv, now
+                    total = recv / (pct / 100.0) if pct > 0 else 0
+                    if pct >= 100:
+                        total = recv
+                    self._set_update(phase="Downloading", percent=pct * 0.9,
+                                     received_bytes=int(recv), total_bytes=int(total), speed_bps=speed)
+                    continue
+                m = rx_phase.search(line)
+                if m:
+                    name = m.group(1).strip()
+                    pct = float(m.group(2))
+                    if name.startswith("Receiving"):
+                        self._set_update(phase="Downloading", percent=pct * 0.9)
+                    elif name.startswith("Resolving"):
+                        self._set_update(phase="Installing", percent=90 + pct * 0.08, speed_bps=0.0)
+                    elif not self.get_update_state()["received_bytes"]:
+                        self._set_update(phase="Preparing (%s)" % name.lower(), percent=min(pct * 0.05, 5))
+            proc.wait()
+            if proc.returncode != 0:
+                raise RuntimeError(" ".join(tail[-2:]) or "git fetch failed")
+
+            self._set_update(phase="Applying update", percent=98, speed_bps=0.0)
+            target = "origin/" + self._UPDATE_BRANCH
+            rc_target, new_sha, _ = self._git("rev-parse", target)
+            if rc_target != 0 or not new_sha:
+                raise RuntimeError("Could not resolve " + target)
+
+            # Targeted diff: only inspect and checkout allowed client files
+            rc, diff_out, _ = self._git("diff", "--name-status", old_sha if old_sha else "HEAD", target)
+            if rc != 0:
+                # If diff against old_sha fails (e.g. shallow clone or invalid sha), diff against HEAD
+                rc, diff_out, _ = self._git("diff", "--name-status", "HEAD", target)
+
+            to_checkout = []
+            to_delete = []
+            if rc == 0 and diff_out:
+                for raw_line in diff_out.splitlines():
+                    line = raw_line.strip()
+                    if not line:
+                        continue
+                    parts = line.split("\t")
+                    if not parts:
+                        continue
+                    status_code = parts[0][0]
+                    if status_code == 'R' and len(parts) >= 3:
+                        old_p, new_p = parts[1].strip(), parts[2].strip()
+                        if self._is_allowed_update_file(old_p):
+                            to_delete.append(old_p)
+                        if self._is_allowed_update_file(new_p):
+                            to_checkout.append(new_p)
+                    elif status_code == 'D' and len(parts) >= 2:
+                        p = parts[1].strip()
+                        if self._is_allowed_update_file(p):
+                            to_delete.append(p)
+                    elif len(parts) >= 2:
+                        p = parts[1].strip()
+                        if self._is_allowed_update_file(p):
+                            to_checkout.append(p)
+
+            # Never overwrite uncommitted local edits (a dev checkout keeps
+            # work in progress here; the old code silently reverted it).
+            skipped_local = []
             try:
-                swaps = self._get_updater().staged_exes()
+                rc_st, st_out, _ = self._git("status", "--porcelain", "-uno", timeout=30)
+                if rc_st == 0 and st_out:
+                    dirty = set()
+                    for ln in st_out.splitlines():
+                        pth = ln[3:].strip().strip('"')
+                        if " -> " in pth:
+                            pth = pth.split(" -> ", 1)[1].strip('"')
+                        dirty.add(pth.replace("\\", "/"))
+                    skipped_local = [p for p in to_checkout + to_delete if p in dirty]
+                    to_checkout = [p for p in to_checkout if p not in dirty]
+                    to_delete = [p for p in to_delete if p not in dirty]
             except Exception:
                 pass
-            steps = ["ping -n 3 127.0.0.1 >nul"]
-            for name in swaps:
-                cur = os.path.join(ROOT_DIR, name)
-                steps.append('move /y "%s.new" "%s" >nul' % (cur, cur))
-            steps.append('start "" "%s"' % bat)
+            if skipped_local:
+                print("update: kept %d locally modified file(s): %s" % (
+                    len(skipped_local), ", ".join(skipped_local[:10])))
+
+            # Apply checkouts in chunks to avoid command-line length limits
+            checkout_chunk_size = 50
+            for i in range(0, len(to_checkout), checkout_chunk_size):
+                chunk = to_checkout[i:i + checkout_chunk_size]
+                rc_co, out_co, err_co = self._git(*(["checkout", target, "--"] + chunk), timeout=60)
+                if rc_co != 0:
+                    raise RuntimeError("Failed to update files: " + (err_co or out_co)[-300:])
+
+            # Apply safe deletions for allowed files only
+            for rel_del in to_delete:
+                full_del = os.path.join(ROOT_DIR, rel_del)
+                if os.path.isfile(full_del):
+                    try:
+                        os.remove(full_del)
+                    except Exception:
+                        pass
+
+            self._set_last_applied_sha(new_sha)
+            launcher_changed = any(p.startswith("Launcher/") for p in to_checkout)
+            self._set_update(status="done", phase="Update complete", percent=100,
+                             local_sha=new_sha, remote_sha=new_sha, speed_bps=0.0,
+                             launcher_changed=launcher_changed,
+                             message="Updated (%d files) to %s" % (len(to_checkout), new_sha[:7]))
+        except Exception as e:
+            self._set_update(status="error", phase="Update failed", message=str(e)[:400], speed_bps=0.0)
+
+    def restart_launcher(self):
+        """Relaunch through CyberHunter.bat (the single entry point) and close."""
+        bat = os.path.join(ROOT_DIR, "CyberHunter.bat")
+        try:
+            # Wait for this process to exit (releases the single-instance lock)
+            # before CyberHunter.bat starts a fresh launcher.
+            cmd = 'ping -n 3 127.0.0.1 >nul & start "" "%s"' % bat
             # One command-line STRING: a list makes Python escape the inner
             # quotes as \" which cmd does not understand -> start runs "\\"
             # and Windows shows "Windows cannot find '\\'".
-            subprocess.Popen('cmd /c ' + " & ".join(steps), cwd=ROOT_DIR,
+            subprocess.Popen('cmd /c ' + cmd, cwd=ROOT_DIR,
                              creationflags=subprocess.CREATE_NO_WINDOW if os.name == "nt" else 0)
         except Exception as e:
             return {"success": False, "message": str(e)}
