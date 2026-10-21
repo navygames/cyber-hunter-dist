@@ -1,6 +1,6 @@
 {
  "schema": 1,
- "version": "2026.10.21-055058",
+ "version": "2026.10.21-064923",
  "files": [
   {
    "path": "CyberHunter.bat",
@@ -9,8 +9,8 @@
   },
   {
    "path": "CyberHunterLauncher.exe",
-   "sha256": "6e8a39822690cea3e27107d14fa5af2993bda9de0056d73be4b635bb0bd28f4e",
-   "size": 24407644
+   "sha256": "207d30973a7b99c383c1dd6b4eef8f0a19e0177b8a0dcc481f9e105968cd262a",
+   "size": 24405849
   },
   {
    "path": "Launcher/app_icon.ico",
@@ -284,7 +284,7 @@
   },
   {
    "path": "client/native/build/script/manifest.json",
-   "sha256": "5804cc0e5cc0115126bc4b4e8da7ddd359e3148fc89a68e5c014b68226e0e762",
+   "sha256": "8621a02b47fc87b1a22dda035f179448fd41806d9e457962b29579651e63a55d",
    "size": 1795
   },
   {
@@ -309,8 +309,8 @@
   },
   {
    "path": "launcher.exe",
-   "sha256": "6e8a39822690cea3e27107d14fa5af2993bda9de0056d73be4b635bb0bd28f4e",
-   "size": 24407644
+   "sha256": "207d30973a7b99c383c1dd6b4eef8f0a19e0177b8a0dcc481f9e105968cd262a",
+   "size": 24405849
   },
   {
    "path": "requirements.txt",
