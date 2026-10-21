@@ -1,6 +1,6 @@
 {
  "schema": 1,
- "version": "2026.10.21-180441",
+ "version": "2026.10.21-184851",
  "files": [
   {
    "path": "CyberHunter.bat",
@@ -9,8 +9,8 @@
   },
   {
    "path": "CyberHunterLauncher.exe",
-   "sha256": "8442107241479ab7724f9a97b782b43ea86dbf9706b6ecf718705ada4ceea5de",
-   "size": 24237970
+   "sha256": "ee8d4038efb546e2d6ee0dfd35a44fe832c918bb12c4f2b9481adf6b8fd4e514",
+   "size": 24237056
   },
   {
    "path": "Launcher/app_icon.ico",
@@ -284,7 +284,7 @@
   },
   {
    "path": "client/native/build/script/manifest.json",
-   "sha256": "b5302ea03abaf2e48fe0401287ddee8698c75f505be2b2347437872413e7a217",
+   "sha256": "f072726a5ecd15009b241007d38fb4757a38b81ba6db6843b4670571b54373bb",
    "size": 2237
   },
   {
@@ -304,8 +304,8 @@
   },
   {
    "path": "client/native/build/script/reawakening/pack.nxs",
-   "sha256": "b0e285b4b94de245669a193e3ec81af23a9e313a227befeb522db07a0b069e68",
-   "size": 817444
+   "sha256": "f588563a9ed11a30a0d196748a74b11ac471b4d22b1655b46dc0d496189d16ea",
+   "size": 820201
   },
   {
    "path": "game-server/src/sync_supabase.js",
@@ -314,8 +314,8 @@
   },
   {
    "path": "launcher.exe",
-   "sha256": "8442107241479ab7724f9a97b782b43ea86dbf9706b6ecf718705ada4ceea5de",
-   "size": 24237970
+   "sha256": "ee8d4038efb546e2d6ee0dfd35a44fe832c918bb12c4f2b9481adf6b8fd4e514",
+   "size": 24237056
   },
   {
    "path": "requirements.txt",
