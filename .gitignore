@@ -62,3 +62,6 @@ game-server/src/sync_relay.js
 # accounts.py, game_downloader.py and the UI (PyInstaller). Players get the exe.
 Launcher/*.py
 Launcher/*.spec
+
+# Launch script is embedded in CyberHunterLauncher.exe (launch/run.ps1).
+client/launchers/

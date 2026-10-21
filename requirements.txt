@@ -1,10 +1,5 @@
-# Cyber Hunter offline revival — Python dependencies (Python 3.10+, 64-bit)
+# Cyber Hunter Reawakening - Python dependencies (Python 3.10+, 64-bit)
 # Install: pip install -r requirements.txt
 
-# Local TLS for the patch server (tools/private_server). The in-game mod is
-# compiled into client/native/build/script and loaded by the game itself;
-# Frida is no longer needed.
 cryptography>=41.0.0
-
-# Navy Games Launcher / Installer UI
 pywebview>=4.4

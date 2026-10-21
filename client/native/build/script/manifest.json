@@ -1,22 +1,22 @@
 {
- "build": "47ff762cee7da60a",
- "built": "2026-10-20T23:51:52",
+ "build": "6e0754e60ce98ba3",
+ "built": "2026-10-21T11:00:41",
  "files": {
   "common/__init__.nxs": "c6480e369916785d0c06fe976a0f1f42db19d91a587ed20cec34e7c3f6d28c34",
   "common/logo_mgr.nxs": "967d39f262786ef43c71b3faf7aaaa21a0cff43c5ecc4c43e637f39ab9afa973",
   "common/logo_panel.nxs": "615bdc6d81b55b3f3ed2179eb93f1c5edd1a05e0a27bdc174d9844ad9e62fbc8",
   "reawakening/__init__.nxs": "1d618a71243345acc17f2a24b2dcb5c85be75d4fc44d413d3c7a8e84b7d6d2ec",
-  "reawakening/boot.nxs": "3a598df215b417dc4bda007f5802f22a2b4f8b4138e12d5d5f54a1cf766c133e",
-  "reawakening/pack.nxs": "ec363093df3c6beac368b3b34e13f80f163a625fb364ad57eabf62ec2dee986a"
+  "reawakening/boot.nxs": "b7c975425964b09c5b46fae3c9a4187a2ae4f60bb98f46eda8260b0caa4c896e",
+  "reawakening/pack.nxs": "162f472ae35100e219c8e94fb8baef133645e17bed2a657601a61f4838047e71"
  },
  "sources": {
   "client/frida/br_world4k_anchors.py": "e942440ea014291dee657450074e1e69c41342b935304833774ec1d466c6eb30",
   "client/frida/br_world4k_spawns.py": "5b6dcc1651c6c0f018a7b873ee3444eed8ca7932f7a558df0e5ed4bdc52c60f5",
-  "client/frida/lobby_full_payload.py": "ff569f5c7ec7fb2125eabaa76242708efc0e1c96be81fb498ed8dddea688efeb",
+  "client/frida/lobby_full_payload.py": "969b56265e5ba4cbf11ebc0678711624bb1969c44c8d8252f981a7f763aa4c1f",
   "client/frida/lobby_offline_server.py": "5fc9947f5cb40875afc0c3414c13a9428dd756bf44c670de04a148798417d925",
   "client/frida/offline_account_db.py": "25c022c0e6c6479fa5d03f2a22f0fc549c582c4ecd2b7f185309d79f99189f6f",
   "client/frida/offline_weapon_damage.json": "d731b363ceea07d99a81c430ae2fe47fd98482c8e432a25b7560af277d796756",
-  "client/native/boot.py": "ceb5047dd3a3331faf28e8a6e0ab87c163f82cb695013125ab108012e602732c",
+  "client/native/boot.py": "813011b73130a5cea6dccc61d877c74da565e3248b4843067abdc510e96351ab",
   "client/native/game_overlay/common/__init__.py": "ec3c621294f583a84cc16d61045d7b38e1512770d6d3782212eeab82f4424c76",
   "client/native/game_overlay/common/logo_mgr.py": "d1fe70f33142dcec70513c1674a7765170612412530254828a787dc57e06e45c",
   "client/native/game_overlay/common/logo_panel.py": "ee80f18cab531243be9ce23e765ed9917755e0e979dc93cd4fc61e77db360d44"

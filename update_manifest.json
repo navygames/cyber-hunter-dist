@@ -1,16 +1,16 @@
 {
  "schema": 1,
- "version": "2026.10.21-022511",
+ "version": "2026.10.21-032149",
  "files": [
   {
    "path": "CyberHunter.bat",
-   "sha256": "cb1c156f7e8d660a6a75ad02dd8a4ed780d4b513827bb89cdef3f0a52ff45c53",
-   "size": 1408
+   "sha256": "7032e691e8f4b40019dc59f9ff754c8b5f23dfcfee556f3374e7c35202bfc5d7",
+   "size": 995
   },
   {
    "path": "CyberHunterLauncher.exe",
-   "sha256": "24348d429224c322f093d75ad837aa9601fd3d85acf44bd96adef7f4ecd46952",
-   "size": 25008742
+   "sha256": "f8343a43361b9d5993feb22e56434543fbeb91a8209b1cdd146c670238e086c6",
+   "size": 24389733
   },
   {
    "path": "Launcher/app_icon.ico",
@@ -19,8 +19,8 @@
   },
   {
    "path": "Launcher/ui/app.js",
-   "sha256": "4d1e28092da1c6bed98ac1a1fe6007b29cbdf84d2fa614bdbd9fd0df4cbc865d",
-   "size": 159838
+   "sha256": "da90d9791d23ab9c1fbb29cea92dd77f9df7b66b9629e29b84040c0b243c4bdc",
+   "size": 140220
   },
   {
    "path": "Launcher/ui/assets/ch-logo-white.png",
@@ -119,13 +119,13 @@
   },
   {
    "path": "Launcher/ui/index.html",
-   "sha256": "d7706ea122cbc5bb6d23df93c2093a487999f141551304adb4677997d9379360",
-   "size": 90198
+   "sha256": "371b0949bd74975f04b7790ae9bb588e317ab6213c43b883309f0b9e821f6bc1",
+   "size": 84212
   },
   {
    "path": "Launcher/ui/style.css",
-   "sha256": "2b696640d8235c88097849a77ccd2cce5e489af0345c829b09f9bcc907233c37",
-   "size": 77182
+   "sha256": "12329259fddb8c55db4c2efb23872c0c309015c9de218d6e1222a2f44c4b184d",
+   "size": 64595
   },
   {
    "path": "Launcher/ui/vendor/fontawesome.css",
@@ -268,11 +268,6 @@
    "size": 38141
   },
   {
-   "path": "client/launchers/run_offline_python.ps1",
-   "sha256": "724f1f5f201e4bf9d09e21758e4aab5e8141952dd14fc2b976e9eab355e4cc46",
-   "size": 34570
-  },
-  {
    "path": "client/native/build/script/common/__init__.nxs",
    "sha256": "c6480e369916785d0c06fe976a0f1f42db19d91a587ed20cec34e7c3f6d28c34",
    "size": 79
@@ -289,7 +284,7 @@
   },
   {
    "path": "client/native/build/script/manifest.json",
-   "sha256": "32e63648fa0b2e795fa9502fc3f63e38d48cf67ad01624e4f5c6acaa5d33d679",
+   "sha256": "74c18b97c69dfa779602a75728172ca289f7f753887e4b33fca2ce12dae4d736",
    "size": 1795
   },
   {
@@ -299,43 +294,43 @@
   },
   {
    "path": "client/native/build/script/reawakening/boot.nxs",
-   "sha256": "3a598df215b417dc4bda007f5802f22a2b4f8b4138e12d5d5f54a1cf766c133e",
-   "size": 4393
+   "sha256": "b7c975425964b09c5b46fae3c9a4187a2ae4f60bb98f46eda8260b0caa4c896e",
+   "size": 4735
   },
   {
    "path": "client/native/build/script/reawakening/pack.nxs",
-   "sha256": "ec363093df3c6beac368b3b34e13f80f163a625fb364ad57eabf62ec2dee986a",
-   "size": 740835
+   "sha256": "162f472ae35100e219c8e94fb8baef133645e17bed2a657601a61f4838047e71",
+   "size": 750982
   },
   {
    "path": "game-server/src/sync_supabase.js",
-   "sha256": "eff231ac865d2c96e18b1b6c51a0b3441623411c605cfa4596994c7ed188d9f4",
-   "size": 12075
+   "sha256": "8674751009eaf089ec91aab912ce4c2b33831dbe6d6f8cf2cd5bfc7ecc0dc2cd",
+   "size": 9126
   },
   {
    "path": "launcher.exe",
-   "sha256": "24348d429224c322f093d75ad837aa9601fd3d85acf44bd96adef7f4ecd46952",
-   "size": 25008742
+   "sha256": "f8343a43361b9d5993feb22e56434543fbeb91a8209b1cdd146c670238e086c6",
+   "size": 24389733
   },
   {
    "path": "requirements.txt",
-   "sha256": "0fc9eae27676bfade9a339635d029a2ea3b8b704c40036ca06384d18c9fcc158",
-   "size": 385
+   "sha256": "eed7a8ca6d0c5a913488ba6c43845fb5b6b5a0fc947d02b1e597a7e8bdd49dac",
+   "size": 157
   },
   {
    "path": "revival_config.env.example",
-   "sha256": "c1798ca9521d0ce620ed1bf09cd6c363e478b82a8f19d7e67b0980837a9c489d",
-   "size": 1888
+   "sha256": "cc36db19b6dbafbff080d8cd303769fffe8327a3fbd8fb863bddf65cf3d50fdf",
+   "size": 753
   },
   {
    "path": "tools/client_manifest.py",
-   "sha256": "979bc04498e9552efa3591ae6b3790ebd1de55324d3c4c58f48d982d6893ea97",
-   "size": 7014
+   "sha256": "1f174280a14c57964ba3d75c76a2714cbe07429cd63506645e201e22f6e4cb94",
+   "size": 3649
   },
   {
    "path": "tools/npk.py",
-   "sha256": "2209cdc14b27a43f7a9e9f08b1d8020adf1f01c0d897f582b371246a10af075c",
-   "size": 14746
+   "sha256": "3fa09cff391ef409c17edfebcb6fb4b73c8e65996ac5614e0e604101617b19eb",
+   "size": 8658
   },
   {
    "path": "tools/private_server/certs/ca.cert.pem",
@@ -344,23 +339,23 @@
   },
   {
    "path": "tools/private_server/gateway_stub.py",
-   "sha256": "024def9fba8e811e468e8ecc596bd0e6f1f1da931bac7514b2e0e3fae78706ed",
-   "size": 2670
+   "sha256": "eb7bf144dce307625614ca680d90178d0d43b677ec975deceea07cb514747f16",
+   "size": 1723
   },
   {
    "path": "tools/private_server/http_stub.py",
-   "sha256": "2d66fb6cfaa015aacda1d47120834fd152ce25287628c7b005092a0dd9406bc2",
-   "size": 2070
+   "sha256": "907b896f619a4292300debacd994c022b565f7edcf8ec8d5e30536f137f40e1e",
+   "size": 1597
   },
   {
    "path": "tools/private_server/inject_game_ca.py",
-   "sha256": "f49534e3388fa57c6b7e6c1d38095a31c9fae6cf12884dec0fe79fdf29ee90bd",
-   "size": 2973
+   "sha256": "b0e21e5771c4da17d6cbae2038e2fc7a00d33f673bf865132aff9590dec35ce9",
+   "size": 2206
   },
   {
    "path": "tools/private_server/patch_server.py",
-   "sha256": "d7b942e1e83c0e945b773395f2143016beebce7a4d4067a7d8cd5cf80199b6cc",
-   "size": 9486
+   "sha256": "3f49b755b34144ca04d95e3d038c4c0cd6152a706fa4364a82c1b006e5750604",
+   "size": 6139
   },
   {
    "path": "tools/private_server/remove_hosts.ps1",
@@ -429,18 +424,18 @@
   },
   {
    "path": "tools/private_server/setup_hosts.ps1",
-   "sha256": "44652e78cff603fb4d7db5027733d5dce119f9f7fa127825f698e74165b7914e",
-   "size": 3006
+   "sha256": "9b15f8f861fe1dbf018a198f77c7e912970dfc7513a79a82bc85b59d4123dab4",
+   "size": 2440
   },
   {
    "path": "tools/private_server/setup_loopback_ips.ps1",
-   "sha256": "081a3f6f22c7d262dca3def6a132d8c44829cbdece1adfa6f2a8d6b64a6b0bb4",
-   "size": 1240
+   "sha256": "43b424ea254eb4e72f2aeb0934e81dae31270da6da7c2334ba53d3fec13d10d7",
+   "size": 779
   },
   {
    "path": "tools/private_server/trust_ca.ps1",
-   "sha256": "55851ce699adff4fc931b2ca7410ea9cd1e0d57fb4efe653875e21dcecd70266",
-   "size": 1191
+   "sha256": "ff999ebfa6b318b5b7cf2842c92e984e0e86fb3678667464ed857372300b8a11",
+   "size": 1095
   },
   {
    "path": "tools/private_server/untrust_ca.ps1",
@@ -449,8 +444,8 @@
   },
   {
    "path": "tools/verify_game_files.py",
-   "sha256": "53a3be60664d447699d782960aaecdcdb6682705512c5d9444104ec8cf171bf1",
-   "size": 17693
+   "sha256": "e1d4df2c81b6eb0f5638bc4f9d7242782de7c886633d3727805485da19c928db",
+   "size": 8714
   }
  ]
 }

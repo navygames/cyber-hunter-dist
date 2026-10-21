@@ -1,16 +1,6 @@
 @echo off
-REM ============================================================
-REM  Navy Games - Cyber Hunter Reawakening
-REM  THE single entry point. Everything else runs behind this.
-REM
-REM  Server target is read from revival_config.env:
-REM    REVIVAL_SERVER_IP=127.0.0.1  -> local mode  (servers start on this PC)
-REM    REVIVAL_SERVER_IP=<vps ip>   -> remote mode (servers already run there)
-REM ============================================================
 title Navy Games - Cyber Hunter Reawakening
 
-REM Admin is required: the client stack edits hosts, binds low ports and
-REM injects Frida into client.exe.
 net session >nul 2>&1
 if %errorlevel% neq 0 (
     echo [*] Requesting Administrator privileges...
@@ -37,7 +27,14 @@ if exist "%~dp0CyberHunterLauncher.exe" (
     exit /b
 )
 
-echo [!] CyberHunterLauncher.exe is missing from this folder.
-echo     Re-run the installer or download the launcher again.
-pause
-exit /b 1
+where pythonw >nul 2>&1
+if errorlevel 1 (
+    echo [!] Python was not found on PATH.
+    echo     Install 64-bit Python 3.10+ ^(tick "Add to PATH"^), then:
+    echo         pip install -r requirements.txt
+    pause
+    exit /b 1
+)
+
+cd /d "%~dp0Launcher"
+start "" pythonw run_launcher.py

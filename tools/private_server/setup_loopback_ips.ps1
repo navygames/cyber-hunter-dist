@@ -1,8 +1,4 @@
 #Requires -RunAsAdministrator
-<#
-  Pin known NetEase LVS / CDN IPs onto the loopback interface so raw-IP
-  dials (not hostnames) hit our local HTTP/HTTPS stubs instead of hanging.
-#>
 $ErrorActionPreference = 'Continue'
 $ips = @(
     '42.186.235.118',
@@ -11,10 +7,6 @@ $ips = @(
     '103.72.17.10',
     '52.76.137.125',
     '52.221.3.167',
-    # ISP NXDOMAIN hijack address that the client's own HTTPDNS resolver hands
-    # back for the dead update/whoami hosts. It is dialled as a raw IP, so the
-    # hosts file cannot catch it; unpinned the client sits in TCP SynSent for
-    # minutes on every cold start before Python imports resume.
     '49.44.79.236'
 )
 $ifName = 'Loopback Pseudo-Interface 1'

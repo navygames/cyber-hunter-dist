@@ -1,12 +1,4 @@
 #Requires -RunAsAdministrator
-<#
-.SYNOPSIS
-  Redirect NetEase patch CDN hostnames to the Revival Server IP (or localhost for offline).
-
-.PARAMETER ServerIp
-  IP address to redirect to. For the revival server pass your VPS public IP.
-  Defaults to 127.0.0.1 (offline / localhost mode).
-#>
 param(
     [string]$ServerIp = "127.0.0.1"
 )
@@ -22,7 +14,6 @@ if ($ServerIp -eq "YOUR_VPS_IP_HERE" -or $ServerIp -eq "") {
 
 Write-Host "Redirecting NetEase hostnames -> $ServerIp" -ForegroundColor Cyan
 
-# patch host + dead SDK telemetry hosts the client blocks on
 $Hosts = @(
     "g94na.update.easebar.com",
     "drpf-g94na.proxima.nie.netease.com",
@@ -63,9 +54,6 @@ function Write-HostsLines([string[]]$lines) {
     }
 }
 
-# Rewrite once instead of alternating Get-Content/WriteAllLines/Add-Content for
-# every hostname. Antivirus/DNS readers can briefly lock the file between those
-# operations, leaving a half-updated hosts file and aborting the launcher.
 $hostPattern = '(?i)(^|\s)(' + (($Hosts | ForEach-Object { [regex]::Escape($_) }) -join '|') + ')(\s|$)'
 $existingLines = Read-HostsLines
 $redirectLines = @($Hosts | ForEach-Object { "$ServerIp`t$_`t$Marker" })
