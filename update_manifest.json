@@ -1,36 +1,21 @@
 {
  "schema": 1,
- "version": "2026.10.20-101147",
+ "version": "2026.10.21-022511",
  "files": [
   {
    "path": "CyberHunter.bat",
-   "sha256": "e1a086fbb1b028d1714e41ed76a2953973ddc5fcdf1dc7784b0f737f03430263",
-   "size": 1562
+   "sha256": "cb1c156f7e8d660a6a75ad02dd8a4ed780d4b513827bb89cdef3f0a52ff45c53",
+   "size": 1408
   },
   {
    "path": "CyberHunterLauncher.exe",
-   "sha256": "50e0d8a8c30ec3262b10b505a950ea16e716a2c0496bb1891572a0d7afbe658d",
-   "size": 25022451
-  },
-  {
-   "path": "Launcher/accounts.py",
-   "sha256": "a93f76d1ee3881f32a0a1da69a838b0e5960678569605aba970e7df1ee17ec42",
-   "size": 54370
+   "sha256": "24348d429224c322f093d75ad837aa9601fd3d85acf44bd96adef7f4ecd46952",
+   "size": 25008742
   },
   {
    "path": "Launcher/app_icon.ico",
    "sha256": "8a4ab25cc951810fabad29fe5401229ae6ce6c0cff57e084687a5be8d933b165",
    "size": 16426
-  },
-  {
-   "path": "Launcher/game_downloader.py",
-   "sha256": "6e7face6f9752cf36a718be20a9008a6e3f17c47754a56ce77a53b2224e00929",
-   "size": 21219
-  },
-  {
-   "path": "Launcher/run_launcher.py",
-   "sha256": "4f7e3b2707c82752c1e7989d684054796708be9fc6f4fb859d34e0da300469f3",
-   "size": 162463
   },
   {
    "path": "Launcher/ui/app.js",
@@ -273,11 +258,6 @@
    "size": 156496
   },
   {
-   "path": "Launcher/updater.py",
-   "sha256": "516d25135bcf6a1860bd37f220400b955c970eee53f948b2c90f4b39d9f0951b",
-   "size": 18392
-  },
-  {
    "path": "README.txt",
    "sha256": "6e1fe3c501e11ca078e79fe367bb36eabc34981944e37fa5a715694a8a1f2e0e",
    "size": 1962
@@ -289,8 +269,8 @@
   },
   {
    "path": "client/launchers/run_offline_python.ps1",
-   "sha256": "952c1c5c341b8d8d2ab3af8ad9c5e68dcf04fda8c8acc397aaddc9cae8bc23f4",
-   "size": 34363
+   "sha256": "724f1f5f201e4bf9d09e21758e4aab5e8141952dd14fc2b976e9eab355e4cc46",
+   "size": 34570
   },
   {
    "path": "client/native/build/script/common/__init__.nxs",
@@ -334,8 +314,8 @@
   },
   {
    "path": "launcher.exe",
-   "sha256": "50e0d8a8c30ec3262b10b505a950ea16e716a2c0496bb1891572a0d7afbe658d",
-   "size": 25022451
+   "sha256": "24348d429224c322f093d75ad837aa9601fd3d85acf44bd96adef7f4ecd46952",
+   "size": 25008742
   },
   {
    "path": "requirements.txt",

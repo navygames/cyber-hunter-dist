@@ -37,14 +37,7 @@ if exist "%~dp0CyberHunterLauncher.exe" (
     exit /b
 )
 
-where pythonw >nul 2>&1
-if errorlevel 1 (
-    echo [!] Python was not found on PATH.
-    echo     Install 64-bit Python 3.10+ ^(tick "Add to PATH"^), then:
-    echo         pip install -r requirements.txt
-    pause
-    exit /b 1
-)
-
-cd /d "%~dp0Launcher"
-start "" pythonw run_launcher.py
+echo [!] CyberHunterLauncher.exe is missing from this folder.
+echo     Re-run the installer or download the launcher again.
+pause
+exit /b 1

@@ -367,7 +367,24 @@ if (-not $IsRemote) {
 foreach ($path in $requiredPaths) {
     if (-not (Test-Path -LiteralPath $path)) { Fail "missing required path: $path" }
 }
-if ($IsNative) {
+# Preflight cache: the package import, verify_game_files.py and
+# client_manifest.py each start Python and read the packs on every Play.
+# Skip all three while game/*.npk are byte-for-byte where they were the
+# last time they passed (name + size + mtime).
+$preStampFile = Join-Path $Runtime 'preflight_stamp.txt'
+$preStamp = ''
+try {
+    $preStamp = (@(Get-ChildItem -LiteralPath $Game -Filter '*.npk' -File -ErrorAction SilentlyContinue) +
+                 @(Get-ChildItem -LiteralPath (Join-Path $Game 'Documents') -Filter '*.npk' -File -ErrorAction SilentlyContinue) |
+                 ForEach-Object { "$($_.Name):$($_.Length):$($_.LastWriteTimeUtc.Ticks)" }) -join '|'
+} catch { $preStamp = '' }
+$preCached = $false
+if ($preStamp -and (Test-Path -LiteralPath $preStampFile)) {
+    $preCached = (([string](Get-Content -LiteralPath $preStampFile -Raw -ErrorAction SilentlyContinue)).Trim() -eq $preStamp)
+}
+if ($preCached) {
+    Ok 'preflight cached (game packs unchanged since last check)'
+} elseif ($IsNative) {
     & $Python -c "import cryptography"
     if ($LASTEXITCODE -ne 0) { Fail 'Python package cryptography is required' }
 } else {
@@ -385,7 +402,7 @@ Ok 'canonical brain and Python services present'
 # inside game_init.start_game() -- see tools/verify_game_files.py for the
 # traceback. Repair it here rather than letting Play fail 240s later.
 $verifyScript = Join-Path $Repo 'tools\verify_game_files.py'
-if (Test-Path -LiteralPath $verifyScript) {
+if ((-not $preCached) -and (Test-Path -LiteralPath $verifyScript)) {
     & $Python $verifyScript
     if ($LASTEXITCODE -ne 0) { Fail 'verify_game_files.py failed' }
     Ok 'game script/data files checked'
@@ -398,12 +415,15 @@ if (Test-Path -LiteralPath $verifyScript) {
 # because that is the documented black screen and failing here beats timing
 # out 240s later with no explanation.
 $manifestScript = Join-Path $Repo 'tools\client_manifest.py'
-if (Test-Path -LiteralPath $manifestScript) {
+if ((-not $preCached) -and (Test-Path -LiteralPath $manifestScript)) {
     & $Python $manifestScript
     if ($LASTEXITCODE -ne 0) {
         Fail 'game/ base packs do not match client_manifest.json - see docs\FRESH_CLONE_BOOT.md'
     }
     Ok 'client matches the reference manifest'
+}
+if ((-not $preCached) -and $preStamp) {
+    try { [System.IO.File]::WriteAllText($preStampFile, $preStamp, [System.Text.UTF8Encoding]::new($false)) } catch {}
 }
 
 # Our compiled scripts (client/native/build/script) go into game/script/, a
@@ -449,30 +469,8 @@ if (Test-Path -LiteralPath $NativeBuild) {
 
 if ($IsRemote) {
     Ok "REMOTE mode - servers at $ServerIp (patch $PatchPort, gateway $GatewayPort, referee $RefereePort)"
-    # Online-only: the lobby goes through the VPS. If none of its ports answer,
-    # stop here instead of booting an offline lobby. The Launcher already
-    # refuses Play in this case; this is the backstop for any other caller.
-    $down = @()
-    $probePorts = @([int]$PatchPort, [int]$GatewayPort, [int]$RefereePort)
-    foreach ($pp in $probePorts) {
-        if (-not (Test-RemotePort $ServerIp $pp)) { $down += $pp }
-    }
-    # Same port set the Launcher's gate uses, so the two never disagree.
-    $anyUp = ($down.Count -lt $probePorts.Count)
-    if (-not $anyUp) {
-        foreach ($pp in @([int](Get-RevivalSetting 'REVIVAL_CONTROL_PANEL_PORT' '8888'), [int](Get-RevivalSetting 'REVIVAL_GAMEAPI_PORT' '3000'))) {
-            if (Test-RemotePort $ServerIp $pp) { $anyUp = $true; break }
-        }
-    }
-    if (-not $anyUp) {
-        Fail "Can't connect. Please connect to the internet. (server $ServerIp not answering on $($down -join ', '))"
-    }
-    if ($down.Count) {
-        Write-Host "  WARN  server $ServerIp not answering on port(s) $($down -join ', ') - online features will be unavailable (is the VPS up / firewall open?)" -ForegroundColor Yellow
-        $script:RemoteDown = ($down -join ',')
-    } else {
-        Ok "server $ServerIp reachable"
-    }
+    # Server reachability is checked in-game (main menu START -> referee
+    # auth_check), so Play no longer waits up to 3 x 1.5 s on port probes.
 } else {
     Ok 'LOCAL mode - starting patch, http, gateway and referee on this PC'
 }
@@ -575,6 +573,8 @@ $nativeCfg = [ordered]@{
     server_ip = $ServerIp
     remote = [bool]$IsRemote
     written = (Get-Date).ToString('o')
+    launcher_auth = $true
+    boot_ticket = [guid]::NewGuid().ToString('N')
 }
 [System.IO.File]::WriteAllText($NativeBootJson, ($nativeCfg | ConvertTo-Json), [System.Text.UTF8Encoding]::new($false))
 Enable-CrashDumps
@@ -656,7 +656,8 @@ while ((Get-Date) -lt $deadline) {
     $joined = ((Get-LogTail) -join "`n")
     $ready = ($joined -match 'lobby ready' -or
         ($joined -match 'IN_GAME OK' -and $joined -match 'scene_enter id=101 active=True') -or
-        $joined -match 'LOBBY_RETURN ok')
+        $joined -match 'LOBBY_RETURN ok' -or
+        $joined -match 'MAIN MENU ready')
     if ($ready) { break }
     if ($clientProc.HasExited) {
         $why = "client exited during lobby wait: $(Get-ExitDetail $clientProc)"

@@ -57,3 +57,8 @@ game-server/src/sync_relay.js
 **/spawn_mapper.py
 *.part
 *.new
+
+# Launcher source never ships: CyberHunterLauncher.exe bundles run_launcher.py,
+# accounts.py, game_downloader.py and the UI (PyInstaller). Players get the exe.
+Launcher/*.py
+Launcher/*.spec
