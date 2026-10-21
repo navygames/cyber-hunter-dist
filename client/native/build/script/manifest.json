@@ -1,21 +1,23 @@
 {
- "build": "50a6807c8988bd9b",
- "built": "2026-10-21T19:32:44",
+ "build": "2429f55260693f27",
+ "built": "2026-10-21T21:35:14",
  "files": {
-  "common/__init__.nxs": "7511018eb3cddf2aa516cc23919ef21f4ebb0f8e66d7ec5ebd474a4df40ac717",
+  "common/__init__.nxs": "c6480e369916785d0c06fe976a0f1f42db19d91a587ed20cec34e7c3f6d28c34",
   "common/logo_mgr.nxs": "967d39f262786ef43c71b3faf7aaaa21a0cff43c5ecc4c43e637f39ab9afa973",
-  "common/logo_panel.nxs": "fa3a9d8cb2dabe89b9e18578c59691b709ac126510c08f23d55ea31d33ca5321",
-  "reawakening/__init__.nxs": "770903410d85c09b4a2768107358f6973f91c4ca6a6010241db03a42bf1dc754",
-  "reawakening/art.nxs": "471e5175680a5caf18eb525cf8e0a07b11a91fd0c2a8898c05d53641e6095633",
-  "reawakening/boot.nxs": "0ba45cdff0c4579c0e66672b9989fe77d60c1499539e293306ead875f554019e",
-  "reawakening/pack.nxs": "8debfd3409d0a0ad587b8f1177ae158347b64123e09cc8d86fcd2743b680abdd"
+  "common/logo_panel.nxs": "0f1ef84aab7ef43fdc3a0c50d6110f8dac71f20db7ce8e83617c0d1d9f0ed679",
+  "reawakening/__init__.nxs": "1d618a71243345acc17f2a24b2dcb5c85be75d4fc44d413d3c7a8e84b7d6d2ec",
+  "reawakening/art.nxs": "a77c7fb68c2b1fa2a5bceca382eb32b666e49941a89a7f5942d2d02499925090",
+  "reawakening/boot.nxs": "b7c975425964b09c5b46fae3c9a4187a2ae4f60bb98f46eda8260b0caa4c896e",
+  "reawakening/pack.nxs": "97eb8042bc254298b02cb643df78459f9b377de6c446bc2ba6b4792c233d7dbd"
  },
  "sources": {
+  "client/frida/assets/reawakening_loading.png": "e61798f447906810295b565166b08e6e0f471c1eb3d336bf3d4a8d17bf8dd051",
+  "client/frida/assets/reawakening_loading_spinner.png": "5955433ca82e1ce35252f32faf0068f20451d4bd97cfbaba279427b21f477153",
   "client/frida/br_world4k_anchors.py": "e942440ea014291dee657450074e1e69c41342b935304833774ec1d466c6eb30",
   "client/frida/br_world4k_spawns.py": "5b6dcc1651c6c0f018a7b873ee3444eed8ca7932f7a558df0e5ed4bdc52c60f5",
-  "client/frida/lobby_full_payload.py": "13684247102bb7e067dbd5919e2d848ec7677e48f926be9ae2fa91d9891b4547",
+  "client/frida/lobby_full_payload.py": "cc83abce1e0d4148d101586480ddbd90aa60db1bc37245d9b873cd9cc12229b8",
   "client/frida/lobby_offline_server.py": "dac442c749985ce20c2292d499e318ad39b55db76def09772d415c5ab05b1601",
-  "client/frida/navy_web_art.bin": "67fbbaf1ba10e9824c928918a19d2a66dba647ab63224268e55aa753ea39f2de",
+  "client/frida/navy_web_art.bin": "7bb9b255ffef84dd882bc3bb6d8372e33f8fc097bd284ae5c9079fceb4721eae",
   "client/frida/offline_account_db.py": "8991c64b73a4b5fdca7c737831de978ad0b58389d8bf2c28a1a920607481a538",
   "client/frida/offline_weapon_damage.json": "d731b363ceea07d99a81c430ae2fe47fd98482c8e432a25b7560af277d796756",
   "client/native/boot.py": "813011b73130a5cea6dccc61d877c74da565e3248b4843067abdc510e96351ab",
