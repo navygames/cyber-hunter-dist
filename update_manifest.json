@@ -1,6 +1,6 @@
 {
  "schema": 1,
- "version": "2026.10.22-114305",
+ "version": "2026.10.22-115556",
  "files": [
   {
    "path": "CyberHunter.bat",
@@ -508,29 +508,14 @@
    "size": 14746
   },
   {
-   "path": "tools/private_server/airdrop_service.py",
-   "sha256": "25f29e349e8e04e1943cc419cf71b1bebfe3809177f2e2f254020cfe651d39d5",
-   "size": 14987
-  },
-  {
    "path": "tools/private_server/certs/ca.cert.pem",
    "sha256": "3a0c3c57a5b314ae6ed28b7495beb605cdd5f5bfde4dabab75f4ada04fbf0afc",
    "size": 1192
   },
   {
-   "path": "tools/private_server/cybercore_service.py",
-   "sha256": "37e054b416acddb80560085a4caaa7af6364da2a6e5114ad919bc05268a88878",
-   "size": 3865
-  },
-  {
    "path": "tools/private_server/gateway_stub.py",
    "sha256": "024def9fba8e811e468e8ecc596bd0e6f1f1da931bac7514b2e0e3fae78706ed",
    "size": 2670
-  },
-  {
-   "path": "tools/private_server/grant_progress.py",
-   "sha256": "e60659a75448ef1b21c8264de9e251dd23e00dc50cef6be1bfc6289d70099829",
-   "size": 2912
   },
   {
    "path": "tools/private_server/http_stub.py",
@@ -546,11 +531,6 @@
    "path": "tools/private_server/patch_server.py",
    "sha256": "7103caf263ef2884d3523c1492723a62e03440187efe3979839939098f4913dd",
    "size": 14035
-  },
-  {
-   "path": "tools/private_server/progression_service.py",
-   "sha256": "398da51b614775fd8f9d180755e539c40ed8246c5bad4299e96c6df2f861f559",
-   "size": 12084
   },
   {
    "path": "tools/private_server/remove_hosts.ps1",
@@ -618,11 +598,6 @@
    "size": 116
   },
   {
-   "path": "tools/private_server/season_service.py",
-   "sha256": "582e12774a9b452d14e157bf097ff77cd258c7520d741d05cd47fb7e5e4d074d",
-   "size": 14995
-  },
-  {
    "path": "tools/private_server/setup_hosts.ps1",
    "sha256": "44652e78cff603fb4d7db5027733d5dce119f9f7fa127825f698e74165b7914e",
    "size": 3006
@@ -631,26 +606,6 @@
    "path": "tools/private_server/setup_loopback_ips.ps1",
    "sha256": "081a3f6f22c7d262dca3def6a132d8c44829cbdece1adfa6f2a8d6b64a6b0bb4",
    "size": 1240
-  },
-  {
-   "path": "tools/private_server/test_airdrop_service.py",
-   "sha256": "7e69f8ba3e24896eae98eb397eadacdeaf91a79c99ecef9d1e6697b88eee86cb",
-   "size": 8867
-  },
-  {
-   "path": "tools/private_server/test_cybercore_service.py",
-   "sha256": "a4c6d03b21b2885e3643c747b8957ab6d75992aff6e0a3ceb5d22a8062f7846a",
-   "size": 3517
-  },
-  {
-   "path": "tools/private_server/test_patch_server.py",
-   "sha256": "6d8ac478e17dadf4d2fc881e3241d32ad7d006e16c486ab24cd2243fb0c8f586",
-   "size": 2913
-  },
-  {
-   "path": "tools/private_server/test_season_service.py",
-   "sha256": "7232cbcb4a371cc0f97918ffb3aa911a8c99148f4a1fc2166478030e91ab5d29",
-   "size": 3638
   },
   {
    "path": "tools/private_server/trust_ca.ps1",
