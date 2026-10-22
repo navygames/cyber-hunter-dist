@@ -449,8 +449,8 @@
   },
   {
    "path": "tools/verify_game_files.py",
-   "sha256": "e1d4df2c81b6eb0f5638bc4f9d7242782de7c886633d3727805485da19c928db",
-   "size": 8714
+   "sha256": "c691a0db9494420459c4d63dff4eca8aa06d8e16acc9cb4e417ca66104790156",
+   "size": 18562
   }
  ]
 }
