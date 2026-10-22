@@ -1,6 +1,6 @@
 {
  "schema": 1,
- "version": "2026.10.22-161627",
+ "version": "2026.10.22-163054",
  "files": [
   {
    "path": "CyberHunter.bat",
@@ -454,7 +454,7 @@
   },
   {
    "path": "client/native/build/script/manifest.json",
-   "sha256": "598b03d1079ce68fb12a9cef07ab38c55a4dba38a5f616250e22e4f1a33cfcab",
+   "sha256": "208cdd183634a46bf8b9b7f90b03631345f2c7e093f13013c7251179b8fad15a",
    "size": 2237
   },
   {
@@ -474,8 +474,8 @@
   },
   {
    "path": "client/native/build/script/reawakening/pack.nxs",
-   "sha256": "b90fbebbfe57cf9076628358ec449ffe9b4b43171db1f71b346ee6be5afa025c",
-   "size": 901739
+   "sha256": "751362bb0ba9e508bae0c4877ed28b5450221b05b7921db1feba2c820e1d9970",
+   "size": 902216
   },
   {
    "path": "game-server/src/sync_supabase.js",
