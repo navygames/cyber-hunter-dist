@@ -9,8 +9,8 @@
   },
   {
    "path": "CyberHunterLauncher.exe",
-   "sha256": "50264458069f7ee80e1c0ea1ae2fcaea0066a27848a1f76dea7de414a19edcbb",
-   "size": 24249038
+   "sha256": "6028b5ca0421ca04934e8e49c6d36fefac4e8f4f3ad8d09d3491d8fe55970f2e",
+   "size": 24255239
   },
   {
    "path": "Launcher/app_icon.ico",
@@ -314,8 +314,8 @@
   },
   {
    "path": "launcher.exe",
-   "sha256": "50264458069f7ee80e1c0ea1ae2fcaea0066a27848a1f76dea7de414a19edcbb",
-   "size": 24249038
+   "sha256": "6028b5ca0421ca04934e8e49c6d36fefac4e8f4f3ad8d09d3491d8fe55970f2e",
+   "size": 24255239
   },
   {
    "path": "requirements.txt",
