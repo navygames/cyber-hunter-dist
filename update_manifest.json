@@ -1,6 +1,6 @@
 {
  "schema": 1,
- "version": "2026.10.22-160144",
+ "version": "2026.10.22-161241",
  "files": [
   {
    "path": "CyberHunter.bat",
@@ -498,9 +498,29 @@
    "size": 753
   },
   {
+   "path": "tools/client_manifest.py",
+   "sha256": "979bc04498e9552efa3591ae6b3790ebd1de55324d3c4c58f48d982d6893ea97",
+   "size": 7014
+  },
+  {
+   "path": "tools/npk.py",
+   "sha256": "2209cdc14b27a43f7a9e9f08b1d8020adf1f01c0d897f582b371246a10af075c",
+   "size": 14746
+  },
+  {
    "path": "tools/private_server/certs/ca.cert.pem",
    "sha256": "3a0c3c57a5b314ae6ed28b7495beb605cdd5f5bfde4dabab75f4ada04fbf0afc",
    "size": 1192
+  },
+  {
+   "path": "tools/private_server/gateway_stub.py",
+   "sha256": "024def9fba8e811e468e8ecc596bd0e6f1f1da931bac7514b2e0e3fae78706ed",
+   "size": 2670
+  },
+  {
+   "path": "tools/private_server/http_stub.py",
+   "sha256": "2d66fb6cfaa015aacda1d47120834fd152ce25287628c7b005092a0dd9406bc2",
+   "size": 2070
   },
   {
    "path": "tools/private_server/inject_game_ca.py",
@@ -511,6 +531,91 @@
    "path": "tools/private_server/patch_server.py",
    "sha256": "7103caf263ef2884d3523c1492723a62e03440187efe3979839939098f4913dd",
    "size": 14035
+  },
+  {
+   "path": "tools/private_server/remove_hosts.ps1",
+   "sha256": "23cc567e4f21252255fc7520d37c7c4c7cea671b3826d6b8c506de53c9ef2d51",
+   "size": 385
+  },
+  {
+   "path": "tools/private_server/remove_loopback_ips.ps1",
+   "sha256": "c44078e88106740e387188b6ec317a618450f25103b370ac6c629bc2cd8da5e2",
+   "size": 344
+  },
+  {
+   "path": "tools/private_server/responses/commits_key.json",
+   "sha256": "53614ff1ad9928b77c9ebf4f52a6142cd6edad483dbaf23cdc06388a4338038a",
+   "size": 85
+  },
+  {
+   "path": "tools/private_server/responses/empty.json",
+   "sha256": "e3566b3a06430868d71e9287dfd6c6c520a3da027aabea01951d407ee131dc2f",
+   "size": 4
+  },
+  {
+   "path": "tools/private_server/responses/full_metadata.json",
+   "sha256": "5d06fca072edac9324c238b7e4c0e2ee8f33c779469084f7c9daaba3435ca2d8",
+   "size": 285
+  },
+  {
+   "path": "tools/private_server/responses/list_entries.json",
+   "sha256": "93a66439c7c38f36aab76919199f90a0b9a3c8ed9cb998a90e6b73d518ad282b",
+   "size": 124
+  },
+  {
+   "path": "tools/private_server/responses/match_local.json",
+   "sha256": "b2232dd4a3cd42c6b81440b58c9ebcc45e0a8eaa53ff68a1730a215ebb893448",
+   "size": 60
+  },
+  {
+   "path": "tools/private_server/responses/npk_version.json",
+   "sha256": "dacba59bcf1591539efae287634f16b3a795cb7dfd419fa63c223565d895fe3c",
+   "size": 177
+  },
+  {
+   "path": "tools/private_server/responses/ret_code_commits.json",
+   "sha256": "298785fee2a2f79f2d1e853ac04872ba74d2a30f974fb821f9a9babb09ded052",
+   "size": 103
+  },
+  {
+   "path": "tools/private_server/responses/ret_code_empty.json",
+   "sha256": "09ed96cdab29cf4fd8c9bd7426f7a07f565b0694b828172d37ee69597838802c",
+   "size": 38
+  },
+  {
+   "path": "tools/private_server/responses/ret_code_ok.json",
+   "sha256": "c5124ab97a5d57a658fdadb0191908f2d28df209520a2cb7082cf4306706c48a",
+   "size": 100
+  },
+  {
+   "path": "tools/private_server/responses/serverlist.txt",
+   "sha256": "c0b7a8673fa8d046128d808079b71c85aa3a669197301baf0c4bb194dbf98011",
+   "size": 483
+  },
+  {
+   "path": "tools/private_server/responses/wrapped_ok.json",
+   "sha256": "b782acf2776d59ab2726d7bbbe4adc35e03e49bb518f2c5c55b3e6ad480bb5ed",
+   "size": 116
+  },
+  {
+   "path": "tools/private_server/setup_hosts.ps1",
+   "sha256": "44652e78cff603fb4d7db5027733d5dce119f9f7fa127825f698e74165b7914e",
+   "size": 3006
+  },
+  {
+   "path": "tools/private_server/setup_loopback_ips.ps1",
+   "sha256": "081a3f6f22c7d262dca3def6a132d8c44829cbdece1adfa6f2a8d6b64a6b0bb4",
+   "size": 1240
+  },
+  {
+   "path": "tools/private_server/trust_ca.ps1",
+   "sha256": "55851ce699adff4fc931b2ca7410ea9cd1e0d57fb4efe653875e21dcecd70266",
+   "size": 1191
+  },
+  {
+   "path": "tools/private_server/untrust_ca.ps1",
+   "sha256": "f473edd6fc0687119d27cb79be37847fe40724b772a077a2e9294fabf6ca36de",
+   "size": 946
   },
   {
    "path": "tools/verify_game_files.py",
