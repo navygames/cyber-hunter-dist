@@ -511,7 +511,7 @@ function startLaunchStatusTracking() {
 
 let currentGfxQuality = 2;
 let currentFpsLimit = 120;
-
+function normalizeGraphicsQuality(value) {  const quality = Number.parseInt(value, 10);  return [0, 1, 2, 3].includes(quality) ? quality : 2;}function normalizeGraphicsFps(value) {  const fps = Number.parseInt(value, 10);  return [60, 90, 120, 144, 240].includes(fps) ? fps : 120;}function applySavedGraphicsToLauncher(quality, fps) {  const q = normalizeGraphicsQuality(quality);  const f = normalizeGraphicsFps(fps);  currentGfxQuality = q;  currentFpsLimit = f;  if (signedInAccount) {    signedInAccount.graphics_configured = true;    signedInAccount.graphic_quality = q;    signedInAccount.fps_limit = f;  }  if (currentConfig) {    currentConfig.graphics_configured = true;    currentConfig.graphic_quality = q;    currentConfig.fps_limit = f;  }  syncSettingsGraphicsUI(q, f);}async function persistGraphicsProfile(quality, fps) {  const q = normalizeGraphicsQuality(quality);  const f = normalizeGraphicsFps(fps);  const result = await getApi().save_graphics_settings(q, f, true);  if (!result || !result.success) {    throw new Error((result && result.message) || 'Could not save graphics settings.');  }  applySavedGraphicsToLauncher(result.graphic_quality, result.fps_limit);  return result;}
 function syncSettingsGraphicsUI(quality, fps) {
   const qualityNames = { 0: 'Very Low', 1: 'Low', 2: 'Medium', 3: 'Ultra' };
   const badgeQ = document.getElementById('gfxQualityBadge');
@@ -531,7 +531,7 @@ function syncSettingsGraphicsUI(quality, fps) {
   });
 }
 
-function openGraphicsSetupModal() {
+async function openGraphicsSetupModal() {
   playBeep(520, 'sine', 0.08);
   const modal = document.getElementById('graphicsSetupModal');
   if (!modal) return;
@@ -539,15 +539,14 @@ function openGraphicsSetupModal() {
   let q = (signedInAccount && typeof signedInAccount.graphic_quality !== 'undefined') ? signedInAccount.graphic_quality : (currentConfig && typeof currentConfig.graphic_quality !== 'undefined' ? currentConfig.graphic_quality : 2);
   let f = (signedInAccount && typeof signedInAccount.fps_limit !== 'undefined') ? signedInAccount.fps_limit : (currentConfig && typeof currentConfig.fps_limit !== 'undefined' ? currentConfig.fps_limit : 120);
 
-  currentGfxQuality = parseInt(q) || 2;
-  currentFpsLimit = parseInt(f) || 120;
+  currentGfxQuality = normalizeGraphicsQuality(q);  currentFpsLimit = normalizeGraphicsFps(f);
 
   updateGraphicsSetupSelection(currentGfxQuality, currentFpsLimit);
-  modal.classList.add('open');
+  modal.classList.add('open');  try {    const saved = await getApi().get_graphics_settings();    if (saved && saved.success) {      currentGfxQuality = normalizeGraphicsQuality(saved.graphic_quality);      currentFpsLimit = normalizeGraphicsFps(saved.fps_limit);      updateGraphicsSetupSelection(currentGfxQuality, currentFpsLimit);      syncSettingsGraphicsUI(currentGfxQuality, currentFpsLimit);    }  } catch (_) {}
 }
 
 function updateGraphicsSetupSelection(quality, fps) {
-  currentGfxQuality = quality;
+  quality = normalizeGraphicsQuality(quality);  fps = normalizeGraphicsFps(fps);  currentGfxQuality = quality;
   currentFpsLimit = fps;
 
   const qualityNames = { 0: 'Very Low (Mode 0)', 1: 'Low (Mode 1)', 2: 'Medium (Mode 2)', 3: 'Ultra (Mode 3)' };
@@ -599,13 +598,11 @@ function initGraphicsSetupModal() {
   document.querySelectorAll('#setupGfxCards .gfx-preset-card').forEach(card => {
     card.addEventListener('click', async () => {
       playBeep(520, 'sine', 0.08);
-      const q = parseInt(card.dataset.quality);
+      const q = normalizeGraphicsQuality(card.dataset.quality);
       updateGraphicsSetupSelection(q, currentFpsLimit);
       // Persist immediately — also sends live IPC if game is running
       try {
-        await getApi().save_graphics_settings(q, currentFpsLimit, true);
-        syncSettingsGraphicsUI(q, currentFpsLimit);
-      } catch (_) {}
+        await persistGraphicsProfile(q, currentFpsLimit);      } catch (e) {        showToast(String(e.message || e), 'fa-triangle-exclamation');      }
     });
   });
 
@@ -613,13 +610,11 @@ function initGraphicsSetupModal() {
   document.querySelectorAll('#setupFpsPills .fps-select-pill').forEach(pill => {
     pill.addEventListener('click', async () => {
       playBeep(560, 'sine', 0.08);
-      const f = parseInt(pill.dataset.fps);
+      const f = normalizeGraphicsFps(pill.dataset.fps);
       updateGraphicsSetupSelection(currentGfxQuality, f);
       // Persist immediately
       try {
-        await getApi().save_graphics_settings(currentGfxQuality, f, true);
-        syncSettingsGraphicsUI(currentGfxQuality, f);
-      } catch (_) {}
+        await persistGraphicsProfile(currentGfxQuality, f);      } catch (e) {        showToast(String(e.message || e), 'fa-triangle-exclamation');      }
     });
   });
 
@@ -629,18 +624,7 @@ function initGraphicsSetupModal() {
       playBeep(750, 'sine', 0.12);
       btnConfirm.disabled = true;
       try {
-        const res = await getApi().save_graphics_settings(currentGfxQuality, currentFpsLimit, true);
-        if (signedInAccount) {
-          signedInAccount.graphics_configured = true;
-          signedInAccount.graphic_quality = currentGfxQuality;
-          signedInAccount.fps_limit = currentFpsLimit;
-        }
-        if (currentConfig) {
-          currentConfig.graphics_configured = true;
-          currentConfig.graphic_quality = currentGfxQuality;
-          currentConfig.fps_limit = currentFpsLimit;
-        }
-        syncSettingsGraphicsUI(currentGfxQuality, currentFpsLimit);
+        await persistGraphicsProfile(currentGfxQuality, currentFpsLimit);
         if (modal) modal.classList.remove('open');
         const qNames = { 0: 'Very Low', 1: 'Low', 2: 'Medium', 3: 'Ultra' };
         showToast(`Graphics profile saved: ${currentFpsLimit} FPS (${qNames[currentGfxQuality] || 'Medium'})`, "fa-circle-check");

@@ -1,6 +1,6 @@
 {
  "schema": 1,
- "version": "2026.10.22-014109",
+ "version": "2026.10.22-023916",
  "files": [
   {
    "path": "CyberHunter.bat",
@@ -9,8 +9,8 @@
   },
   {
    "path": "CyberHunterLauncher.exe",
-   "sha256": "8d0025413a2fb8af116bff00144f8ebb02bcf05f28170a43f733514d56b6fb0f",
-   "size": 24238666
+   "sha256": "4752aeec6e2fe0c9d7a4c1eeee66c89254ace844f07995646a9b50e5aea945e3",
+   "size": 24241918
   },
   {
    "path": "Launcher/app_icon.ico",
@@ -19,8 +19,8 @@
   },
   {
    "path": "Launcher/ui/app.js",
-   "sha256": "32af25ec0b5cca0b930904c1c2905565f788b6deae9c5c8a816d64c1721c5f16",
-   "size": 156057
+   "sha256": "2f584b73ee30aaf39d87b0eec3b0048a037e59a206b05e54272c798e605b2ba3",
+   "size": 157310
   },
   {
    "path": "Launcher/ui/assets/ch-logo-white.png",
@@ -126,6 +126,246 @@
    "path": "Launcher/ui/style.css",
    "sha256": "12329259fddb8c55db4c2efb23872c0c309015c9de218d6e1222a2f44c4b184d",
    "size": 64595
+  },
+  {
+   "path": "Launcher/ui/ui/app.js",
+   "sha256": "49ceeec37224bb248859086f66730a860cb6632a5acf2bde893e0bda2e0f9d3c",
+   "size": 161450
+  },
+  {
+   "path": "Launcher/ui/ui/assets/ch-logo-white.png",
+   "sha256": "a9f32ac50f063e9077dd8a692161c6b5dbc63aacb4b3250ef97ff4600c85e29e",
+   "size": 52311
+  },
+  {
+   "path": "Launcher/ui/ui/assets/ch-logo.png",
+   "sha256": "1ea4af1fff60d031846dbe1b3767af3c6c1664abbe10100b06c76483fbf2fa0b",
+   "size": 284932
+  },
+  {
+   "path": "Launcher/ui/ui/assets/ch-solid-white.png",
+   "sha256": "a9f32ac50f063e9077dd8a692161c6b5dbc63aacb4b3250ef97ff4600c85e29e",
+   "size": 52311
+  },
+  {
+   "path": "Launcher/ui/ui/assets/hero-bg.jpg",
+   "sha256": "0bca8835ad3c91e919c136f37b3d5b781fff85aa8c1768593dfcbfb57759802b",
+   "size": 283861
+  },
+  {
+   "path": "Launcher/ui/ui/assets/heroes-duo.png",
+   "sha256": "4fdb33d947f4eccd53b5b799cd9c9d462d08ae97316bdecb14cc0df21012000a",
+   "size": 866281
+  },
+  {
+   "path": "Launcher/ui/ui/assets/logo-clear.png",
+   "sha256": "19b8fdd632d378892c48b555fcffb734dcf1c8d024f2a67b6d01ca4fdd997710",
+   "size": 2489
+  },
+  {
+   "path": "Launcher/ui/ui/assets/logo-reawakening.png",
+   "sha256": "c6af8474f1fc8c20dcafa0ead1e4a329ab82731e3c608fbba404fef3bc8b31b5",
+   "size": 63120
+  },
+  {
+   "path": "Launcher/ui/ui/assets/logo.png",
+   "sha256": "c6af8474f1fc8c20dcafa0ead1e4a329ab82731e3c608fbba404fef3bc8b31b5",
+   "size": 63120
+  },
+  {
+   "path": "Launcher/ui/ui/assets/map-biohazard-facility.jpg",
+   "sha256": "29f6383c521ab58e8b50261b047d22ef13d92763d88ed575005ada10086dccab",
+   "size": 306498
+  },
+  {
+   "path": "Launcher/ui/ui/assets/map-coastal-resort.jpg",
+   "sha256": "741ce7884be043419bbd359447373835e8da62cba243289282ab7744cb700cba",
+   "size": 307011
+  },
+  {
+   "path": "Launcher/ui/ui/assets/map-sunken-suburb.jpg",
+   "sha256": "504a9d8ed7c5bcf2e94f6003b58cda60b20d82b273bb883e8b6cad43c3eef5ae",
+   "size": 304865
+  },
+  {
+   "path": "Launcher/ui/ui/assets/navy-emblem-clear.png",
+   "sha256": "959a5e6551fae7c3a42a84d719ad31a760b26db4cdf5d23f4dafdbc614646ece",
+   "size": 97307
+  },
+  {
+   "path": "Launcher/ui/ui/assets/navy-emblem.png",
+   "sha256": "40af865757a6e5aa364a00d01bcda478af25e1e92ebfb37fcaebc74243ce0bd8",
+   "size": 98913
+  },
+  {
+   "path": "Launcher/ui/ui/assets/navy-games-logo-clear.png",
+   "sha256": "7546a670204cea8d009006a3f7199eeee92ffc4890988c090bc8ac4bdef9b5c6",
+   "size": 37462
+  },
+  {
+   "path": "Launcher/ui/ui/assets/navy-games-logo.png",
+   "sha256": "ed21d04ae0af5652837ee427dabd603d7285d7ae9839fc78e1555ff4b357db11",
+   "size": 41097
+  },
+  {
+   "path": "Launcher/ui/ui/assets/navy-logo-2x.png",
+   "sha256": "7875512bbe4d512b811e3535c6a01e48463ac15ec7c8f58b7bb6492b4f19dfb2",
+   "size": 43172
+  },
+  {
+   "path": "Launcher/ui/ui/assets/navy-logo-clear.png",
+   "sha256": "ebe85351c326acff6564f0751e724a8011b78cf5b3ce283f3afd2571b6d8c8d5",
+   "size": 35170
+  },
+  {
+   "path": "Launcher/ui/ui/assets/navy-logo-word-clear.png",
+   "sha256": "5f5762ab2b2deb268ab838720a48b13dc241eee6508555bdad9aa00a4bf842dc",
+   "size": 10334
+  },
+  {
+   "path": "Launcher/ui/ui/assets/navy-logo.png",
+   "sha256": "796b1971db4653c8d9bc54e66220816c757c0d5c59bfcf51acd1214fa179f0c9",
+   "size": 11331
+  },
+  {
+   "path": "Launcher/ui/ui/index.html",
+   "sha256": "ef3330ae5d3fc379af6ee4d8898d0f8513af63b067c20a0e962b94a16e1877db",
+   "size": 86469
+  },
+  {
+   "path": "Launcher/ui/ui/style.css",
+   "sha256": "b482594e9a53200c4d217bab5f44cc75c289d27280770b9bdafef17f936dacf2",
+   "size": 72246
+  },
+  {
+   "path": "Launcher/ui/ui/vendor/fontawesome.css",
+   "sha256": "5c93ca7247a7db311802f1613b6d1a5dc0896fb7991f76aa35bf2fbac8d99e4c",
+   "size": 102589
+  },
+  {
+   "path": "Launcher/ui/ui/vendor/fonts.css",
+   "sha256": "865637882725d9aabc0db7993926d218f357bd6e1ff71e5f378e55b5c4a48d96",
+   "size": 28249
+  },
+  {
+   "path": "Launcher/ui/ui/vendor/fonts/gf_000.woff2",
+   "sha256": "82cc85bd416dc825c05b4264a8a58e189e528fed8a05fbd471b5493e010d623b",
+   "size": 8680
+  },
+  {
+   "path": "Launcher/ui/ui/vendor/fonts/gf_001.woff2",
+   "sha256": "0d17b7880f389deeb6663a52fa4eadc6d9116bdda725f0aa1f3d404fbb7d3d59",
+   "size": 31356
+  },
+  {
+   "path": "Launcher/ui/ui/vendor/fonts/gf_002.woff2",
+   "sha256": "d0fa07ff63dd60cbc0e2f58e29c802dca2a5ae0276c999f59c6111ab7bbaec3b",
+   "size": 18612
+  },
+  {
+   "path": "Launcher/ui/ui/vendor/fonts/gf_003.woff2",
+   "sha256": "71d5ee93cc1e9f1d520a3a8b66456de18c7879d8df09d57fcd2eaff75fef0075",
+   "size": 18748
+  },
+  {
+   "path": "Launcher/ui/ui/vendor/fonts/gf_004.woff2",
+   "sha256": "3100e775e8616cd2611beecfa23a4263d7037586789b43f035236a2e6fbd4c62",
+   "size": 48256
+  },
+  {
+   "path": "Launcher/ui/ui/vendor/fonts/gf_005.woff2",
+   "sha256": "1be3448e292fbf05ffe176fe1e43f135013d50b1e7d324ad1a558f623d3bb6f6",
+   "size": 18996
+  },
+  {
+   "path": "Launcher/ui/ui/vendor/fonts/gf_006.woff2",
+   "sha256": "34b9c504cab7a73e37b746343a449132e56cf7b5481af2cb81dc74dcff25c956",
+   "size": 85068
+  },
+  {
+   "path": "Launcher/ui/ui/vendor/fonts/gf_007.woff2",
+   "sha256": "ca157063339ac4ad418f214f3abfed119b0798ab4d377386ce5c9e5a7a435ebd",
+   "size": 25960
+  },
+  {
+   "path": "Launcher/ui/ui/vendor/fonts/gf_008.woff2",
+   "sha256": "6e9e020a25f9b56d418f2c085b1d3c09725a4da23fe693a5b463064606732190",
+   "size": 11232
+  },
+  {
+   "path": "Launcher/ui/ui/vendor/fonts/gf_009.woff2",
+   "sha256": "5c66f9e07e90c6d4ac4922cc68d60de26c17b1858e677fb5e603fce3952b3ff2",
+   "size": 10252
+  },
+  {
+   "path": "Launcher/ui/ui/vendor/fonts/gf_010.woff2",
+   "sha256": "62213be8a78b42f1e29d1452d91e2f8b3e745572a9dd98d3941e39fa00b37d76",
+   "size": 1640
+  },
+  {
+   "path": "Launcher/ui/ui/vendor/fonts/gf_011.woff2",
+   "sha256": "db5ff4db83e580426280e9337a58dc57d3a83784a1b03ad80914651594441d52",
+   "size": 11624
+  },
+  {
+   "path": "Launcher/ui/ui/vendor/fonts/gf_012.woff2",
+   "sha256": "83c005d49d8a6a50474c73a5a36ac0468076e9c4a29da7bdb14995d80560a5be",
+   "size": 31432
+  },
+  {
+   "path": "Launcher/ui/ui/vendor/fonts/gf_013.woff2",
+   "sha256": "0a557721b1f8b36d3f3f84442689a71ca4a744300abcb46a1953f51bfc663b66",
+   "size": 6836
+  },
+  {
+   "path": "Launcher/ui/ui/vendor/fonts/gf_014.woff2",
+   "sha256": "e17cfd15fb96909d64095015f958207063a0c07191da3512df7d560a781aebdf",
+   "size": 8872
+  },
+  {
+   "path": "Launcher/ui/ui/vendor/fonts/gf_015.woff2",
+   "sha256": "c89b9cc0bc6262bd4f8d8494b6961601f3aefa829d08c2e3635f4d501d3a47c2",
+   "size": 5888
+  },
+  {
+   "path": "Launcher/ui/ui/vendor/fonts/gf_016.woff2",
+   "sha256": "95c3d8d1db01b5ecd85b0d90aa81d39d24231f74de28c7418cfd8c08261fe929",
+   "size": 11748
+  },
+  {
+   "path": "Launcher/ui/ui/vendor/fonts/gf_017.woff2",
+   "sha256": "571f3457dab507b6f2ce5394d593ca015251b69fea81ab7a546bd2368e9fc3ed",
+   "size": 21472
+  },
+  {
+   "path": "Launcher/ui/ui/vendor/fonts/gf_018.woff2",
+   "sha256": "99016932b273efa7d55b3a0ae9fe4babc6dbdcd7539f58a742697054f89b1142",
+   "size": 19104
+  },
+  {
+   "path": "Launcher/ui/ui/vendor/fonts/gf_019.woff2",
+   "sha256": "0e6ae07493c5ebae5e815123be8fe99b34f7b13dac4a0907e072e244dd7edcdd",
+   "size": 6204
+  },
+  {
+   "path": "Launcher/ui/ui/vendor/fonts/gf_020.woff2",
+   "sha256": "fd48ff70d399cc905ec878993b1a72b6c0a4863c46118ec413e01e1fdc3127c3",
+   "size": 13964
+  },
+  {
+   "path": "Launcher/ui/ui/vendor/webfonts/fa-brands-400.woff2",
+   "sha256": "3a8924cd5203a28628716aedb5cef0943da4c3b44e3ffcee90ab06387b41c490",
+   "size": 117372
+  },
+  {
+   "path": "Launcher/ui/ui/vendor/webfonts/fa-regular-400.woff2",
+   "sha256": "2bccecf0bc7e96cd5ce4003abeb3ae9ee4a3d19158c4e6edfd2df32d2f0d5721",
+   "size": 25452
+  },
+  {
+   "path": "Launcher/ui/ui/vendor/webfonts/fa-solid-900.woff2",
+   "sha256": "9fc85f3a4544ab0d570c7f8f9bbb88db8d92c359b2707580ea8b07c75673eae2",
+   "size": 156496
   },
   {
    "path": "Launcher/ui/vendor/fontawesome.css",
@@ -284,7 +524,7 @@
   },
   {
    "path": "client/native/build/script/manifest.json",
-   "sha256": "d3d78639a93cbbedb1f88b69f548a3fd90041b04d37b2d482e531b85d72715a5",
+   "sha256": "dee6412a7580f856ea5937f52bb514ec2107f60286240ee63c75a8b7939e4f6e",
    "size": 2237
   },
   {
@@ -304,8 +544,8 @@
   },
   {
    "path": "client/native/build/script/reawakening/pack.nxs",
-   "sha256": "ab7903841fc7a34e35ead1a2f5d2d8ee5014cf02ae272e7819325e67d5d67f49",
-   "size": 820986
+   "sha256": "af21d81ad8e8abd96c97b23a5360c61ed3ee2e2c8f447d5df480c313a5b60168",
+   "size": 821694
   },
   {
    "path": "game-server/src/sync_supabase.js",
@@ -314,8 +554,8 @@
   },
   {
    "path": "launcher.exe",
-   "sha256": "8d0025413a2fb8af116bff00144f8ebb02bcf05f28170a43f733514d56b6fb0f",
-   "size": 24238666
+   "sha256": "4752aeec6e2fe0c9d7a4c1eeee66c89254ace844f07995646a9b50e5aea945e3",
+   "size": 24241918
   },
   {
    "path": "requirements.txt",
