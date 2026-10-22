@@ -1,4 +1,8 @@
 #Requires -RunAsAdministrator
+<#
+.SYNOPSIS
+  Trust the local CyberHunter patch CA in CurrentUser + LocalMachine roots.
+#>
 $ErrorActionPreference = "Stop"
 $Root = Split-Path -Parent $MyInvocation.MyCommand.Path
 $CaPath = Join-Path $Root "certs\ca.cert.pem"

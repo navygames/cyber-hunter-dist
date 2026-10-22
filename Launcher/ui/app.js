@@ -788,200 +788,105 @@ let statusPollTimer = null;
 
 
 
-function setPlayButtonState(state, customLabel) {
-
+function setPlayButtonState(state, customLabel, customStatus) {
   const btn = document.getElementById('btnPlayMain');
-
   const label = document.getElementById('btnPlayLabel');
-
   const statusTag = document.getElementById('installedStatus');
-
   if (!btn || !label) return;
-
-
 
   btn.classList.remove('is-launching', 'is-running', 'is-update', 'is-updating');
 
-
-
   if (state === 'idle') {
-
     if (!gameInstalled) state = 'download';
-
     else if (updateAvailable) state = 'update';
-
   }
-
-
 
   if (state === 'download') {
-
     btn.classList.add('is-update');
-
     label.innerHTML = `<i class="fa-solid fa-download btn-play-icon"></i> DOWNLOAD GAME`;
-
     if (statusTag) {
-
       statusTag.innerHTML = `<i class="fa-solid fa-cloud-arrow-down" style="color:#38bdf8"></i> Download available (9.4 GB)`;
-
     }
-
   } else if (state === 'paused') {
-
     btn.classList.add('is-update');
-
     label.innerHTML = `<i class="fa-solid fa-play btn-play-icon"></i> ${customLabel || 'CONTINUE DOWNLOAD'}`;
-
     if (statusTag) {
-
       statusTag.innerHTML = `<i class="fa-solid fa-pause" style="color:#fbbf24"></i> Download paused — Ready to continue`;
-
     }
-
   } else if (state === 'downloading') {
-
     btn.classList.add('is-updating');
-
     label.innerHTML = `<i class="fa-solid fa-pause btn-play-icon"></i> ${customLabel || 'PAUSE DOWNLOAD'}`;
-
     if (statusTag) {
-
       statusTag.innerHTML = `<i class="fa-solid fa-spinner fa-spin" style="color:#38bdf8"></i> Downloading game files...`;
-
     }
-
   } else if (state === 'update') {
-
     btn.classList.add('is-update');
-
     label.innerHTML = `<i class="fa-solid fa-download btn-play-icon"></i> UPDATE`;
-
     if (statusTag) {
-
       statusTag.innerHTML = `<i class="fa-solid fa-circle-arrow-up" style="color:#fbbf24"></i> Update available`;
-
     }
-
   } else if (state === 'updating') {
-
     btn.classList.add('is-updating');
-
     label.innerHTML = `<i class="fa-solid fa-spinner fa-spin btn-play-icon"></i> ${customLabel || 'UPDATING...'}`;
-
     if (statusTag) {
-
       statusTag.innerHTML = `<i class="fa-solid fa-spinner fa-spin" style="color:#fbbf24"></i> Updating...`;
-
     }
-
   } else if (state === 'launching') {
-
     btn.classList.add('is-launching');
-
     label.innerHTML = `<i class="fa-solid fa-spinner fa-spin btn-play-icon"></i> ${customLabel || 'LAUNCHING...'}`;
-
     if (statusTag) {
-
-      statusTag.innerHTML = `<i class="fa-solid fa-spinner fa-spin text-purple"></i> Launching...`;
-
+      statusTag.innerHTML = `<i class="fa-solid fa-spinner fa-spin text-purple"></i> ${customStatus || 'Launching...'}`;
     }
-
   } else if (state === 'running') {
-
     btn.classList.add('is-running');
-
-    label.innerHTML = `<i class="fa-solid fa-gamepad btn-play-icon"></i> RUNNING`;
-
+    label.innerHTML = `<i class="fa-solid fa-gamepad btn-play-icon"></i> ${customLabel || 'RUNNING'}`;
     if (statusTag) {
-
-      statusTag.innerHTML = `<i class="fa-solid fa-circle-check text-success"></i> Reawakening online`;
-
+      statusTag.innerHTML = `<i class="fa-solid fa-circle-check text-success"></i> ${customStatus || 'Reawakening online'}`;
     }
-
   } else {
-
-    // idle
-
     label.innerHTML = `<i class="fa-solid fa-play btn-play-icon"></i> PLAY`;
-
     if (statusTag) {
-
       statusTag.innerHTML = `<i class="fa-solid fa-circle-check text-success"></i> Navy Games — Ready`;
-
     }
-
   }
-
 }
 
-
-
 function startLaunchStatusTracking() {
-
   if (statusPollTimer) clearInterval(statusPollTimer);
 
-
-
   let checkCount = 0;
-
   statusPollTimer = setInterval(async () => {
-
     checkCount++;
-
     try {
-
       const st = await getApi().get_launch_status();
 
-      
-
-      // When client or lobby starts running — require a live client process.
-
-      // Stale lobby_ready in the status file must not lock Play forever.
-
       if (st.running && (st.ready || st.status === 'lobby_ready' || st.status === 'server_lobby_ready')) {
-
         isLaunching = false;
-
         isGameRunning = true;
-
         setPlayButtonState('running');
-
-        // Do not auto-minimize: frameless WebView2 windows look black/blank
-
-        // when minimized or restored from the taskbar. Use the title-bar
-
-        // minimize button if you want the launcher out of the way.
-
         if (!hasAutoMinimized) {
-
           hasAutoMinimized = true;
-
           showToast("Game started — lobby ready", "fa-gamepad");
-
         }
-
       } else if (st.running && isLaunching) {
-
-        setPlayButtonState('launching');
-
+        setPlayButtonState('running', 'STARTING...', 'Game process running — loading resources...');
+        if (checkCount > 15) {
+          isLaunching = false;
+          isGameRunning = true;
+          setPlayButtonState('running');
+        }
       } else if (st.status === 'failed') {
-
         clearInterval(statusPollTimer);
-
         isLaunching = false;
-
         isGameRunning = false;
-
         hasAutoMinimized = false;
-
         setPlayButtonState('idle');
-
         showToast(st.error || "Launch failed. Check logs.", "fa-triangle-exclamation");
-
       } else if (isLaunching) {
+        const stepName = st.step || "Preparing launch...";
+        setPlayButtonState('launching', 'LAUNCHING...', stepName);
 
-        // Pipeline ended without game starting
-        if (checkCount > 10 && st.pipeline_running === false && !st.running) {
+        if (checkCount > 4 && st.pipeline_running === false && !st.running) {
           clearInterval(statusPollTimer);
           isLaunching = false;
           isGameRunning = false;
@@ -991,49 +896,28 @@ function startLaunchStatusTracking() {
           return;
         }
 
-        // Maximum timeout safety (45 seconds)
-        if (checkCount > 45 && !st.running) {
+        if (checkCount > 75 && !st.running) {
           clearInterval(statusPollTimer);
           isLaunching = false;
           isGameRunning = false;
           hasAutoMinimized = false;
           setPlayButtonState('idle');
-          showToast("Launch timed out. Please run the launcher as Administrator.", "fa-triangle-exclamation");
+          showToast("Launch timed out. Please check logs or run as Administrator.", "fa-triangle-exclamation");
           return;
         }
-
-        // Deliberately not surfacing st.step: the pipeline's internal step
-        // names are for the log, not the player.
-        setPlayButtonState('launching');
-
       }
 
-
-
-      // If game was running and client exited
-
-      if (isGameRunning && !st.running && checkCount > 10) {
-
+      if (isGameRunning && !st.running && checkCount > 5) {
         isGameRunning = false;
-
         isLaunching = false;
-
         hasAutoMinimized = false;
-
         clearInterval(statusPollTimer);
-
         setPlayButtonState('idle');
-
         showToast("Cyber Hunter closed.", "fa-info-circle");
-
       }
-
     } catch (e) {
-
       console.error("Status polling error", e);
-
     }
-
   }, 1200);
 
 }
