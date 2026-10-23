@@ -1,6 +1,6 @@
 {
- "build": "41859750faf262ed",
- "built": "2026-10-23T12:20:27",
+ "build": "c8471dec7ef90fad",
+ "built": "2026-10-23T12:58:13",
  "files": {
   "common/__init__.nxs": "c6480e369916785d0c06fe976a0f1f42db19d91a587ed20cec34e7c3f6d28c34",
   "common/logo_mgr.nxs": "967d39f262786ef43c71b3faf7aaaa21a0cff43c5ecc4c43e637f39ab9afa973",
@@ -8,17 +8,17 @@
   "reawakening/__init__.nxs": "1d618a71243345acc17f2a24b2dcb5c85be75d4fc44d413d3c7a8e84b7d6d2ec",
   "reawakening/art.nxs": "a77c7fb68c2b1fa2a5bceca382eb32b666e49941a89a7f5942d2d02499925090",
   "reawakening/boot.nxs": "6f26846e5dc053767221908a4ef68cf702e5dedb3b073e43c18be5567aa5ceca",
-  "reawakening/pack.nxs": "8335103e57f21da293d62548800f8070fe1271a03ecbe00620c3a64839368750"
+  "reawakening/pack.nxs": "7dfa83f844a0a736e5317a7d97a90a7f9c18257e83fe1f93b0b33a1619f121da"
  },
  "sources": {
   "client/frida/assets/reawakening_loading.png": "e61798f447906810295b565166b08e6e0f471c1eb3d336bf3d4a8d17bf8dd051",
   "client/frida/assets/reawakening_loading_spinner.png": "5955433ca82e1ce35252f32faf0068f20451d4bd97cfbaba279427b21f477153",
   "client/frida/br_world4k_anchors.py": "e942440ea014291dee657450074e1e69c41342b935304833774ec1d466c6eb30",
   "client/frida/br_world4k_spawns.py": "020ad9c73c078c5b35a5459dc4cb5e4ee1149333b88939446e5e393df09d8458",
-  "client/frida/lobby_full_payload.py": "49f121f5d2fcbd7ada848600d0b0c2f08c3fd470985f1f806b23f90589458bb6",
-  "client/frida/lobby_offline_server.py": "c134fec00828c11a45f2560f56a469364c23c213d758a00c5dd611b4c418a9ac",
+  "client/frida/lobby_full_payload.py": "aaa4075c33ce9438fbb343f22b81234b161b71085d02d92e4103640890c689de",
+  "client/frida/lobby_offline_server.py": "d6b30dd42208fadc7fa63305e5c975fdc431ffb951024e24bf1fdf4d29952cbf",
   "client/frida/navy_web_art.bin": "7bb9b255ffef84dd882bc3bb6d8372e33f8fc097bd284ae5c9079fceb4721eae",
-  "client/frida/offline_account_db.py": "78718657d591813d067ebbc0574508b7c5c9209efb42e834ce340cb15716eef5",
+  "client/frida/offline_account_db.py": "cd7c7cb0c8dec0fa3742d57df917406f924a339989d371a7ac4f96f0a436546a",
   "client/frida/offline_weapon_damage.json": "d731b363ceea07d99a81c430ae2fe47fd98482c8e432a25b7560af277d796756",
   "client/native/boot.py": "3b548a9ce15e7eb1b1f14b871f73ed8ad51704e1f9b3d56ba92e1a4101206863",
   "client/native/game_overlay/common/__init__.py": "ec3c621294f583a84cc16d61045d7b38e1512770d6d3782212eeab82f4424c76",
