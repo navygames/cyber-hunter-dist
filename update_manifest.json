@@ -454,7 +454,7 @@
   },
   {
    "path": "client/native/build/script/manifest.json",
-   "sha256": "e1dcc99263d510795126a4ba240cb8fb9b11c0888453dec034eee76c6c9c7b51",
+   "sha256": "b377cda77da44b59bf39c3bca0e6220c671f5f5691760271d02a977306ef0166",
    "size": 2237
   },
   {
@@ -474,7 +474,7 @@
   },
   {
    "path": "client/native/build/script/reawakening/pack.nxs",
-   "sha256": "43334cc1caf66f2c327eb1b59f613a77b75b606571b103b0800b48299af0bc61",
+   "sha256": "dabd6df3dedbb0a8fd44cb0424bba4c957cdb5519d941ea64434af2b51b70691",
    "size": 941942
   },
   {
