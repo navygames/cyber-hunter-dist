@@ -1,6 +1,6 @@
 {
- "build": "decf6fe40e549b32",
- "built": "2026-10-23T15:42:06",
+ "build": "0b3a87f95a65f571",
+ "built": "2026-10-23T18:36:07",
  "files": {
   "common/__init__.nxs": "c6480e369916785d0c06fe976a0f1f42db19d91a587ed20cec34e7c3f6d28c34",
   "common/logo_mgr.nxs": "967d39f262786ef43c71b3faf7aaaa21a0cff43c5ecc4c43e637f39ab9afa973",
@@ -8,14 +8,14 @@
   "reawakening/__init__.nxs": "1d618a71243345acc17f2a24b2dcb5c85be75d4fc44d413d3c7a8e84b7d6d2ec",
   "reawakening/art.nxs": "a77c7fb68c2b1fa2a5bceca382eb32b666e49941a89a7f5942d2d02499925090",
   "reawakening/boot.nxs": "6f26846e5dc053767221908a4ef68cf702e5dedb3b073e43c18be5567aa5ceca",
-  "reawakening/pack.nxs": "9a40639150223d117043ad46175614be126b45abc1928db280bf026e962db3f3"
+  "reawakening/pack.nxs": "46e995f4700cf660d75a0b21f52db5e0fae552922150b87b75932f4aba0d9995"
  },
  "sources": {
   "client/frida/assets/reawakening_loading.png": "e61798f447906810295b565166b08e6e0f471c1eb3d336bf3d4a8d17bf8dd051",
   "client/frida/assets/reawakening_loading_spinner.png": "5955433ca82e1ce35252f32faf0068f20451d4bd97cfbaba279427b21f477153",
   "client/frida/br_world4k_anchors.py": "e942440ea014291dee657450074e1e69c41342b935304833774ec1d466c6eb30",
   "client/frida/br_world4k_spawns.py": "b1380966ab29942f76eb5ecee3815e0c46f3cc21a1670ede89d593414e802e78",
-  "client/frida/lobby_full_payload.py": "300eb3212ecf3348f9d066fe3ce82ecd996225352e37dce5b5b28223c8dbe009",
+  "client/frida/lobby_full_payload.py": "1bb0958bda58babdcbd2b81885a44cb3af946438052361857b679fc60bfbd502",
   "client/frida/lobby_offline_server.py": "d6b30dd42208fadc7fa63305e5c975fdc431ffb951024e24bf1fdf4d29952cbf",
   "client/frida/navy_web_art.bin": "7bb9b255ffef84dd882bc3bb6d8372e33f8fc097bd284ae5c9079fceb4721eae",
   "client/frida/offline_account_db.py": "cd7c7cb0c8dec0fa3742d57df917406f924a339989d371a7ac4f96f0a436546a",
