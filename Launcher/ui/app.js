@@ -2147,8 +2147,9 @@ function startServerPoll() {
       const res = await getApi().check_server_status();
 
       const statusStr = res.online ? 'Online' : 'Standby';
+      const countStr = (res.online && typeof res.online_players === 'number') ? ` · ${res.online_players} Online` : '';
 
-      showToast(`Reawakening Server — ${statusStr}`, res.online ? 'fa-circle-check' : 'fa-server');
+      showToast(`Reawakening Server — ${statusStr}${countStr}`, res.online ? 'fa-circle-check' : 'fa-server');
 
     } catch (_) {}
 
@@ -2202,6 +2203,33 @@ async function checkServer() {
 
       serverText.textContent = 'STATUS: REAWAKENING SERVER';
 
+    }
+
+    const onlineCount = typeof res.online_players === 'number' ? res.online_players : (res.online ? 1 : 0);
+    const onlineCountVal = document.getElementById('onlineCountVal');
+    const onlinePlayersDot = document.getElementById('onlinePlayersDot');
+    const bottomOnlineCount = document.getElementById('bottomOnlineCount');
+    const onlinePlayersBadge = document.getElementById('onlinePlayersBadge');
+
+    if (onlineCountVal) {
+      onlineCountVal.textContent = res.online ? String(onlineCount) : '0';
+    }
+    if (bottomOnlineCount) {
+      bottomOnlineCount.textContent = res.online ? String(onlineCount) : '0';
+    }
+    if (onlinePlayersDot) {
+      if (!res.online) {
+        onlinePlayersDot.className = 'online-dot-pulse';
+      } else if (onlineCount > 0) {
+        onlinePlayersDot.className = 'online-dot-pulse active';
+      } else {
+        onlinePlayersDot.className = 'online-dot-pulse standby';
+      }
+    }
+    if (onlinePlayersBadge) {
+      onlinePlayersBadge.title = res.online 
+        ? `Reawakening Server Online — ${onlineCount} player${onlineCount === 1 ? '' : 's'} in-game`
+        : 'Server Standby / Offline';
     }
 
 

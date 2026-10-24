@@ -1,6 +1,6 @@
 {
  "schema": 1,
- "version": "2026.10.24-042758",
+ "version": "2026.10.24-060029",
  "files": [
   {
    "path": "CyberHunter.bat",
@@ -19,8 +19,8 @@
   },
   {
    "path": "Launcher/ui/app.js",
-   "sha256": "0e2990a1263f8de3f96abf3020aa978ceb29a52678921208e787805699f11a25",
-   "size": 161842
+   "sha256": "650879e19e8ec5f0bf8805e09f904aa774b3d3d020bb0b0c65a6e3b45cd58e30",
+   "size": 163156
   },
   {
    "path": "Launcher/ui/assets/ch-logo-white.png",
@@ -119,13 +119,13 @@
   },
   {
    "path": "Launcher/ui/index.html",
-   "sha256": "9fa36f00436be123bd8013f76e50d47685424df5753ead8f4329a983bd7cb452",
-   "size": 84707
+   "sha256": "8a9ec3f40281640c737d0956ea1fdb4ef4cce6a10bc43315aac9c650b60cf5b4",
+   "size": 87151
   },
   {
    "path": "Launcher/ui/style.css",
-   "sha256": "12329259fddb8c55db4c2efb23872c0c309015c9de218d6e1222a2f44c4b184d",
-   "size": 64595
+   "sha256": "25d9aac9a23c640f80a425be5a76169ddab5219a8b71d11c159260d43d9c6271",
+   "size": 73913
   },
   {
    "path": "Launcher/ui/vendor/fontawesome.css",
