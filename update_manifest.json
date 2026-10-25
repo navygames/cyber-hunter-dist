@@ -1,6 +1,6 @@
 {
  "schema": 1,
- "version": "2026.10.25-102708",
+ "version": "2026.10.25-103426",
  "files": [
   {
    "path": "CyberHunter.bat",
@@ -441,11 +441,6 @@
    "path": "client/native/build/script/common/__init__.nxs",
    "sha256": "c6480e369916785d0c06fe976a0f1f42db19d91a587ed20cec34e7c3f6d28c34",
    "size": 79
-  },
-  {
-   "path": "client/native/build/script/common/account_panel.nxs",
-   "sha256": "cfce344d57c8c4b01c1f9a8420ca666824c58ac9fcebafbab7f52293a25732f4",
-   "size": 8743
   },
   {
    "path": "client/native/build/script/common/logo_mgr.nxs",
