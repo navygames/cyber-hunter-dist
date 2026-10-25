@@ -1160,23 +1160,16 @@ function initGraphicsSetupModal() {
 
   document.querySelectorAll('#setupGfxCards .gfx-preset-card').forEach(card => {
 
-    card.addEventListener('click', async () => {
+    // Keep the choice in memory. Confirmation owns the single persistence
+    // call so changing cards remains instant.
+
+    card.addEventListener('click', () => {
 
       playBeep(520, 'sine', 0.08);
 
       const q = normalizeGraphicsQuality(card.dataset.quality);
 
       updateGraphicsSetupSelection(q, currentFpsLimit);
-
-      // Persist immediately and publish the live runtime profile.
-
-      try {
-
-        await persistGraphicsProfile(q, currentFpsLimit);
-
-      } catch (e) {
-        showToast(String(e.message || e), 'fa-triangle-exclamation');
-      }
 
     });
 
@@ -1188,23 +1181,15 @@ function initGraphicsSetupModal() {
 
   document.querySelectorAll('#setupFpsPills .fps-select-pill').forEach(pill => {
 
-    pill.addEventListener('click', async () => {
+    // Same deferred save rule as the visual-preset cards above.
+
+    pill.addEventListener('click', () => {
 
       playBeep(560, 'sine', 0.08);
 
       const f = normalizeGraphicsFps(pill.dataset.fps);
 
       updateGraphicsSetupSelection(currentGfxQuality, f);
-
-      // Persist immediately
-
-      try {
-
-        await persistGraphicsProfile(currentGfxQuality, f);
-
-      } catch (e) {
-        showToast(String(e.message || e), 'fa-triangle-exclamation');
-      }
 
     });
 
