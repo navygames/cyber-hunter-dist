@@ -1,6 +1,6 @@
 {
- "build": "77e0467456f8645a",
- "built": "2026-10-28T12:12:21",
+ "build": "cf27c7242c9ca334",
+ "built": "2026-10-28T12:42:12",
  "files": {
   "common/__init__.nxs": "c6480e369916785d0c06fe976a0f1f42db19d91a587ed20cec34e7c3f6d28c34",
   "common/logo_mgr.nxs": "967d39f262786ef43c71b3faf7aaaa21a0cff43c5ecc4c43e637f39ab9afa973",
@@ -8,7 +8,7 @@
   "reawakening/__init__.nxs": "1d618a71243345acc17f2a24b2dcb5c85be75d4fc44d413d3c7a8e84b7d6d2ec",
   "reawakening/art.nxs": "120242d6031d098c09e4dad6e50bfb12c65d673fd0a52a767a61db330f2e5d55",
   "reawakening/boot.nxs": "3d5d107132e676d328a799300c631172087f9da7f00da04d135ba63f14033d34",
-  "reawakening/pack.nxs": "7ce2e56c5626c9b5959cd628c4704612a5d70d17e1a93416713ed3550c237a4c"
+  "reawakening/pack.nxs": "5fd6d51ead652721673fd60f40c3d0c2b3a4838cb96c960dc433f9155a288583"
  },
  "sources": {
   "client/frida/assets/lf_1v1_badge.png": "4109ffe3e94ca7749e98512eff36efae3cbc42ce32b44cf38e80cbb3abb6142f",
@@ -55,8 +55,8 @@
   "client/frida/assets/reawakening_loading_spinner.png": "5955433ca82e1ce35252f32faf0068f20451d4bd97cfbaba279427b21f477153",
   "client/frida/br_world4k_anchors.py": "e942440ea014291dee657450074e1e69c41342b935304833774ec1d466c6eb30",
   "client/frida/br_world4k_spawns.py": "b1380966ab29942f76eb5ecee3815e0c46f3cc21a1670ede89d593414e802e78",
-  "client/frida/lobby_full_payload.py": "2a047004428cb52eb9ddae273d648cdd7a9129c238080a1cff2a56437d3ba98d",
-  "client/frida/lobby_offline_server.py": "c182d72e2117b7af6b3e6509a5a871e20d8b396f30e1332036a3af8022b2dae9",
+  "client/frida/lobby_full_payload.py": "2fa006ce70e464b3acc500e8e1705896f034cdaa5fd17cca696d06d79b052374",
+  "client/frida/lobby_offline_server.py": "28ef5fa271eb2cde9462d160a3d15b466f15705791fa0d8936a1344c8c4d76e3",
   "client/frida/navy_web_art.bin": "2a24967fb30565e61e9c02eccc09f94c7e014c999b254ba84cc17e42529c573d",
   "client/frida/offline_account_db.py": "4663ae077bc91d0c645c974f3f15a84994e75aede31cab8ffeeddcc5016d86aa",
   "client/frida/offline_weapon_damage.json": "d731b363ceea07d99a81c430ae2fe47fd98482c8e432a25b7560af277d796756",
