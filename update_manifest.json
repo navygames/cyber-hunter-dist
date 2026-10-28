@@ -1,7 +1,7 @@
 {
  "schema": 1,
  "launcher": "dotnet",
- "version": "2026.10.28-054329",
+ "version": "2026.10.28-095053",
  "files": [
   {
    "path": "CyberHunter.bat",
@@ -10,8 +10,8 @@
   },
   {
    "path": "CyberHunterLauncher.exe",
-   "sha256": "f5e011d937a49ed38944c0fe86b0e661335fab9f88688bd1ceeec4bad3cebf24",
-   "size": 4926976
+   "sha256": "81ad4bd02aaab223412f54fb3541916bca403134fb6fa1d4b2d83d2a358c18ac",
+   "size": 4930560
   },
   {
    "path": "Launcher/app_icon.ico",
@@ -500,8 +500,8 @@
   },
   {
    "path": "launcher.exe",
-   "sha256": "f5e011d937a49ed38944c0fe86b0e661335fab9f88688bd1ceeec4bad3cebf24",
-   "size": 4926976
+   "sha256": "81ad4bd02aaab223412f54fb3541916bca403134fb6fa1d4b2d83d2a358c18ac",
+   "size": 4930560
   },
   {
    "path": "requirements.txt",
