@@ -1,16 +1,17 @@
 {
  "schema": 1,
- "version": "2026.10.27-170712",
+ "launcher": "dotnet",
+ "version": "2026.10.28-041307",
  "files": [
   {
    "path": "CyberHunter.bat",
-   "sha256": "8edcb0de748b334c1d16ef314c6263c5471c8aefcf127941a4f0b0f55ee44520",
-   "size": 3727
+   "sha256": "c8d9d7fb88e944fbd1c4b042de17fbf96764fa3ec5bec86296830bfe0cd9ec8e",
+   "size": 3571
   },
   {
    "path": "CyberHunterLauncher.exe",
-   "sha256": "988746df9421f754a86ac7d4440d710078b765153113fb84ae7db696458a3829",
-   "size": 24261516
+   "sha256": "f5e011d937a49ed38944c0fe86b0e661335fab9f88688bd1ceeec4bad3cebf24",
+   "size": 4926976
   },
   {
    "path": "Launcher/app_icon.ico",
@@ -258,6 +259,16 @@
    "size": 156496
   },
   {
+   "path": "Microsoft.Web.WebView2.Core.dll",
+   "sha256": "8219a3135436c147f8eb02fb831e99596103eebc18b6d7b794ca93f4c67018a2",
+   "size": 649800
+  },
+  {
+   "path": "Microsoft.Web.WebView2.WinForms.dll",
+   "sha256": "c48f8d729dc531288d2c53a6241effe7922ed1b947850b2442008a945c098c48",
+   "size": 39016
+  },
+  {
    "path": "README.txt",
    "sha256": "6e1fe3c501e11ca078e79fe367bb36eabc34981944e37fa5a715694a8a1f2e0e",
    "size": 1962
@@ -433,6 +444,11 @@
    "size": 31000
   },
   {
+   "path": "WebView2Loader.dll",
+   "sha256": "eb5335edeaa6f2122c044e82aab2351dc8c9b4e0fe5e578c71922fb61be285e7",
+   "size": 161864
+  },
+  {
    "path": "client/client_manifest.json",
    "sha256": "2c1b444c74a4687ca34bcca7bc8a95b7192550125803d74916cba62e6ce879c9",
    "size": 38141
@@ -454,8 +470,8 @@
   },
   {
    "path": "client/native/build/script/manifest.json",
-   "sha256": "c4ea4c81287bf2cc70c02dded154cc38f94eb2c9a7617425da1dbc9095b5ec3f",
-   "size": 2237
+   "sha256": "c5bd60306da4ccce6f8c670c5ae8c0acb50a682fd0d8bf5c7002501cb03ba526",
+   "size": 6607
   },
   {
    "path": "client/native/build/script/reawakening/__init__.nxs",
@@ -464,8 +480,8 @@
   },
   {
    "path": "client/native/build/script/reawakening/art.nxs",
-   "sha256": "a77c7fb68c2b1fa2a5bceca382eb32b666e49941a89a7f5942d2d02499925090",
-   "size": 12982390
+   "sha256": "120242d6031d098c09e4dad6e50bfb12c65d673fd0a52a767a61db330f2e5d55",
+   "size": 14890894
   },
   {
    "path": "client/native/build/script/reawakening/boot.nxs",
@@ -474,8 +490,8 @@
   },
   {
    "path": "client/native/build/script/reawakening/pack.nxs",
-   "sha256": "f9cbf7df0fa38f913ebdbd491d86c5a7d0e5016728dec606c3001ac56d6196da",
-   "size": 1081830
+   "sha256": "7ce2e56c5626c9b5959cd628c4704612a5d70d17e1a93416713ed3550c237a4c",
+   "size": 1087313
   },
   {
    "path": "game-server/src/sync_supabase.js",
@@ -484,8 +500,8 @@
   },
   {
    "path": "launcher.exe",
-   "sha256": "988746df9421f754a86ac7d4440d710078b765153113fb84ae7db696458a3829",
-   "size": 24261516
+   "sha256": "f5e011d937a49ed38944c0fe86b0e661335fab9f88688bd1ceeec4bad3cebf24",
+   "size": 4926976
   },
   {
    "path": "requirements.txt",
@@ -599,8 +615,8 @@
   },
   {
    "path": "tools/private_server/setup_hosts.ps1",
-   "sha256": "44652e78cff603fb4d7db5027733d5dce119f9f7fa127825f698e74165b7914e",
-   "size": 3006
+   "sha256": "70bea30fcda47b0b38fac9e4393f24e9d44ecad6a8199d96fc0ac284bb26f543",
+   "size": 3345
   },
   {
    "path": "tools/private_server/setup_loopback_ips.ps1",
@@ -621,6 +637,11 @@
    "path": "tools/verify_game_files.py",
    "sha256": "c691a0db9494420459c4d63dff4eca8aa06d8e16acc9cb4e417ca66104790156",
    "size": 18562
+  },
+  {
+   "path": "tools/weather_packs.py",
+   "sha256": "a3fd7d9d8cf71374446379b8f056b456c27def5b4d443b8cec20a5adf07256d5",
+   "size": 51353
   }
  ]
 }
