@@ -1,14 +1,14 @@
 {
- "build": "d330c92084828b38",
- "built": "2026-10-29T01:01:22",
+ "build": "fdb4ca48b3a9b294",
+ "built": "2026-10-29T16:25:13",
  "files": {
   "common/__init__.nxs": "c6480e369916785d0c06fe976a0f1f42db19d91a587ed20cec34e7c3f6d28c34",
   "common/logo_mgr.nxs": "967d39f262786ef43c71b3faf7aaaa21a0cff43c5ecc4c43e637f39ab9afa973",
   "common/logo_panel.nxs": "0f1ef84aab7ef43fdc3a0c50d6110f8dac71f20db7ce8e83617c0d1d9f0ed679",
   "reawakening/__init__.nxs": "1d618a71243345acc17f2a24b2dcb5c85be75d4fc44d413d3c7a8e84b7d6d2ec",
-  "reawakening/art.nxs": "54ca612d005753a2185f244f0b03f183dcff1e0017ad2047a58b0b85379c0b26",
+  "reawakening/art.nxs": "c4dc162bcb3211b6f90f813078180f031bd7961435cc76892db1595e0fff1fc8",
   "reawakening/boot.nxs": "3d5d107132e676d328a799300c631172087f9da7f00da04d135ba63f14033d34",
-  "reawakening/pack.nxs": "2ed3c9c069b0d8a8eb81f1f06fc05ce53964a6bb520ac40016a0548362ddb649"
+  "reawakening/pack.nxs": "2cdadd006a954b5067f9726879f1c0e196e8c3279ecbab1e11f46dc76e478d93"
  },
  "sources": {
   "client/frida/assets/lf_1v1_badge.png": "4109ffe3e94ca7749e98512eff36efae3cbc42ce32b44cf38e80cbb3abb6142f",
@@ -61,9 +61,9 @@
   "client/frida/assets/tt_poster_black_cat_legend_avatar.png": "a588e8118da0480fbdb45ea4fbd7c4cd9ed4d9c9dedd6406d6da15d6021447b9",
   "client/frida/br_world4k_anchors.py": "e942440ea014291dee657450074e1e69c41342b935304833774ec1d466c6eb30",
   "client/frida/br_world4k_spawns.py": "b1380966ab29942f76eb5ecee3815e0c46f3cc21a1670ede89d593414e802e78",
-  "client/frida/lobby_full_payload.py": "b4b3a924c5713cb2d4d2ca8a9c148c2232e56639a1351ec659b3404f45018644",
-  "client/frida/lobby_offline_server.py": "af783e6c14893de421cc907f1a4c6a78c34e3b1f4895aed43e41787e6c56041d",
-  "client/frida/navy_web_art.bin": "69ca6247b945d4213f34edf7dd425fc96c9c9b7b40ba741c6d0e0b69039d5577",
+  "client/frida/lobby_full_payload.py": "9d75feeeb1674c4d3fd2117422b9c7e5f92540b0b4ff5e21c3fa9f60809f2bb2",
+  "client/frida/lobby_offline_server.py": "9d2576b13a527e505581d9c429e2c4db74b631c5cb90ee4daa3d1a4180c27e11",
+  "client/frida/navy_web_art.bin": "ae2ab18fbc52d3f1cce63e177700199b4e2290aa46dc937e565f46b99d876579",
   "client/frida/offline_account_db.py": "4663ae077bc91d0c645c974f3f15a84994e75aede31cab8ffeeddcc5016d86aa",
   "client/frida/offline_weapon_damage.json": "d731b363ceea07d99a81c430ae2fe47fd98482c8e432a25b7560af277d796756",
   "client/native/boot.py": "5cb4ef3875973dc268497440ff83ae792c2a227ed30ba920d721b73874399e01",
