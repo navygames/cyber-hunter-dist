@@ -1,17 +1,27 @@
 {
  "schema": 1,
  "launcher": "dotnet",
- "version": "2026.10.30-132951",
+ "version": "2026.10.30-151505",
  "files": [
   {
+   "path": "AntiCheat/ac_host.exe",
+   "sha256": "86978ff56c6644f984f423fdcdea19b0c0a47fbd26053d53242bdd18aa1d9e00",
+   "size": 277504
+  },
+  {
+   "path": "AntiCheat/chac.dll",
+   "sha256": "cd6bb7232c626435d5c1b94d2a9f8662c6a351cd839c638e32a9d0a854c21437",
+   "size": 359424
+  },
+  {
    "path": "CyberHunter.bat",
-   "sha256": "c8d9d7fb88e944fbd1c4b042de17fbf96764fa3ec5bec86296830bfe0cd9ec8e",
-   "size": 3571
+   "sha256": "8edcb0de748b334c1d16ef314c6263c5471c8aefcf127941a4f0b0f55ee44520",
+   "size": 3727
   },
   {
    "path": "CyberHunterLauncher.exe",
-   "sha256": "81ad4bd02aaab223412f54fb3541916bca403134fb6fa1d4b2d83d2a358c18ac",
-   "size": 4930560
+   "sha256": "c91b59ce672b93a60510ed36644c407ef47e74c7a23b74424ab736243df34ec3",
+   "size": 4940288
   },
   {
    "path": "Launcher/app_icon.ico",
@@ -470,8 +480,8 @@
   },
   {
    "path": "client/native/build/script/manifest.json",
-   "sha256": "0feec8a5cce6cfaef2f1239813cb7f9aba671268d70666133970d9c5824df8b6",
-   "size": 7358
+   "sha256": "491d450e91ac45cf92892baa771417b0ac179a9c411a21f632ba579d09e16e33",
+   "size": 7377
   },
   {
    "path": "client/native/build/script/reawakening/__init__.nxs",
@@ -490,8 +500,8 @@
   },
   {
    "path": "client/native/build/script/reawakening/pack.nxs",
-   "sha256": "99530f4703cf5573776453d2934f851149f7fc06d7c465a7b3a97db0ce2d820b",
-   "size": 1271586
+   "sha256": "c556e1dcc5dd4bb1dd00de7acfee8232e66e419e9cc9c5f3e40888995ec38d2e",
+   "size": 1274397
   },
   {
    "path": "game-server/src/sync_supabase.js",
@@ -499,9 +509,14 @@
    "size": 9126
   },
   {
+   "path": "game_manifest.json",
+   "sha256": "8ce1935bc44133aa5c7dc70ae4adb998a4a0053d99e94a9187be109281ad6055",
+   "size": 800
+  },
+  {
    "path": "launcher.exe",
-   "sha256": "81ad4bd02aaab223412f54fb3541916bca403134fb6fa1d4b2d83d2a358c18ac",
-   "size": 4930560
+   "sha256": "c91b59ce672b93a60510ed36644c407ef47e74c7a23b74424ab736243df34ec3",
+   "size": 4940288
   },
   {
    "path": "requirements.txt",
@@ -615,8 +630,8 @@
   },
   {
    "path": "tools/private_server/setup_hosts.ps1",
-   "sha256": "70bea30fcda47b0b38fac9e4393f24e9d44ecad6a8199d96fc0ac284bb26f543",
-   "size": 3345
+   "sha256": "44652e78cff603fb4d7db5027733d5dce119f9f7fa127825f698e74165b7914e",
+   "size": 3006
   },
   {
    "path": "tools/private_server/setup_loopback_ips.ps1",

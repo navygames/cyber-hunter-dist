@@ -65,3 +65,10 @@ Launcher/*.spec
 
 # Launch script is embedded in CyberHunterLauncher.exe (launch/run.ps1).
 client/launchers/
+
+# Anti-cheat: players get AntiCheat/ac_host.exe + chac.dll only. The
+# server side (ac_service.py) and the C++ source stay in the dev repo.
+**/ac_service*
+AntiCheat/src/
+AntiCheat/build/
+AntiCheat/*.log
