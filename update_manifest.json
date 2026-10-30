@@ -1,7 +1,7 @@
 {
  "schema": 1,
  "launcher": "dotnet",
- "version": "2026.10.30-151505",
+ "version": "2026.10.30-151649",
  "files": [
   {
    "path": "AntiCheat/ac_host.exe",
@@ -269,16 +269,6 @@
    "size": 156496
   },
   {
-   "path": "Microsoft.Web.WebView2.Core.dll",
-   "sha256": "8219a3135436c147f8eb02fb831e99596103eebc18b6d7b794ca93f4c67018a2",
-   "size": 649800
-  },
-  {
-   "path": "Microsoft.Web.WebView2.WinForms.dll",
-   "sha256": "c48f8d729dc531288d2c53a6241effe7922ed1b947850b2442008a945c098c48",
-   "size": 39016
-  },
-  {
    "path": "README.txt",
    "sha256": "6e1fe3c501e11ca078e79fe367bb36eabc34981944e37fa5a715694a8a1f2e0e",
    "size": 1962
@@ -454,11 +444,6 @@
    "size": 31000
   },
   {
-   "path": "WebView2Loader.dll",
-   "sha256": "eb5335edeaa6f2122c044e82aab2351dc8c9b4e0fe5e578c71922fb61be285e7",
-   "size": 161864
-  },
-  {
    "path": "client/client_manifest.json",
    "sha256": "2c1b444c74a4687ca34bcca7bc8a95b7192550125803d74916cba62e6ce879c9",
    "size": 38141
@@ -507,11 +492,6 @@
    "path": "game-server/src/sync_supabase.js",
    "sha256": "8674751009eaf089ec91aab912ce4c2b33831dbe6d6f8cf2cd5bfc7ecc0dc2cd",
    "size": 9126
-  },
-  {
-   "path": "game_manifest.json",
-   "sha256": "8ce1935bc44133aa5c7dc70ae4adb998a4a0053d99e94a9187be109281ad6055",
-   "size": 800
   },
   {
    "path": "launcher.exe",
@@ -652,11 +632,6 @@
    "path": "tools/verify_game_files.py",
    "sha256": "c691a0db9494420459c4d63dff4eca8aa06d8e16acc9cb4e417ca66104790156",
    "size": 18562
-  },
-  {
-   "path": "tools/weather_packs.py",
-   "sha256": "a3fd7d9d8cf71374446379b8f056b456c27def5b4d443b8cec20a5adf07256d5",
-   "size": 51353
   }
  ]
 }
