@@ -1,7 +1,7 @@
 {
  "schema": 1,
  "launcher": "dotnet",
- "version": "2026.11.01-051808",
+ "version": "2026.11.01-055210",
  "files": [
   {
    "path": "AntiCheat/ac_host.exe",
@@ -20,8 +20,8 @@
   },
   {
    "path": "CyberHunterLauncher.exe",
-   "sha256": "e19186181731d3d9b6cec92d4904b8efb03f457b6dab84a4d6aee3b383f7dd5b",
-   "size": 4952576
+   "sha256": "9eccb6c44bde955d0f0c4f59a92fb091087d4ac293aa5f03f2285e55bbd2d1a5",
+   "size": 4953088
   },
   {
    "path": "Launcher/app_icon.ico",
@@ -510,8 +510,8 @@
   },
   {
    "path": "launcher.exe",
-   "sha256": "e19186181731d3d9b6cec92d4904b8efb03f457b6dab84a4d6aee3b383f7dd5b",
-   "size": 4952576
+   "sha256": "9eccb6c44bde955d0f0c4f59a92fb091087d4ac293aa5f03f2285e55bbd2d1a5",
+   "size": 4953088
   },
   {
    "path": "requirements.txt",
