@@ -206,6 +206,20 @@
 
           <!-- Bottom-Right Play Action Box (Exact Outer-Framed Button Aesthetic) -->
           <div class="view-action-container">
+            <div class="server-switcher" id="serverSwitcher">
+              <button type="button" class="server-switcher-trigger" id="btnServerPicker"
+                      aria-haspopup="listbox" aria-expanded="false" title="Choose server for your next Play">
+                <span class="server-switcher-icon"><i class="fa-solid fa-server"></i></span>
+                <span class="server-switcher-copy">
+                  <span class="server-switcher-label">GAME SERVER</span>
+                  <span class="server-switcher-name" id="selectedServerName">SEA Reawakening</span>
+                </span>
+                <i class="fa-solid fa-chevron-down server-switcher-chevron"></i>
+              </button>
+              <div class="server-picker-menu" id="serverPickerMenu" role="listbox" aria-label="Game server">
+                <!-- Rendered from revival_config.env. Unconfigured regions stay visible but cannot be selected. -->
+              </div>
+            </div>
             <div class="play-btn-wrapper">
               <button class="val-btn-primary" id="btnPlayMain">
                 <span class="btn-frame-box"></span>
@@ -638,6 +652,159 @@
             <button type="button" class="tool-btn dev-add-trigger-btn" id="btnOpenAddDevModal">
               <i class="fa-solid fa-user-plus"></i> Add to Dev
             </button>
+          </div>
+        </div>
+
+        <!-- Developer: Send Player Rewards & Donation Gifts Control Panel -->
+        <div class="settings-group dev-only-feature" id="groupDevRewardPanel">
+          <label class="settings-label"><i class="fa-solid fa-gift text-purple"></i> Send Player Rewards &amp; Donation Gifts (Owner Control Panel)</label>
+          <div class="dev-options-card" style="flex-direction: column; align-items: stretch; gap: 14px; padding: 18px;">
+            <div class="dev-options-info">
+              <div class="dev-options-title" style="font-size: 14px;"><i class="fa-solid fa-crown" style="color: #facc15;"></i> Grant Donation Tiers, Credits &amp; Red Rarity Skins / Outfits</div>
+              <div class="dev-options-desc" style="font-size: 12px;">Send official in-game reward gifts (Credits, Red Rarity Skins/Outfits, or Unlock All Skins) directly to a specific player's account.</div>
+            </div>
+
+            <!-- 1-Click Donation Tier Presets -->
+            <div>
+              <label style="font-size: 11px; text-transform: uppercase; color: #94a3b8; font-weight: 600; display: block; margin-bottom: 6px;">Quick Donation Tier Presets</label>
+              <div style="display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px;">
+                <button type="button" class="tool-btn reward-preset-btn" data-tier="10" style="padding: 8px 6px; font-size: 11px; height: auto; flex-direction: column; gap: 3px;">
+                  <strong style="color: #38bdf8;">$10 TIER</strong>
+                  <span style="font-size: 10px; opacity: 0.8;">20k Cr + 3 Red</span>
+                </button>
+                <button type="button" class="tool-btn reward-preset-btn" data-tier="50" style="padding: 8px 6px; font-size: 11px; height: auto; flex-direction: column; gap: 3px; border-color: rgba(129, 94, 255, 0.6);">
+                  <strong style="color: #a78bfa;">$50 TIER</strong>
+                  <span style="font-size: 10px; opacity: 0.8;">60k Cr + 5 Outfits</span>
+                </button>
+                <button type="button" class="tool-btn reward-preset-btn" data-tier="100" style="padding: 8px 6px; font-size: 11px; height: auto; flex-direction: column; gap: 3px;">
+                  <strong style="color: #f472b6;">$100 TIER</strong>
+                  <span style="font-size: 10px; opacity: 0.8;">120k Cr + 10 Red</span>
+                </button>
+                <button type="button" class="tool-btn reward-preset-btn" data-tier="500" style="padding: 8px 6px; font-size: 11px; height: auto; flex-direction: column; gap: 3px; border-color: rgba(250, 204, 21, 0.5);">
+                  <strong style="color: #facc15;">$500 TIER</strong>
+                  <span style="font-size: 10px; opacity: 0.8;">300k + All Skins</span>
+                </button>
+                <button type="button" class="tool-btn reward-preset-btn" data-tier="custom" style="padding: 8px 6px; font-size: 11px; height: auto; flex-direction: column; gap: 3px;">
+                  <strong style="color: #e2e8f0;">CUSTOM</strong>
+                  <span style="font-size: 10px; opacity: 0.8;">Custom Gift</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- Recipient Player Username & Search -->
+            <div>
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+                <label style="font-size: 11px; text-transform: uppercase; color: #94a3b8; font-weight: 600;">Recipient Player Username</label>
+                <label style="font-size: 11px; color: #38bdf8; font-weight: 600; display: inline-flex; align-items: center; gap: 6px; cursor: pointer;">
+                  <input type="checkbox" id="chkRewardAllPlayers" style="accent-color: #815eff; cursor: pointer;">
+                  <span>Send to ALL Players</span>
+                </label>
+              </div>
+              <div class="settings-input-row">
+                <input type="text" class="settings-input" id="inputRewardUser" maxlength="32" placeholder="Enter exact player username (e.g. Hunter01)...">
+                <button type="button" class="settings-browse-btn" id="btnSearchRewardUser" style="white-space: nowrap; padding: 0 14px;">
+                  <i class="fa-solid fa-magnifying-glass"></i> Search Player
+                </button>
+              </div>
+              <div id="rewardUserSearchResults" style="display: none; margin-top: 6px; flex-wrap: wrap; gap: 6px;"></div>
+            </div>
+
+            <!-- Currency Inputs -->
+            <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px;">
+              <div>
+                <label style="font-size: 11px; text-transform: uppercase; color: #94a3b8; font-weight: 600; display: block; margin-bottom: 6px;">Credits</label>
+                <input type="number" class="settings-input" id="inputRewardCredits" min="0" step="1000" value="20000" style="width: 100%;">
+              </div>
+              <div>
+                <label style="font-size: 11px; text-transform: uppercase; color: #94a3b8; font-weight: 600; display: block; margin-bottom: 6px;">V-Coins (Optional)</label>
+                <input type="number" class="settings-input" id="inputRewardVcoins" min="0" step="500" value="0" style="width: 100%;">
+              </div>
+              <div>
+                <label style="font-size: 11px; text-transform: uppercase; color: #94a3b8; font-weight: 600; display: block; margin-bottom: 6px;">Quantum Cubes (Optional)</label>
+                <input type="number" class="settings-input" id="inputRewardCubes" min="0" step="500" value="0" style="width: 100%;">
+              </div>
+            </div>
+
+            <!-- Red Rarity Skins / Outfits Auto-Roller -->
+            <div style="display: grid; grid-template-columns: 140px 1fr; gap: 10px;">
+              <div>
+                <label style="font-size: 11px; text-transform: uppercase; color: #f87171; font-weight: 700; display: block; margin-bottom: 6px;">Red Rarity Count</label>
+                <input type="number" class="settings-input" id="inputRewardRedCount" min="0" max="35" value="3" style="width: 100%;">
+              </div>
+              <div>
+                <label style="font-size: 11px; text-transform: uppercase; color: #f87171; font-weight: 700; display: block; margin-bottom: 6px;">Red Rarity Reward Type</label>
+                <select class="settings-input" id="selectRewardRedMode" style="width: 100%; background: #0f1322; color: #f8fafc;">
+                  <option value="skins">Red Rarity Skins &amp; Outfits (Mixed Pool)</option>
+                  <option value="outfits">Red Rarity Outfit Bundles (Male &amp; Female Balanced)</option>
+                  <option value="outfits_male">Red Rarity Male Outfit Bundles Only</option>
+                  <option value="outfits_female">Red Rarity Female Outfit Bundles Only</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- Optional Specific Red Rarity Item Picker -->
+            <div>
+              <label style="font-size: 11px; text-transform: uppercase; color: #94a3b8; font-weight: 600; display: block; margin-bottom: 6px;">Hand-Pick Specific Red Rarity Skins / Outfits (Optional)</label>
+              <div class="settings-input-row" style="margin-bottom: 6px;">
+                <select class="settings-input" id="selectSpecificRedItem" style="flex: 1; background: #0f1322; color: #f8fafc;">
+                  <option value="">-- Select a specific Red Rarity Outfit or Skin to add --</option>
+                </select>
+                <button type="button" class="settings-browse-btn" id="btnAddSpecificRedItem" style="white-space: nowrap; padding: 0 14px;">
+                  <i class="fa-solid fa-plus"></i> Add Item
+                </button>
+              </div>
+              <input type="text" class="settings-input" id="inputRewardSpecificItems" placeholder="Specific Item IDs (comma-separated, e.g. 1119010, 1228010, 3300100) - leave blank for auto-roll" style="width: 100%; font-size: 12px;">
+            </div>
+
+            <!-- Unlock All Skins Toggle ($500 Tier / VIP Perk) -->
+            <div style="background: rgba(250, 204, 21, 0.08); border: 1px solid rgba(250, 204, 21, 0.35); border-radius: 8px; padding: 10px 14px; display: flex; justify-content: space-between; align-items: center;">
+              <div>
+                <div style="font-size: 12px; font-weight: 700; color: #facc15;">
+                  <i class="fa-solid fa-crown"></i> UNLOCK ALL SKINS IN GAME (Permanent Account Unlock)
+                </div>
+                <div style="font-size: 11px; color: #cbd5e1;">Unlocks all outfits, cosmetics, weapon skins, vehicles &amp; gliders for this player ($500 Sovereign Perk).</div>
+              </div>
+              <input type="checkbox" id="chkRewardUnlockAll" style="width: 18px; height: 18px; accent-color: #facc15; cursor: pointer;">
+            </div>
+
+            <!-- Mail Title & Message -->
+            <div style="display: grid; grid-template-columns: 1fr 1.4fr; gap: 10px;">
+              <div>
+                <label style="font-size: 11px; text-transform: uppercase; color: #94a3b8; font-weight: 600; display: block; margin-bottom: 6px;">In-Game Mail Title</label>
+                <input type="text" class="settings-input" id="inputRewardTitle" maxlength="80" value="Quantum Scout ($10) Donation Reward" style="width: 100%;">
+              </div>
+              <div>
+                <label style="font-size: 11px; text-transform: uppercase; color: #94a3b8; font-weight: 600; display: block; margin-bottom: 6px;">Gift Message Shown in Mail</label>
+                <input type="text" class="settings-input" id="inputRewardBody" maxlength="300" value="Thank you for supporting Cyber Hunter Reawakening! Claim your Credits and Red Rarity rewards below." style="width: 100%;">
+              </div>
+            </div>
+
+            <!-- Action Buttons -->
+            <div style="display: flex; gap: 10px; align-items: center; justify-content: space-between; margin-top: 4px;">
+              <button type="button" class="tool-btn" id="btnToggleRewardAudit" style="height: 38px; padding: 0 14px; font-size: 12px;">
+                <i class="fa-solid fa-clock-rotate-left"></i> Sent Rewards History
+              </button>
+              <button type="button" class="val-btn-primary" id="btnSendRewardGift" style="height: 38px; padding: 0 22px;">
+                <i class="fa-solid fa-paper-plane"></i> SEND REWARD / GIFT
+              </button>
+            </div>
+
+            <!-- Confirmation Box -->
+            <div id="rewardResultBox" style="display: none; background: rgba(16, 185, 129, 0.12); border: 1px solid rgba(16, 185, 129, 0.4); border-radius: 8px; padding: 12px 14px; margin-top: 4px;">
+              <div style="font-size: 11px; color: #34d399; font-weight: 700; text-transform: uppercase; margin-bottom: 4px;">
+                <i class="fa-solid fa-circle-check"></i> Reward Gift Dispatched
+              </div>
+              <div style="font-size: 12px; color: #f8fafc; font-family: monospace; white-space: pre-wrap;" id="rewardResultText"></div>
+            </div>
+
+            <!-- Recent Sent Rewards History -->
+            <div id="rewardAuditBox" style="display: none; background: rgba(15, 19, 34, 0.85); border: 1px solid rgba(129, 94, 255, 0.3); border-radius: 8px; padding: 12px 14px; max-height: 200px; overflow-y: auto;">
+              <div style="font-size: 11px; color: #a78bfa; font-weight: 700; text-transform: uppercase; margin-bottom: 6px; display: flex; justify-content: space-between; align-items: center;">
+                <span><i class="fa-solid fa-list-check"></i> Recent Sent Rewards (Server Audit)</span>
+                <button type="button" class="tool-btn" id="btnRefreshRewardAudit" style="padding: 2px 8px; height: 22px; font-size: 10px;">Refresh</button>
+              </div>
+              <div id="rewardAuditList" style="font-size: 11px; color: #cbd5e1; font-family: monospace;">Loading...</div>
+            </div>
           </div>
         </div>
 

@@ -1,6 +1,6 @@
 {
- "build": "e90ba8fe9e6e16d7",
- "built": "2026-10-30T23:05:58",
+ "build": "33071c1032cbe451",
+ "built": "2026-11-01T12:58:42",
  "files": {
   "common/__init__.nxs": "c6480e369916785d0c06fe976a0f1f42db19d91a587ed20cec34e7c3f6d28c34",
   "common/logo_mgr.nxs": "967d39f262786ef43c71b3faf7aaaa21a0cff43c5ecc4c43e637f39ab9afa973",
@@ -8,7 +8,7 @@
   "reawakening/__init__.nxs": "1d618a71243345acc17f2a24b2dcb5c85be75d4fc44d413d3c7a8e84b7d6d2ec",
   "reawakening/art.nxs": "c4dc162bcb3211b6f90f813078180f031bd7961435cc76892db1595e0fff1fc8",
   "reawakening/boot.nxs": "3d5d107132e676d328a799300c631172087f9da7f00da04d135ba63f14033d34",
-  "reawakening/pack.nxs": "c556e1dcc5dd4bb1dd00de7acfee8232e66e419e9cc9c5f3e40888995ec38d2e"
+  "reawakening/pack.nxs": "8b6e76308dffa5fa417941d0d859187fa2b1b9673546a7d834056c267a982110"
  },
  "release": true,
  "sources": {
@@ -62,7 +62,7 @@
   "client/frida/assets/tt_poster_black_cat_legend_avatar.png": "a588e8118da0480fbdb45ea4fbd7c4cd9ed4d9c9dedd6406d6da15d6021447b9",
   "client/frida/br_world4k_anchors.py": "ef328ab3b3b59ec4b5274d2fd21c43639de420dbcd59db5248b25bdced402a93",
   "client/frida/br_world4k_spawns.py": "448324f09ec0c54224c07e357aae7fa74da984301fc3251bbea1f3ff1228c3e2",
-  "client/frida/lobby_full_payload.py": "e093bdfadb19d63cf894d760f3db467fdae165cb49565db84fe7dec9f90c9d9c",
+  "client/frida/lobby_full_payload.py": "72ca140082ae892594eba3c029090c5c37422e93b03da07f899c068b468ab045",
   "client/frida/lobby_offline_server.py": "9d2576b13a527e505581d9c429e2c4db74b631c5cb90ee4daa3d1a4180c27e11",
   "client/frida/navy_web_art.bin": "ae2ab18fbc52d3f1cce63e177700199b4e2290aa46dc937e565f46b99d876579",
   "client/frida/offline_account_db.py": "4663ae077bc91d0c645c974f3f15a84994e75aede31cab8ffeeddcc5016d86aa",

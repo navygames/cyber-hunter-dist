@@ -655,6 +655,97 @@ body.launcher-body {
   z-index: 10;
 }
 
+/* Server selection sits immediately above Play.  The dropdown uses the same
+   dark translucent panel language as the in-game login server selector. */
+.server-switcher {
+  position: relative;
+  width: 250px;
+}
+
+.server-switcher-trigger {
+  width: 100%;
+  min-height: 54px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 13px;
+  border: 1px solid rgba(160, 221, 255, 0.42);
+  border-radius: 5px;
+  background: linear-gradient(100deg, rgba(9, 17, 31, 0.94), rgba(41, 66, 83, 0.82));
+  color: #fff;
+  cursor: pointer;
+  box-shadow: 0 5px 18px rgba(0, 0, 0, 0.32), inset 0 1px rgba(255, 255, 255, 0.08);
+  text-align: left;
+  transition: border-color .18s ease, background .18s ease, transform .18s ease;
+}
+
+.server-switcher-trigger:hover,
+.server-switcher.open .server-switcher-trigger {
+  border-color: #54dcff;
+  background: linear-gradient(100deg, rgba(15, 38, 60, 0.98), rgba(50, 93, 114, 0.9));
+  transform: translateY(-1px);
+}
+
+.server-switcher-icon {
+  width: 27px;
+  height: 27px;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(52, 226, 255, 0.15);
+  border: 1px solid rgba(82, 229, 255, 0.58);
+  color: #5feaff;
+  text-shadow: 0 0 10px rgba(67, 231, 255, .9);
+}
+
+.server-switcher-copy { display: flex; flex: 1; min-width: 0; flex-direction: column; }
+.server-switcher-label { color: rgba(222, 239, 255, .63); font: 9px var(--font-mono); letter-spacing: 1px; }
+.server-switcher-name { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font: 600 15px var(--font-heading); letter-spacing: .5px; }
+.server-switcher-chevron { color: rgba(255,255,255,.7); font-size: 12px; transition: transform .18s ease; }
+.server-switcher.open .server-switcher-chevron { transform: rotate(180deg); }
+
+.server-picker-menu {
+  position: absolute;
+  right: 0;
+  bottom: calc(100% + 8px);
+  width: 100%;
+  padding: 6px;
+  display: none;
+  border: 1px solid rgba(143, 206, 255, .36);
+  border-radius: 6px;
+  background: rgba(8, 14, 27, .97);
+  box-shadow: 0 14px 35px rgba(0, 0, 0, .58);
+  backdrop-filter: blur(14px);
+}
+
+.server-switcher.open .server-picker-menu { display: grid; gap: 4px; }
+
+.server-picker-option {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 25px 1fr auto;
+  align-items: center;
+  gap: 8px;
+  padding: 8px;
+  color: #eaf6ff;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  background: transparent;
+  cursor: pointer;
+  font: inherit;
+  text-align: left;
+}
+
+.server-picker-option:hover:not(:disabled) { background: rgba(65, 192, 255, .13); border-color: rgba(86, 215, 255, .46); }
+.server-picker-option.selected { background: rgba(76, 204, 255, .16); border-color: rgba(88, 224, 255, .6); }
+.server-picker-option:disabled { cursor: not-allowed; opacity: .5; }
+.server-picker-region { color: #59e7ff; font: 700 10px var(--font-mono); }
+.server-picker-name { display: block; font-size: 12px; font-weight: 700; }
+.server-picker-status { display: block; color: rgba(225, 238, 255, .58); font: 9px var(--font-mono); margin-top: 2px; }
+.server-picker-state { color: #49e1a7; font: 9px var(--font-mono); text-transform: uppercase; }
+.server-picker-option:disabled .server-picker-state { color: #e6ac55; }
+
 .play-btn-wrapper {
   display: inline-block;
   position: relative;

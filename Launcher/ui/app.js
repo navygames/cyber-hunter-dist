@@ -38,7 +38,15 @@ const fallbackApi = {
 
   stop_server: async () => { return { success: true, running: false }; },
 
-  check_server_status: async () => ({ online: true, url: "http://127.0.0.1:8888", server_name: "Cyber Hunter Revival" }),
+  check_server_status: async () => ({ online: true, url: "http://127.0.0.1:8888", server_name: "SEA Reawakening" }),
+
+  list_servers: async () => ({ success: true, servers: [
+    { id: 'sea', name: 'SEA Reawakening', region: 'SEA', available: true, selected: true },
+    { id: 'eu', name: 'EU Reawakening', region: 'EU', available: false, selected: false },
+    { id: 'na', name: 'NA Reawakening', region: 'NA', available: false, selected: false }
+  ]}),
+
+  select_server: async () => ({ success: true, message: 'Selected SEA Reawakening. Press Play to connect.' }),
 
   get_launch_status: async () => ({ status: "idle", ready: false, running: false }),
 
@@ -135,6 +143,10 @@ const fallbackApi = {
   resume_game_download: async () => ({ success: true, message: "Mock download resumed" }),
 
   create_tester_account: async (u, p, h) => ({ success: true, message: "Tester account created (mock)", username: u, password: p, hero_name: h || u }),
+  dev_get_reward_catalog: async () => ({ success: true, catalog: { all_items: [] } }),
+  dev_search_players: async (q) => ({ success: true, players: [] }),
+  dev_send_reward_gift: async (p) => ({ success: true, message: "Mock reward sent", recipient: p.username || "ALL", credits: p.credits || 0, items: [] }),
+  dev_get_reward_audit: async () => ({ success: true, entries: [] }),
 
   open_external_url: async (url) => window.open(url, '_blank'),
 
@@ -391,12 +403,15 @@ document.addEventListener('DOMContentLoaded', async () => {
   initAddDevModal();
 
   initAddTesters();
+  initDevRewardPanel();
 
   initActions();
 
   initSocial();
 
   initTitlebar();
+
+  initServerPicker();
 
   initMasterConsole();
 
@@ -2109,6 +2124,90 @@ async function pauseGameDownload() {
 
 // ── Server Health Monitoring ────────────────────────────────────
 
+let serverProfiles = [];
+
+function renderServerPicker(servers) {
+  const menu = document.getElementById('serverPickerMenu');
+  const selectedName = document.getElementById('selectedServerName');
+  if (!menu || !Array.isArray(servers)) return;
+
+  serverProfiles = servers;
+  menu.textContent = '';
+  const selected = servers.find(server => server.selected) || servers[0];
+  if (selectedName && selected) selectedName.textContent = selected.name;
+
+  servers.forEach(server => {
+    const option = document.createElement('button');
+    option.type = 'button';
+    option.className = `server-picker-option${server.selected ? ' selected' : ''}`;
+    option.disabled = !server.available;
+    option.setAttribute('role', 'option');
+    option.setAttribute('aria-selected', server.selected ? 'true' : 'false');
+
+    const region = document.createElement('span');
+    region.className = 'server-picker-region';
+    region.textContent = server.region || server.id.toUpperCase();
+    const copy = document.createElement('span');
+    const name = document.createElement('span');
+    name.className = 'server-picker-name';
+    name.textContent = server.name;
+    const status = document.createElement('span');
+    status.className = 'server-picker-status';
+    status.textContent = server.available ? (server.selected ? 'Current server' : 'Ready to select') : 'Endpoint not configured';
+    copy.append(name, status);
+    const state = document.createElement('span');
+    state.className = 'server-picker-state';
+    state.textContent = server.selected ? 'Selected' : (server.available ? 'Select' : 'Unavailable');
+    option.append(region, copy, state);
+    if (server.available && !server.selected) {
+      option.addEventListener('click', async () => {
+        const result = await getApi().select_server(server.id);
+        if (!result || !result.success) {
+          showToast((result && result.message) || 'Unable to change server.', 'fa-triangle-exclamation');
+          return;
+        }
+        renderServerPicker(result.servers || []);
+        closeServerPicker();
+        await checkServer();
+        showToast(result.message || `Selected ${server.name}.`, 'fa-server');
+      });
+    }
+    menu.appendChild(option);
+  });
+}
+
+async function refreshServerPicker() {
+  try {
+    const result = await getApi().list_servers();
+    if (result && result.success) renderServerPicker(result.servers || []);
+  } catch (_) {}
+}
+
+function closeServerPicker() {
+  const switcher = document.getElementById('serverSwitcher');
+  const button = document.getElementById('btnServerPicker');
+  if (switcher) switcher.classList.remove('open');
+  if (button) button.setAttribute('aria-expanded', 'false');
+}
+
+function initServerPicker() {
+  const switcher = document.getElementById('serverSwitcher');
+  const button = document.getElementById('btnServerPicker');
+  if (!switcher || !button || button.__bound) return;
+  button.__bound = true;
+  button.addEventListener('click', async event => {
+    event.stopPropagation();
+    const open = !switcher.classList.contains('open');
+    if (open) await refreshServerPicker();
+    switcher.classList.toggle('open', open);
+    button.setAttribute('aria-expanded', open ? 'true' : 'false');
+  });
+  document.addEventListener('click', event => {
+    if (!switcher.contains(event.target)) closeServerPicker();
+  });
+  refreshServerPicker();
+}
+
 function startServerPoll() {
 
   checkServer();
@@ -2134,7 +2233,7 @@ function startServerPoll() {
       const statusStr = res.online ? 'Online' : 'Standby';
       const countStr = (res.online && typeof res.online_players === 'number') ? ` · ${res.online_players} Online` : '';
 
-      showToast(`Reawakening Server — ${statusStr}${countStr}`, res.online ? 'fa-circle-check' : 'fa-server');
+      showToast(`${res.server_name || 'Reawakening Server'} — ${statusStr}${countStr}`, res.online ? 'fa-circle-check' : 'fa-server');
 
     } catch (_) {}
 
@@ -2186,7 +2285,7 @@ async function checkServer() {
 
     if (serverText) {
 
-      serverText.textContent = 'STATUS: REAWAKENING SERVER';
+      serverText.textContent = `STATUS: ${(res.server_name || 'REAWAKENING SERVER').toUpperCase()}`;
 
     }
 
@@ -2227,19 +2326,19 @@ async function checkServer() {
 
         serverTargetBadge.className = `server-target-badge online ${isRemote ? 'remote' : 'local'}`;
 
-        serverTargetBadge.title = `Reawakening Server · Online`;
+        serverTargetBadge.title = `${res.server_name || 'Reawakening Server'} · Online`;
 
       }
 
       if (serverTargetText) {
 
-        serverTargetText.textContent = `Reawakening Server (Online)`;
+        serverTargetText.textContent = `${res.server_name || 'Reawakening Server'} (Online)`;
 
       }
 
       if (btnServerQuick) {
 
-        btnServerQuick.title = `Reawakening Server — Online`;
+        btnServerQuick.title = `${res.server_name || 'Reawakening Server'} — Online`;
 
       }
 
@@ -2251,19 +2350,19 @@ async function checkServer() {
 
         serverTargetBadge.className = 'server-target-badge offline';
 
-        serverTargetBadge.title = `Reawakening Server · Standby`;
+        serverTargetBadge.title = `${res.server_name || 'Reawakening Server'} · Standby`;
 
       }
 
       if (serverTargetText) {
 
-        serverTargetText.textContent = `Reawakening Server (Standby)`;
+        serverTargetText.textContent = `${res.server_name || 'Reawakening Server'} (Standby)`;
 
       }
 
       if (btnServerQuick) {
 
-        btnServerQuick.title = `Reawakening Server — Standby`;
+        btnServerQuick.title = `${res.server_name || 'Reawakening Server'} — Standby`;
 
       }
 
@@ -4944,6 +5043,281 @@ function initAddTesters() {
 }
 
 
+
+// ── Developer Reward & Donation Gift Control Panel ──────────────
+function initDevRewardPanel() {
+  const panel = document.getElementById('groupDevRewardPanel');
+  if (!panel) return;
+
+  const inputUser = document.getElementById('inputRewardUser');
+  const chkAll = document.getElementById('chkRewardAllPlayers');
+  const btnSearch = document.getElementById('btnSearchRewardUser');
+  const searchResults = document.getElementById('rewardUserSearchResults');
+  const inputCredits = document.getElementById('inputRewardCredits');
+  const inputVcoins = document.getElementById('inputRewardVcoins');
+  const inputCubes = document.getElementById('inputRewardCubes');
+  const inputRedCount = document.getElementById('inputRewardRedCount');
+  const selectRedMode = document.getElementById('selectRewardRedMode');
+  const selectSpecific = document.getElementById('selectSpecificRedItem');
+  const btnAddSpecific = document.getElementById('btnAddSpecificRedItem');
+  const inputSpecific = document.getElementById('inputRewardSpecificItems');
+  const chkUnlockAll = document.getElementById('chkRewardUnlockAll');
+  const inputTitle = document.getElementById('inputRewardTitle');
+  const inputBody = document.getElementById('inputRewardBody');
+  const btnSend = document.getElementById('btnSendRewardGift');
+  const resultBox = document.getElementById('rewardResultBox');
+  const resultText = document.getElementById('rewardResultText');
+  const btnToggleAudit = document.getElementById('btnToggleRewardAudit');
+  const btnRefreshAudit = document.getElementById('btnRefreshRewardAudit');
+  const auditBox = document.getElementById('rewardAuditBox');
+  const auditList = document.getElementById('rewardAuditList');
+
+  let catalogLoaded = false;
+
+  async function ensureCatalog() {
+    if (catalogLoaded || !selectSpecific) return;
+    try {
+      const res = await getApi().dev_get_reward_catalog();
+      if (res && res.success && res.catalog && Array.isArray(res.catalog.all_items)) {
+        selectSpecific.innerHTML = '<option value="">-- Select a specific Red Rarity Outfit or Skin to add --</option>';
+        res.catalog.all_items.forEach(item => {
+          const opt = document.createElement('option');
+          opt.value = String(item.type_id);
+          opt.textContent = `[${item.category}] ${item.name}`;
+          selectSpecific.appendChild(opt);
+        });
+        catalogLoaded = true;
+      }
+    } catch (_) {}
+  }
+
+  // Load catalog when settings opens or panel is interacted with
+  panel.addEventListener('mouseenter', ensureCatalog, { once: true });
+  setTimeout(ensureCatalog, 1500);
+
+  // Preset buttons ($10, $50, $100, $500, Custom)
+  const presets = {
+    '10': {
+      credits: 20000, vcoins: 0, cubes: 0, redCount: 3, redMode: 'skins', unlockAll: false,
+      title: 'Quantum Scout ($10) Donation Reward',
+      body: 'Thank you for your $10 Quantum Scout contribution! Enjoy your 20,000 Credits and 3 Red Rarity Skins.'
+    },
+    '50': {
+      credits: 60000, vcoins: 0, cubes: 0, redCount: 5, redMode: 'outfits', unlockAll: false,
+      title: 'Cyber Vanguard ($50) Donation Reward',
+      body: 'Thank you for your $50 Cyber Vanguard contribution! Enjoy your 60,000 Credits and 5 Red Rarity Outfits.'
+    },
+    '100': {
+      credits: 120000, vcoins: 0, cubes: 0, redCount: 10, redMode: 'skins', unlockAll: false,
+      title: 'Apex Spectre ($100) Donation Reward',
+      body: 'Thank you for your $100 Apex Spectre contribution! Enjoy your 120,000 Credits and 10 Red Rarity Skins.'
+    },
+    '500': {
+      credits: 300000, vcoins: 0, cubes: 0, redCount: 0, redMode: 'skins', unlockAll: true,
+      title: 'Reawakening Sovereign ($500) Reward',
+      body: 'Thank you for your $500 Reawakening Sovereign contribution! All Skins in game unlocked + 300,000 Credits!'
+    },
+    'custom': {
+      credits: 10000, vcoins: 0, cubes: 0, redCount: 1, redMode: 'skins', unlockAll: false,
+      title: 'Developer Reward Gift',
+      body: 'A special reward gift from Cyber Hunter Reawakening Administration!'
+    }
+  };
+
+  panel.querySelectorAll('.reward-preset-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const tier = btn.getAttribute('data-tier');
+      const p = presets[tier];
+      if (!p) return;
+      playBeep(680, 'sine', 0.06);
+      if (inputCredits) inputCredits.value = p.credits;
+      if (inputVcoins) inputVcoins.value = p.vcoins;
+      if (inputCubes) inputCubes.value = p.cubes;
+      if (inputRedCount) inputRedCount.value = p.redCount;
+      if (selectRedMode) selectRedMode.value = p.redMode;
+      if (chkUnlockAll) chkUnlockAll.checked = p.unlockAll;
+      if (inputTitle) inputTitle.value = p.title;
+      if (inputBody) inputBody.value = p.body;
+      showToast(`Applied $${tier === 'custom' ? 'Custom' : tier} Reward Preset`, 'fa-gift');
+    });
+  });
+
+  if (chkAll && inputUser) {
+    chkAll.addEventListener('change', () => {
+      inputUser.disabled = chkAll.checked;
+      inputUser.placeholder = chkAll.checked
+        ? 'Sending to ALL registered players...'
+        : 'Enter exact player username (e.g. Hunter01)...';
+    });
+  }
+
+  if (btnAddSpecific && selectSpecific && inputSpecific) {
+    btnAddSpecific.addEventListener('click', () => {
+      const val = (selectSpecific.value || '').trim();
+      if (!val) {
+        showToast('Select a Red Rarity item from the dropdown first.', 'fa-triangle-exclamation');
+        return;
+      }
+      const cur = (inputSpecific.value || '').split(/[\s,;]+/).filter(Boolean);
+      if (!cur.includes(val)) cur.push(val);
+      inputSpecific.value = cur.join(', ');
+      playBeep(620, 'sine', 0.05);
+    });
+  }
+
+  if (btnSearch && inputUser && searchResults) {
+    btnSearch.addEventListener('click', async () => {
+      const q = (inputUser.value || '').trim();
+      btnSearch.disabled = true;
+      try {
+        const res = await getApi().dev_search_players(q);
+        const list = (res && Array.isArray(res.players)) ? res.players : [];
+        searchResults.innerHTML = '';
+        if (list.length === 0) {
+          searchResults.style.display = 'flex';
+          searchResults.innerHTML = `<span style="font-size: 11px; color: #94a3b8;">No matching players found for "${escapeHtml(q)}".</span>`;
+        } else {
+          searchResults.style.display = 'flex';
+          list.slice(0, 12).forEach(pl => {
+            const uname = typeof pl === 'string' ? pl : (pl.username || '');
+            const hname = (typeof pl === 'object' && pl && pl.hero_name) ? pl.hero_name : '';
+            if (!uname) return;
+            const chip = document.createElement('button');
+            chip.type = 'button';
+            chip.className = 'tool-btn';
+            chip.style.cssText = 'padding: 3px 10px; height: 24px; font-size: 11px;';
+            chip.textContent = hname && hname !== uname ? `${uname} (${hname})` : uname;
+            chip.addEventListener('click', () => {
+              inputUser.value = uname;
+              if (chkAll) {
+                chkAll.checked = false;
+                inputUser.disabled = false;
+              }
+              playBeep(650, 'sine', 0.05);
+            });
+            searchResults.appendChild(chip);
+          });
+        }
+      } catch (e) {
+        showToast('Search failed: ' + String(e), 'fa-triangle-exclamation');
+      } finally {
+        btnSearch.disabled = false;
+      }
+    });
+  }
+
+  async function refreshAudit() {
+    if (!auditList) return;
+    auditList.textContent = 'Loading server audit history...';
+    try {
+      const res = await getApi().dev_get_reward_audit(20);
+      const entries = (res && Array.isArray(res.entries)) ? res.entries : [];
+      if (entries.length === 0) {
+        auditList.textContent = 'No reward actions recorded yet.';
+        return;
+      }
+      auditList.innerHTML = entries.map(e => {
+        const dt = e.created_at ? new Date(e.created_at * 1000).toLocaleString() : '';
+        const det = e.detail || {};
+        const att = det.attachments || {};
+        const cur = att.currencies || {};
+        const cr = cur.credits ? `${Number(cur.credits).toLocaleString()} Cr` : '';
+        const itCnt = Array.isArray(att.items) ? att.items.filter(i => ![1, 2, 10, 9000].includes(Number(i.type_id))).length : 0;
+        const unl = att.unlock_all ? ' + UNLOCK ALL SKINS' : '';
+        return `<div style="padding: 4px 0; border-bottom: 1px dashed rgba(255,255,255,0.08);">` +
+          `<span style="color:#38bdf8;">[${escapeHtml(dt)}]</span> ` +
+          `<b>${escapeHtml(e.target || '')}</b> &mdash; ` +
+          `${escapeHtml(det.title || e.action || '')} ` +
+          `<span style="color:#a78bfa;">(${[cr, itCnt ? (itCnt + ' Red/Items') : ''].filter(Boolean).join(', ')}${unl})</span>` +
+          `</div>`;
+      }).join('');
+    } catch (err) {
+      auditList.textContent = 'Failed to load audit log: ' + String(err);
+    }
+  }
+
+  if (btnToggleAudit && auditBox) {
+    btnToggleAudit.addEventListener('click', () => {
+      const show = auditBox.style.display === 'none';
+      auditBox.style.display = show ? 'block' : 'none';
+      if (show) refreshAudit();
+    });
+  }
+  if (btnRefreshAudit) {
+    btnRefreshAudit.addEventListener('click', refreshAudit);
+  }
+
+  if (btnSend) {
+    btnSend.addEventListener('click', async () => {
+      const sendAll = !!(chkAll && chkAll.checked);
+      const username = ((inputUser && inputUser.value) || '').trim();
+      if (!sendAll && !username) {
+        showToast('Please enter a recipient player username.', 'fa-triangle-exclamation');
+        if (inputUser) inputUser.focus();
+        return;
+      }
+      const credits = Math.max(0, parseInt((inputCredits && inputCredits.value) || '0', 10) || 0);
+      const vcoins = Math.max(0, parseInt((inputVcoins && inputVcoins.value) || '0', 10) || 0);
+      const cubes = Math.max(0, parseInt((inputCubes && inputCubes.value) || '0', 10) || 0);
+      const redCount = Math.max(0, parseInt((inputRedCount && inputRedCount.value) || '0', 10) || 0);
+      const redMode = (selectRedMode && selectRedMode.value) || 'skins';
+      const specific = ((inputSpecific && inputSpecific.value) || '').trim();
+      const unlockAll = !!(chkUnlockAll && chkUnlockAll.checked);
+      const title = ((inputTitle && inputTitle.value) || 'Reawakening Reward Gift').trim();
+      const body = ((inputBody && inputBody.value) || 'Thank you for supporting Cyber Hunter Reawakening!').trim();
+
+      if (sendAll) {
+        if (!confirm('Are you sure you want to send this reward gift to ALL registered players?')) {
+          return;
+        }
+      }
+
+      btnSend.disabled = true;
+      try {
+        const res = await getApi().dev_send_reward_gift({
+          send_all: sendAll,
+          username: username,
+          credits: credits,
+          vcoins: vcoins,
+          quantum_cubes: cubes,
+          red_count: redCount,
+          red_mode: redMode,
+          specific_items: specific,
+          unlock_all: unlockAll,
+          title: title,
+          body: body
+        });
+
+        if (res && res.success) {
+          playBeep(780, 'sine', 0.14);
+          showToast(res.message || `Reward sent to ${sendAll ? 'ALL players' : username}!`, 'fa-circle-check');
+          if (resultBox && resultText) {
+            const itemLines = (res.items || []).map(it => `  • ${it.name} (#${it.type_id})`).join('\n');
+            const summary = [
+              `Recipient: ${res.recipient || username}`,
+              `Credits: ${(res.credits || 0).toLocaleString()}` +
+                (res.vcoins ? ` | V-Coins: ${res.vcoins.toLocaleString()}` : '') +
+                (res.quantum_cubes ? ` | Cubes: ${res.quantum_cubes.toLocaleString()}` : ''),
+              res.unlock_all ? `Special Perk: UNLOCKED ALL SKINS IN GAME` : '',
+              itemLines ? `Granted Red Rarity Skins / Outfits:\n${itemLines}` : ''
+            ].filter(Boolean).join('\n');
+            resultText.textContent = summary;
+            resultBox.style.display = 'block';
+          }
+          if (auditBox && auditBox.style.display !== 'none') {
+            refreshAudit();
+          }
+        } else {
+          showToast((res && res.message) || 'Failed to send reward gift.', 'fa-triangle-exclamation');
+        }
+      } catch (err) {
+        showToast('Error sending reward: ' + String(err), 'fa-triangle-exclamation');
+      } finally {
+        btnSend.disabled = false;
+      }
+    });
+  }
+}
 
 // ── Master Console (logs + Frida overrides) ─────────────────────
 

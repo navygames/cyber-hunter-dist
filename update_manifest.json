@@ -1,7 +1,7 @@
 {
  "schema": 1,
  "launcher": "dotnet",
- "version": "2026.10.30-151649",
+ "version": "2026.11.01-045911",
  "files": [
   {
    "path": "AntiCheat/ac_host.exe",
@@ -20,8 +20,8 @@
   },
   {
    "path": "CyberHunterLauncher.exe",
-   "sha256": "c91b59ce672b93a60510ed36644c407ef47e74c7a23b74424ab736243df34ec3",
-   "size": 4940288
+   "sha256": "15863b001f4654b1923b71b96a5df519e28a893eacbc4bb26303c7eabb73d3f0",
+   "size": 4952064
   },
   {
    "path": "Launcher/app_icon.ico",
@@ -30,8 +30,8 @@
   },
   {
    "path": "Launcher/ui/app.js",
-   "sha256": "f793de70af7f88c5222785b2f3b872515635e041bff1880b67e0683c0a3ffc20",
-   "size": 162876
+   "sha256": "4f233c06edc455f3143bde68d0488387c35b289c8fb399e0426cc0bf12e25c11",
+   "size": 179816
   },
   {
    "path": "Launcher/ui/assets/ch-logo-white.png",
@@ -130,13 +130,13 @@
   },
   {
    "path": "Launcher/ui/index.html",
-   "sha256": "8a9ec3f40281640c737d0956ea1fdb4ef4cce6a10bc43315aac9c650b60cf5b4",
-   "size": 87151
+   "sha256": "8d9e04fe5258c82668cfebaa8632237ccd91f7a69b96ea7ec28d83c1864d4b7f",
+   "size": 100203
   },
   {
    "path": "Launcher/ui/style.css",
-   "sha256": "25d9aac9a23c640f80a425be5a76169ddab5219a8b71d11c159260d43d9c6271",
-   "size": 73913
+   "sha256": "fe621dcbf438f38588adfc41a15ed53e53979202989981494f2c37420b77f8b7",
+   "size": 77231
   },
   {
    "path": "Launcher/ui/vendor/fontawesome.css",
@@ -267,6 +267,16 @@
    "path": "Launcher/ui/vendor/webfonts/fa-solid-900.woff2",
    "sha256": "9fc85f3a4544ab0d570c7f8f9bbb88db8d92c359b2707580ea8b07c75673eae2",
    "size": 156496
+  },
+  {
+   "path": "Microsoft.Web.WebView2.Core.dll",
+   "sha256": "8219a3135436c147f8eb02fb831e99596103eebc18b6d7b794ca93f4c67018a2",
+   "size": 649800
+  },
+  {
+   "path": "Microsoft.Web.WebView2.WinForms.dll",
+   "sha256": "c48f8d729dc531288d2c53a6241effe7922ed1b947850b2442008a945c098c48",
+   "size": 39016
   },
   {
    "path": "README.txt",
@@ -444,6 +454,11 @@
    "size": 31000
   },
   {
+   "path": "WebView2Loader.dll",
+   "sha256": "eb5335edeaa6f2122c044e82aab2351dc8c9b4e0fe5e578c71922fb61be285e7",
+   "size": 161864
+  },
+  {
    "path": "client/client_manifest.json",
    "sha256": "2c1b444c74a4687ca34bcca7bc8a95b7192550125803d74916cba62e6ce879c9",
    "size": 38141
@@ -465,7 +480,7 @@
   },
   {
    "path": "client/native/build/script/manifest.json",
-   "sha256": "491d450e91ac45cf92892baa771417b0ac179a9c411a21f632ba579d09e16e33",
+   "sha256": "fa51fb04d9bb2f1dc0c42854e32c3af67d36d77524056e6f31f579a1736d2378",
    "size": 7377
   },
   {
@@ -485,18 +500,18 @@
   },
   {
    "path": "client/native/build/script/reawakening/pack.nxs",
-   "sha256": "c556e1dcc5dd4bb1dd00de7acfee8232e66e419e9cc9c5f3e40888995ec38d2e",
-   "size": 1274397
+   "sha256": "8b6e76308dffa5fa417941d0d859187fa2b1b9673546a7d834056c267a982110",
+   "size": 1276727
   },
   {
-   "path": "game-server/src/sync_supabase.js",
-   "sha256": "8674751009eaf089ec91aab912ce4c2b33831dbe6d6f8cf2cd5bfc7ecc0dc2cd",
-   "size": 9126
+   "path": "game_manifest.json",
+   "sha256": "8ce1935bc44133aa5c7dc70ae4adb998a4a0053d99e94a9187be109281ad6055",
+   "size": 800
   },
   {
    "path": "launcher.exe",
-   "sha256": "c91b59ce672b93a60510ed36644c407ef47e74c7a23b74424ab736243df34ec3",
-   "size": 4940288
+   "sha256": "15863b001f4654b1923b71b96a5df519e28a893eacbc4bb26303c7eabb73d3f0",
+   "size": 4952064
   },
   {
    "path": "requirements.txt",
@@ -505,8 +520,8 @@
   },
   {
    "path": "revival_config.env.example",
-   "sha256": "cc36db19b6dbafbff080d8cd303769fffe8327a3fbd8fb863bddf65cf3d50fdf",
-   "size": 753
+   "sha256": "9aa2e9d1f8899c22a7fc38d34a74239ad31a6645802df9101771e5fc3c5d1fe9",
+   "size": 2133
   },
   {
    "path": "tools/client_manifest.py",
@@ -520,8 +535,8 @@
   },
   {
    "path": "tools/private_server/certs/ca.cert.pem",
-   "sha256": "3a0c3c57a5b314ae6ed28b7495beb605cdd5f5bfde4dabab75f4ada04fbf0afc",
-   "size": 1192
+   "sha256": "7ff3900516c4143646f363ed9655f740d6c067c09f0a9420cadb8382357f1997",
+   "size": 1196
   },
   {
    "path": "tools/private_server/gateway_stub.py",
@@ -632,6 +647,11 @@
    "path": "tools/verify_game_files.py",
    "sha256": "c691a0db9494420459c4d63dff4eca8aa06d8e16acc9cb4e417ca66104790156",
    "size": 18562
+  },
+  {
+   "path": "tools/weather_packs.py",
+   "sha256": "a3fd7d9d8cf71374446379b8f056b456c27def5b4d443b8cec20a5adf07256d5",
+   "size": 51353
   }
  ]
 }
