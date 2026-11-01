@@ -1,6 +1,6 @@
 {
  "build": "3d8620eef9cd3caa",
- "built": "2026-11-01T14:47:47",
+ "built": "2026-11-01T14:55:41",
  "files": {
   "common/__init__.nxs": "c6480e369916785d0c06fe976a0f1f42db19d91a587ed20cec34e7c3f6d28c34",
   "common/logo_mgr.nxs": "967d39f262786ef43c71b3faf7aaaa21a0cff43c5ecc4c43e637f39ab9afa973",
@@ -8,9 +8,9 @@
   "reawakening/__init__.nxs": "1d618a71243345acc17f2a24b2dcb5c85be75d4fc44d413d3c7a8e84b7d6d2ec",
   "reawakening/art.nxs": "c4dc162bcb3211b6f90f813078180f031bd7961435cc76892db1595e0fff1fc8",
   "reawakening/boot.nxs": "3d5d107132e676d328a799300c631172087f9da7f00da04d135ba63f14033d34",
-  "reawakening/pack.nxs": "a393336015271fbf31007cdd13ae8307db6b58e2bc8a93b69813fd74677e34bc"
+  "reawakening/pack.nxs": "be3cae4c556e96819d056868ca53591baddfe80a338f5c6b6b76b95e556a28c7"
  },
- "release": false,
+ "release": true,
  "sources": {
   "client/frida/assets/lf_1v1_badge.png": "4109ffe3e94ca7749e98512eff36efae3cbc42ce32b44cf38e80cbb3abb6142f",
   "client/frida/assets/lf_1v1_defeat.png": "ad5f90a5defcb265b94e6e600cd26f18a175e52b0180ef586a91c7c55ffce643",
