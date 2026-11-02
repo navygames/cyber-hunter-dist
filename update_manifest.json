@@ -1,7 +1,7 @@
 {
  "schema": 1,
  "launcher": "dotnet",
- "version": "2026.11.02-044813",
+ "version": "2026.11.02-082241",
  "files": [
   {
    "path": "AntiCheat/ac_host.exe",
@@ -480,7 +480,7 @@
   },
   {
    "path": "client/native/build/script/manifest.json",
-   "sha256": "d983987b8a30caf325490c099c3a5f9087b90162221029c6a25c545340f09be9",
+   "sha256": "d91e32922a8c8445ac318be8e7c19a9792d5a095a1eff3f07c23de84b78af080",
    "size": 7377
   },
   {
@@ -500,8 +500,8 @@
   },
   {
    "path": "client/native/build/script/reawakening/pack.nxs",
-   "sha256": "6cb2ca907a7482dd2e9394e969963b82ba22f9026efd7b4dd1bd510f0d40e548",
-   "size": 1189756
+   "sha256": "0dfeff7eee1973f26a9d753a887c0a9136b004c65d102ade93a789e2fb27e758",
+   "size": 1189990
   },
   {
    "path": "game_manifest.json",
