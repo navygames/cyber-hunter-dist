@@ -1396,6 +1396,18 @@ async function triggerPlayLaunch() {
 
     }
 
+    if (res && res.session_expired) {
+      // Server session expired: sign out locally and ask for the password.
+      isLaunching = false;
+      setPlayButtonState('idle');
+      try { await getApi().account_logout(); } catch (e) {}
+      signedInAccount = null;
+      try { renderAccountLink(); } catch (e) {}
+      showToast(res.message || "Your session has expired. Please sign in again.", "fa-right-to-bracket");
+      if (typeof window.openAccountModal === 'function') window.openAccountModal(res.message || "Your session has expired. Please sign in again.", 'login');
+      return;
+    }
+
     if (res && res.offline) {
 
       isLaunching = false;
@@ -3807,6 +3819,12 @@ async function refreshAccountState() {
     }
 
     signedInAccount = st.signed_in || null;
+
+    if (st.session_expired && !window._sessionExpiredShown && typeof window.openAccountModal === 'function') {
+      // Server session ran out while the launcher was closed: ask once.
+      window._sessionExpiredShown = true;
+      setTimeout(function () { window.openAccountModal("Your session has expired. Please sign in again to play.", 'login'); }, 300);
+    }
 
     if (signedInAccount && typeof signedInAccount.graphic_quality !== 'undefined') {
 

@@ -1,7 +1,7 @@
 {
  "schema": 1,
  "launcher": "dotnet",
- "version": "2026.11.09-075627",
+ "version": "2026.11.09-115905",
  "files": [
   {
    "path": "AntiCheat/ac_host.exe",
@@ -20,18 +20,18 @@
   },
   {
    "path": "CyberHunterLauncher.exe",
-   "sha256": "6268dd58db8b0d59d484419ffc421e3219735148a7ce6d50e5a289f22d7a95b5",
-   "size": 4954112
+   "sha256": "2af5993294e09b06661cc08b49a722af1970c98df58d95068d1ff1ed98b8def0",
+   "size": 5289984
   },
   {
    "path": "Launcher/app_icon.ico",
-   "sha256": "8a4ab25cc951810fabad29fe5401229ae6ce6c0cff57e084687a5be8d933b165",
-   "size": 16426
+   "sha256": "f56d4e3a6f056818790e61fe42c03bfcaacdb7e3a4e223a50b3426d05078ed1c",
+   "size": 173786
   },
   {
    "path": "Launcher/ui/app.js",
-   "sha256": "4f233c06edc455f3143bde68d0488387c35b289c8fb399e0426cc0bf12e25c11",
-   "size": 179816
+   "sha256": "de6136735ced99baa359bfa781ee6572b0e3d17879611297ad659ecf9124f3b3",
+   "size": 181077
   },
   {
    "path": "Launcher/ui/assets/ch-logo-white.png",
@@ -130,8 +130,8 @@
   },
   {
    "path": "Launcher/ui/index.html",
-   "sha256": "8d9e04fe5258c82668cfebaa8632237ccd91f7a69b96ea7ec28d83c1864d4b7f",
-   "size": 100203
+   "sha256": "7d46f690b4fab00f07d1ba2954a19e853bf38d4de8218562042f48c0df3699ee",
+   "size": 98654
   },
   {
    "path": "Launcher/ui/style.css",
@@ -267,6 +267,16 @@
    "path": "Launcher/ui/vendor/webfonts/fa-solid-900.woff2",
    "sha256": "9fc85f3a4544ab0d570c7f8f9bbb88db8d92c359b2707580ea8b07c75673eae2",
    "size": 156496
+  },
+  {
+   "path": "Microsoft.Web.WebView2.Core.dll",
+   "sha256": "8219a3135436c147f8eb02fb831e99596103eebc18b6d7b794ca93f4c67018a2",
+   "size": 649800
+  },
+  {
+   "path": "Microsoft.Web.WebView2.WinForms.dll",
+   "sha256": "c48f8d729dc531288d2c53a6241effe7922ed1b947850b2442008a945c098c48",
+   "size": 39016
   },
   {
    "path": "README.txt",
@@ -444,6 +454,11 @@
    "size": 31000
   },
   {
+   "path": "WebView2Loader.dll",
+   "sha256": "eb5335edeaa6f2122c044e82aab2351dc8c9b4e0fe5e578c71922fb61be285e7",
+   "size": 161864
+  },
+  {
    "path": "client/client_manifest.json",
    "sha256": "2c1b444c74a4687ca34bcca7bc8a95b7192550125803d74916cba62e6ce879c9",
    "size": 38141
@@ -495,8 +510,8 @@
   },
   {
    "path": "launcher.exe",
-   "sha256": "6268dd58db8b0d59d484419ffc421e3219735148a7ce6d50e5a289f22d7a95b5",
-   "size": 4954112
+   "sha256": "2af5993294e09b06661cc08b49a722af1970c98df58d95068d1ff1ed98b8def0",
+   "size": 5289984
   },
   {
    "path": "requirements.txt",
@@ -632,6 +647,11 @@
    "path": "tools/verify_game_files.py",
    "sha256": "c691a0db9494420459c4d63dff4eca8aa06d8e16acc9cb4e417ca66104790156",
    "size": 18562
+  },
+  {
+   "path": "tools/weather_packs.py",
+   "sha256": "a3fd7d9d8cf71374446379b8f056b456c27def5b4d443b8cec20a5adf07256d5",
+   "size": 51353
   }
  ]
 }
