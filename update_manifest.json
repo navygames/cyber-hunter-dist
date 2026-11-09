@@ -1,7 +1,7 @@
 {
  "schema": 1,
  "launcher": "dotnet",
- "version": "2026.11.02-141004",
+ "version": "2026.11.09-052356",
  "files": [
   {
    "path": "AntiCheat/ac_host.exe",
@@ -465,7 +465,7 @@
   },
   {
    "path": "client/native/build/script/manifest.json",
-   "sha256": "c7e7d71445781bc76475ad2ffc0e6782e5975b90f5ea19ee5f4899a9dc4d36af",
+   "sha256": "a4cd7098494da3c517cf41bdcc94edb1f79f450e9b2c3fccafe0df9f9f94ae49",
    "size": 7377
   },
   {
@@ -485,8 +485,8 @@
   },
   {
    "path": "client/native/build/script/reawakening/pack.nxs",
-   "sha256": "43c42e5438fb93caacd16406f91562f0d5153dad414c522d90e0b22fafddca70",
-   "size": 1280898
+   "sha256": "350b2d03e0352acba46b76341998d1c856b1ddab1ec1ba156884e033b2fa2bce",
+   "size": 1302510
   },
   {
    "path": "game-server/src/sync_supabase.js",
