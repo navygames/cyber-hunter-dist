@@ -9,14 +9,8 @@ REM    REVIVAL_SERVER_IP=<vps ip>   -> remote mode (servers already run there)
 REM ============================================================
 title Navy Games - Cyber Hunter Reawakening
 
-REM Admin is required: the client stack edits hosts, binds low ports and
-REM injects Frida into client.exe.
-net session >nul 2>&1
-if %errorlevel% neq 0 (
-    echo [*] Requesting Administrator privileges...
-    powershell -NoProfile -Command "Start-Process '%~f0' -Verb RunAs"
-    exit /b
-)
+REM No administrator rights needed to start (2026-10-28). The launcher asks
+REM Windows once, only for the one-time hosts-file setup.
 
 cd /d "%~dp0"
 
