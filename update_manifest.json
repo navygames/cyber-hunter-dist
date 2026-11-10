@@ -1,7 +1,7 @@
 {
  "schema": 1,
  "launcher": "dotnet",
- "version": "2026.11.10-150447",
+ "version": "2026.11.10-152812",
  "files": [
   {
    "path": "CyberHunter.bat",
@@ -10,8 +10,8 @@
   },
   {
    "path": "CyberHunterLauncher.exe",
-   "sha256": "74fdcec0cbccd1693c82056327f954a44b0177f2bfcf61012c2e073fdafce748",
-   "size": 5286400
+   "sha256": "0cb11ec41d4c0c22f0b155933f763a1dbf377475d3945a4df6131409247f5d71",
+   "size": 5405696
   },
   {
    "path": "Launcher/app_icon.ico",
@@ -22,6 +22,11 @@
    "path": "Launcher/ui/app.js",
    "sha256": "de6136735ced99baa359bfa781ee6572b0e3d17879611297ad659ecf9124f3b3",
    "size": 181077
+  },
+  {
+   "path": "Launcher/ui/assets/app-icon.png",
+   "sha256": "4eb65d512726472699d9a81ae42ab5fc85bec10b0b3c2b6f491261d82a25db2c",
+   "size": 116795
   },
   {
    "path": "Launcher/ui/assets/ch-logo-white.png",
@@ -505,8 +510,8 @@
   },
   {
    "path": "launcher.exe",
-   "sha256": "74fdcec0cbccd1693c82056327f954a44b0177f2bfcf61012c2e073fdafce748",
-   "size": 5286400
+   "sha256": "0cb11ec41d4c0c22f0b155933f763a1dbf377475d3945a4df6131409247f5d71",
+   "size": 5405696
   },
   {
    "path": "requirements.txt",
@@ -532,6 +537,11 @@
    "path": "tools/private_server/certs/ca.cert.pem",
    "sha256": "7ff3900516c4143646f363ed9655f740d6c067c09f0a9420cadb8382357f1997",
    "size": 1196
+  },
+  {
+   "path": "tools/private_server/discord_presence.py",
+   "sha256": "a375c9d546099e2bac1b7cd42ee646885d2ad737ab92ea78f01f8d6852c1b525",
+   "size": 9610
   },
   {
    "path": "tools/private_server/gateway_stub.py",
