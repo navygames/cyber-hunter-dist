@@ -1,13 +1,8 @@
 {
  "schema": 1,
  "launcher": "dotnet",
- "version": "2026.11.10-110926",
+ "version": "2026.11.10-111226",
  "files": [
-  {
-   "path": "AntiCheat/chac.dll",
-   "sha256": "cd6bb7232c626435d5c1b94d2a9f8662c6a351cd839c638e32a9d0a854c21437",
-   "size": 359424
-  },
   {
    "path": "CyberHunter.bat",
    "sha256": "8edcb0de748b334c1d16ef314c6263c5471c8aefcf127941a4f0b0f55ee44520",
@@ -15,7 +10,7 @@
   },
   {
    "path": "CyberHunterLauncher.exe",
-   "sha256": "982fa744933f00c0b038eade1ec93683752b1c5a4e0fc3b909823e80bce2eb4d",
+   "sha256": "24ffad424cf1e813b5ef57ab7f44531b7582c82ed782b4b61296ff175ae49c2a",
    "size": 5286400
   },
   {
@@ -510,7 +505,7 @@
   },
   {
    "path": "launcher.exe",
-   "sha256": "982fa744933f00c0b038eade1ec93683752b1c5a4e0fc3b909823e80bce2eb4d",
+   "sha256": "24ffad424cf1e813b5ef57ab7f44531b7582c82ed782b4b61296ff175ae49c2a",
    "size": 5286400
   },
   {
