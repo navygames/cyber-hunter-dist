@@ -1,13 +1,8 @@
 {
  "schema": 1,
  "launcher": "dotnet",
- "version": "2026.11.09-115905",
+ "version": "2026.11.10-110926",
  "files": [
-  {
-   "path": "AntiCheat/ac_host.exe",
-   "sha256": "86978ff56c6644f984f423fdcdea19b0c0a47fbd26053d53242bdd18aa1d9e00",
-   "size": 277504
-  },
   {
    "path": "AntiCheat/chac.dll",
    "sha256": "cd6bb7232c626435d5c1b94d2a9f8662c6a351cd839c638e32a9d0a854c21437",
@@ -20,8 +15,8 @@
   },
   {
    "path": "CyberHunterLauncher.exe",
-   "sha256": "2af5993294e09b06661cc08b49a722af1970c98df58d95068d1ff1ed98b8def0",
-   "size": 5289984
+   "sha256": "982fa744933f00c0b038eade1ec93683752b1c5a4e0fc3b909823e80bce2eb4d",
+   "size": 5286400
   },
   {
    "path": "Launcher/app_icon.ico",
@@ -509,9 +504,14 @@
    "size": 9126
   },
   {
+   "path": "game_manifest.json",
+   "sha256": "0f9b42234958ffc16543067bb24776da0157749fb16360fb9823f35f9df8d323",
+   "size": 1107
+  },
+  {
    "path": "launcher.exe",
-   "sha256": "2af5993294e09b06661cc08b49a722af1970c98df58d95068d1ff1ed98b8def0",
-   "size": 5289984
+   "sha256": "982fa744933f00c0b038eade1ec93683752b1c5a4e0fc3b909823e80bce2eb4d",
+   "size": 5286400
   },
   {
    "path": "requirements.txt",

@@ -1,0 +1,36 @@
+{
+ "tag": "game-client-v1",
+ "seg_workers": 3,
+ "parts": [
+  {
+   "name": "game-part1.zip",
+   "size": 1564143619,
+   "url": "https://github.com/navygames/cyber-hunter-dist/releases/download/game-client-v1/game-part1.zip"
+  },
+  {
+   "name": "game-part2.zip",
+   "size": 1705633438,
+   "url": "https://github.com/navygames/cyber-hunter-dist/releases/download/game-client-v1/game-part2.zip"
+  },
+  {
+   "name": "game-part3.zip",
+   "size": 1764076156,
+   "url": "https://github.com/navygames/cyber-hunter-dist/releases/download/game-client-v1/game-part3.zip"
+  },
+  {
+   "name": "game-part4.zip",
+   "size": 1442823548,
+   "url": "https://github.com/navygames/cyber-hunter-dist/releases/download/game-client-v1/game-part4.zip"
+  },
+  {
+   "name": "game-part5.zip",
+   "size": 1802815908,
+   "url": "https://github.com/navygames/cyber-hunter-dist/releases/download/game-client-v1/game-part5.zip"
+  },
+  {
+   "name": "game-part6.zip",
+   "size": 1506131282,
+   "url": "https://github.com/navygames/cyber-hunter-dist/releases/download/game-client-v1/game-part6.zip"
+  }
+ ]
+}
