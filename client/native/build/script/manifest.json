@@ -1,6 +1,6 @@
 {
- "build": "96f4454ce1506a10",
- "built": "2026-11-14T20:31:24",
+ "build": "a934fc57b3e412c2",
+ "built": "2026-11-14T22:00:25",
  "files": {
   "common/__init__.nxs": "c6480e369916785d0c06fe976a0f1f42db19d91a587ed20cec34e7c3f6d28c34",
   "common/logo_mgr.nxs": "967d39f262786ef43c71b3faf7aaaa21a0cff43c5ecc4c43e637f39ab9afa973",
@@ -8,7 +8,7 @@
   "reawakening/__init__.nxs": "1d618a71243345acc17f2a24b2dcb5c85be75d4fc44d413d3c7a8e84b7d6d2ec",
   "reawakening/art.nxs": "76c7f5aa47312c0b5ebe1a74aa71332c568870d4cf965ecb243898fe1dc158d7",
   "reawakening/boot.nxs": "91f5ed88cd54e9f79dfecc20af7c4b0a7327496566b24a4cfe71f28a4c985713",
-  "reawakening/pack.nxs": "866d804f1ceda03c323b1fa5dc6aeff1cd0814f612f644eef6d0fae7a44b2288"
+  "reawakening/pack.nxs": "4dd190e9bd9a08754c14ea9a2940bdebbbbe669fa4bd28d0fbd5a6c5686a0f37"
  },
  "release": true,
  "sources": {
@@ -73,16 +73,29 @@
   "client/frida/assets/supply_wave_breaker_avatar.png": "e86a5328ab186f336908f796b9bc03aa851ec4ce9a9fa938d62fb62db58398ee",
   "client/frida/assets/supply_western_cowboy_avatar.png": "c5c2f9a3e818156751628705fed2b79253495ab2d9b700ad76b831d9dd928004",
   "client/frida/assets/tt_poster_black_cat_legend_avatar.png": "a588e8118da0480fbdb45ea4fbd7c4cd9ed4d9c9dedd6406d6da15d6021447b9",
-  "client/frida/br_world4k_anchors.py": "3aaa6fc2974b7e4015acb8479d39c7a997710c045b5a60a7ad62f6ae923fa0b6",
-  "client/frida/br_world4k_spawns.py": "c3773f075f4ba516368ce9a738cd59a19908d123966e9d24179f4dbdfe5ea26f",
-  "client/frida/lobby_full_payload.py": "f214feeb844da01a16aff0f063d43066703dbb9057d2f109202ab104187963f1",
-  "client/frida/lobby_offline_server.py": "c06024d8fb8b7d67a813b026122a7037b8b3a09f716b4d573c51ab14a7e3d4b6",
+  "client/frida/br_world4k_anchors.py": "ef328ab3b3b59ec4b5274d2fd21c43639de420dbcd59db5248b25bdced402a93",
+  "client/frida/br_world4k_spawns.py": "f61152378ffd8a815d8f563721ce1e120dfd40725043ccfdccac0f1970d22fe1",
+  "client/frida/cinematics/cine_engine.py": "89b439715ccd6bc48564403406803b952025c534a0ddaf5356cc8f8cfed780ab",
+  "client/frida/cinematics/interact.py": "4aeecc7d1aad6d55bba708498daf19cec2cdff63f75ccf5208cdd849bf103731",
+  "client/frida/cinematics/scripts/cyber_royale_escape.py": "bb1a91c96810140d7b93f88859ab2141830e3c571b37e5fc7d187540f53e3155",
+  "client/frida/cinematics/scripts/cyber_royale_intro.py": "92d3b49e7215dcc05d2b74e398a207537498c05ab4a430023d9d538e5cdd2209",
+  "client/frida/cyber_royale/bunker_layout.py": "0fd318cfb5911dc783ae21e044f1fe7f61b09ae6fbd2c261281eb73fe64ccdf3",
+  "client/frida/cyber_royale/cyber_anchors.py": "b6320851a8fde12fb50dfcdd50895a3ffecee98cad81f4c73c17a1b1ea4baca8",
+  "client/frida/cyber_royale/heist_data.py": "31911ed3fbed7e814d9ca294ad5784ee3fc06e7f793a43c3a3980691c47f9d15",
+  "client/frida/cyber_royale/heist_engine.py": "6d58dee0e0180c8165b7140889183cb43d5eb73405786b61efa17429eaa7f544",
+  "client/frida/cyber_royale/heist_factions.py": "438474d89324e368bb5349a1e6bfdbfe9d35a257f1925cfd5a4eac478c16a2dc",
+  "client/frida/cyber_royale/heist_spots.py": "ba48b4ed851d9dc74e85fe6472b62f2ad151e4f750209e1bde9ef8106f97369b",
+  "client/frida/cyber_royale/lod_guard.py": "932d33adeed7cdac2aeb8c5a06dc9bc58c16448a64f1a29ec6a2eb2c0a305c06",
+  "client/frida/cyber_royale/story_spots.py": "5ce94c720bb040da500af4617c2e4d9d38effbee08bc623ce01ec1f843ecff68",
+  "client/frida/cyber_royale/swing_engine.py": "3b882dbbef7caab6d887066606a267e5cae9d436e3831c41c51a8911e0eddb9b",
+  "client/frida/lobby_full_payload.py": "fe30f3a446750722a6bfc53d8edfda7e0d83f01c8a3ecce5f632cd85f2542617",
+  "client/frida/lobby_offline_server.py": "9e322d380703208c4c7be6fe524886ee73a862bb357269878816af5288dce215",
   "client/frida/navy_web_art.bin": "8ae3c9fb8d8bbf647c4f585831a0248d0840eafa75e6ad35b29eb8afc42038a6",
-  "client/frida/offline_account_db.py": "d3225256052513e4c4528af737acbea0b949936e0defcd160e380796f918565d",
-  "client/frida/offline_weapon_damage.json": "6229732bf2d6b972ac7dba15c598dafa1ff4443c7dbd526f375244ce430b2dc5",
+  "client/frida/offline_account_db.py": "9efa66e0a034727b93f8b554686a696abe26711fcde809c43788368d52ec6e3d",
+  "client/frida/offline_weapon_damage.json": "d731b363ceea07d99a81c430ae2fe47fd98482c8e432a25b7560af277d796756",
   "client/native/boot.py": "6b3e5edd70000be695d426f127688c08c3acfbd98922caa244afb5a608b9a87c",
   "client/native/game_overlay/common/__init__.py": "ec3c621294f583a84cc16d61045d7b38e1512770d6d3782212eeab82f4424c76",
   "client/native/game_overlay/common/logo_mgr.py": "d1fe70f33142dcec70513c1674a7765170612412530254828a787dc57e06e45c",
-  "client/native/game_overlay/common/logo_panel.py": "84d6fef2c2fd7c805227059cbf496028c863250ad105154f2d1af311474ab232"
+  "client/native/game_overlay/common/logo_panel.py": "dd41e97af635236e65cc4caa865a7e07903d8cc43e17671d023c20803c9543d9"
  }
 }
